@@ -4,6 +4,11 @@ namespace Campus.Domain.Entities
 {
     public class Group
     {
+        public Group()
+        {
+            Lessons = new HashSet<Lesson>();
+        }
+
         public int Id { get; set; }
         public string Name { get; set; }
         public int SpecialityId { get; set; }
@@ -13,6 +18,6 @@ namespace Campus.Domain.Entities
 
         public Speciality Speciality { get; set; }
         public EducationalDegree EducationalDegree { get; set; }   
-        public ICollection<Lesson> Lessons { get; set; }
+        public ICollection<Lesson> Lessons { get; private set; }
     }
 }

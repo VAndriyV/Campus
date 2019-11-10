@@ -4,6 +4,11 @@ namespace Campus.Domain.Entities
 {
     public class Lector
     {
+        public Lector()
+        {
+            LectorSubjects = new HashSet<LectorSubject>();
+        }
+
         public int Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
@@ -18,6 +23,6 @@ namespace Campus.Domain.Entities
         public AcademicDegree AcademicDegree { get; set; }
         public AcademicRank AcademicRank { get; set; }
         public User User { get; set; }
-        public ICollection<LectorSubject> LectorSubjects { get; set; }
+        public ICollection<LectorSubject> LectorSubjects { get; private set; }
     }
 }
