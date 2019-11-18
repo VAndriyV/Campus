@@ -14,4 +14,25 @@
     <ProjectReference Include="..\Campus.Persistence\Campus.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Attendances\Commands\CreateAttendance\" />
+    <Folder Include="Attendances\Commands\DeleteAttendance\" />
+    <Folder Include="Attendances\Commands\UpdateAttendance\" />
+    <Folder Include="Attendances\Queries\GetAttendancesList\" />
+    <Folder Include="LectorSubjects\Commands\CreateLectorSubject\" />
+    <Folder Include="LectorSubjects\Commands\DeleteLectorSubject\" />
+    <Folder Include="LectorSubjects\Commands\UpdateLectorSubject\" />
+    <Folder Include="Lessons\Commands\CreateLesson\" />
+    <Folder Include="Lessons\Commands\DeleteLesson\" />
+    <Folder Include="Lessons\Commands\UpdateLesson\" />
+    <Folder Include="Lessons\Queries\GetGroupsLessonsList\" />
+    <Folder Include="Lessons\Queries\GetLectorsLessonsList\" />
+    <Folder Include="Specialities\Commands\CreateSpeciality\" />
+    <Folder Include="Specialities\Commands\DeleteSpeciality\" />
+    <Folder Include="Specialities\Commands\UpdateSpeciality\" />
+    <Folder Include="Specialities\Queries\GetSpecialitiesList\" />
+    <Folder Include="User\Commands\" />
+    <Folder Include="User\Queries\" />
+  </ItemGroup>
+
 </Project>
