@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 using Campus.Domain.Entities;
 
-namespace Campus.Application.Groups.Queries.GetAllGroups
+namespace Campus.Application.Groups.Queries.DataTransferObjects
 {
     public class GroupDto
     {

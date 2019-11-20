@@ -1,10 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FluentValidation;
 
 namespace Campus.Application.Subjects.Commands.UpdateSubject
 {
-    class UpdateSubjectCommandValidator
+    public class UpdateSubjectCommandValidator : AbstractValidator<UpdateSubjectCommand>
     {
+        public UpdateSubjectCommandValidator()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(40);
+        }
     }
 }

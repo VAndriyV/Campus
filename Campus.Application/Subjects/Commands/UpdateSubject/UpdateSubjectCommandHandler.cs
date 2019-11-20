@@ -1,10 +1,25 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
+
+using MediatR;
+
+using Campus.Persistence;
 
 namespace Campus.Application.Subjects.Commands.UpdateSubject
 {
-    class UpdateSubjectCommandHandler
+    public class UpdateSubjectCommandHandler : IRequestHandler<UpdateSubjectCommand, Unit>
     {
+        private readonly CampusDbContext _context;
+
+        public UpdateSubjectCommandHandler(CampusDbContext context)
+        {
+            _context = context;
+        }
+
+        public async Task<Unit> Handle(UpdateSubjectCommand request, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

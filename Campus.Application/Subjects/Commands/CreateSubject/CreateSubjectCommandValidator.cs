@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FluentValidation;
 
 namespace Campus.Application.Subjects.Commands.CreateSubject
 {
-    class CreateSubjectCommandValidator
+    public class CreateSubjectCommandValidator : AbstractValidator<CreateSubjectCommand>
     {
+        public CreateSubjectCommandValidator()
+        {
+            RuleFor(x => x.Name).NotEmpty().MaximumLength(40);
+        }
     }
 }

@@ -1,10 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using FluentValidation;
 
 namespace Campus.Application.Subjects.Commands.DeleteSubject
 {
-    class DeleteSubjectCommandValidator
+    public class DeleteSubjectCommandValidator : AbstractValidator<DeleteSubjectCommand>
     {
+        public DeleteSubjectCommandValidator()
+        {
+            RuleFor(x => x.Id).NotEmpty();
+        }
     }
 }

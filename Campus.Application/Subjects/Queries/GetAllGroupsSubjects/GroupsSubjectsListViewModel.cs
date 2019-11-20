@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-using Campus.Application.Subjects.Queries.Models;
+using Campus.Application.Subjects.Queries.DataTransferObjects;
 
 namespace Campus.Application.Subjects.Queries.GetAllGroupsSubjects
 {

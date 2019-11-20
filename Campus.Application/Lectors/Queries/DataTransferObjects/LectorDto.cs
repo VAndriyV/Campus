@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 
 using Campus.Domain.Entities;
 
-namespace Campus.Application.Lectors.Queries.GetAllLectors
+namespace Campus.Application.Lectors.Queries.DataTransferObjects
 {
     public class LectorDto
     {

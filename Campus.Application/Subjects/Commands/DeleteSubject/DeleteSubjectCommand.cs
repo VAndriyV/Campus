@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 
 namespace Campus.Application.Subjects.Commands.DeleteSubject
 {
-    class DeleteSubjectCommand
+    public class DeleteSubjectCommand : IRequest
     {
+        public int Id { get; set; }
     }
 }

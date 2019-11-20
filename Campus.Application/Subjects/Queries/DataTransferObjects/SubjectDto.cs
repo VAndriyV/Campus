@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Linq.Expressions;
 
-using Campus.Domain.Entities;
-
-namespace Campus.Application.Subjects.Queries.Models
+namespace Campus.Application.Subjects.Queries.DataTransferObjects
 {
     public class SubjectDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
 
-        public static Expression<Func<Domain.Entities.Subject, SubjectDto>> Projection
+        public static Expression<Func<Subject, SubjectDto>> Projection
         {
             get
             {

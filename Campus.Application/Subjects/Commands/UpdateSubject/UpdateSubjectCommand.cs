@@ -1,10 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using MediatR;
 
 namespace Campus.Application.Subjects.Commands.UpdateSubject
 {
-    class UpdateSubjectCommand
+    public class UpdateSubjectCommand : IRequest
     {
+        public int Id { get; set; }
+        public string Name { get; set; }
     }
 }
