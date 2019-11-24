@@ -2,7 +2,7 @@
 
 namespace Campus.Application.Groups.Commands.UpdateGroup
 {
-    public class UpdateGroupCommand : IRequest
+    public class UpdateGroupCommand : IRequest<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }

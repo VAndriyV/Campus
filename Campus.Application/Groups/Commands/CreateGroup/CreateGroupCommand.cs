@@ -2,7 +2,7 @@
 
 namespace Campus.Application.Groups.Commands.CreateGroup
 {
-    public class CreateGroupCommand : IRequest
+    public class CreateGroupCommand : IRequest<int>
     {
         public int Id { get; set; }
         public string Name { get; set; }

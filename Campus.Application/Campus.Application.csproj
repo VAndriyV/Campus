@@ -15,10 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Attendances\Queries\GetAllGroupsAttendances\" />
-    <Folder Include="Attendances\Queries\GetAllLectorsAttendances\" />
     <Folder Include="User\Commands\" />
-    <Folder Include="User\Queries\" />
   </ItemGroup>
 
 </Project>

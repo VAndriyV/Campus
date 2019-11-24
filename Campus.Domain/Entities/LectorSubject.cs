@@ -9,6 +9,7 @@ namespace Campus.Domain.Entities
             Lessons = new HashSet<Lesson>();
         }
 
+        public int Id { get; set; }
         public int LectorId { get; set; }
         public int SubjectId { get; set; }
         public int LessonTypeId { get; set; }

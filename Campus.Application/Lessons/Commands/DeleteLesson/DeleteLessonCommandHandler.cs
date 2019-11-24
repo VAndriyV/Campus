@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using MediatR;
 
 using Campus.Persistence;
+using Campus.Application.Exceptions;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.Lessons.Commands.DeleteLesson
 {
@@ -16,9 +18,20 @@ namespace Campus.Application.Lessons.Commands.DeleteLesson
             _context = context;
         }
 
-        public Task<Unit> Handle(DeleteLessonCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteLessonCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var lesson = await _context.Lessons.FindAsync(request.Id);
+
+            if(lesson == null)
+            {
+                throw new NotFoundException(nameof(Lesson), request.Id);
+            }
+
+            _context.Lessons.Remove(lesson);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

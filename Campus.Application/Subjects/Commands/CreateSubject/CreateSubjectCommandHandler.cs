@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
 
 using Campus.Persistence;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.Subjects.Commands.CreateSubject
 {
@@ -19,7 +19,16 @@ namespace Campus.Application.Subjects.Commands.CreateSubject
 
         public async Task<Unit> Handle(CreateSubjectCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var subject = new Subject
+            {
+                Name = request.Name
+            };
+
+            _context.Subjects.Add(subject);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

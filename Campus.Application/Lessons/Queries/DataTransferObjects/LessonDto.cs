@@ -18,7 +18,7 @@ namespace Campus.Application.Lessons.Queries.DataTransferObjects
 
         public string LessonTypeName { get; set; }
 
-        public Expression<Func<Lesson,LessonDto>> Projection
+        public static Expression<Func<Lesson,LessonDto>> Projection
         {
             get
             {   

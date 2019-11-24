@@ -1,10 +1,13 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
 
 using MediatR;
 
 using Campus.Persistence;
+
+using Campus.Application.Specialities.Queries.DataTransferObjects;
 
 namespace Campus.Application.Specialities.Queries.GetAllSpecialities
 {
@@ -17,9 +20,13 @@ namespace Campus.Application.Specialities.Queries.GetAllSpecialities
             _context = context;
         }
 
-        public Task<SpecialitiesListViewModel> Handle(GetAllSpecialitiesQuery request, CancellationToken cancellationToken)
+        public async Task<SpecialitiesListViewModel> Handle(GetAllSpecialitiesQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var model = new SpecialitiesListViewModel();
+
+            model.Specialities = await _context.Specialities.Select(SpecialityDto.Projection).ToListAsync();
+
+            return model;
         }
     }
 }

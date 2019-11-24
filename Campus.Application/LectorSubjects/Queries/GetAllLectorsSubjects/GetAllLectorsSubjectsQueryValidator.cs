@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Campus.Application.Subjects.Queries.GetAllLectorsSubjects
+namespace Campus.Application.LectorSubjects.Queries.GetAllLectorsSubjects
 {
     public class GetAllLectorsSubjectsQueryValidator : AbstractValidator<GetAllLectorsSubjectsQuery>
     {

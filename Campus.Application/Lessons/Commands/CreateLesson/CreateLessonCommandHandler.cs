@@ -1,10 +1,10 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
 
 using Campus.Persistence;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.Lessons.Commands.CreateLesson
 {
@@ -15,9 +15,19 @@ namespace Campus.Application.Lessons.Commands.CreateLesson
         {
             _context = context;
         }
-        public Task<Unit> Handle(CreateLessonCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CreateLessonCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var lesson = new Lesson
+            {
+                LectorSubjectId = request.LectorSubjectId,
+                GroupId = request.GroupId
+            };
+
+            _context.Lessons.Add(lesson);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

@@ -9,7 +9,9 @@ namespace Campus.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<LectorSubject> builder)
         {
-            builder.HasKey(ls => new { ls.LectorId, ls.SubjectId });
+            builder.HasKey(ls => ls.Id);
+            builder.Property(ls => ls.Id)
+               .ValueGeneratedOnAdd();
 
             builder.HasOne(ls=>ls.LessonType)
                 .WithMany(lt=>lt.LectorSubjects)

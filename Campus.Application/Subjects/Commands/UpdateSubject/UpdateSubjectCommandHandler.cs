@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
 
 using Campus.Persistence;
+using Campus.Application.Exceptions;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.Subjects.Commands.UpdateSubject
 {
@@ -19,7 +20,18 @@ namespace Campus.Application.Subjects.Commands.UpdateSubject
 
         public async Task<Unit> Handle(UpdateSubjectCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var subject = await _context.Subjects.FindAsync(request.Id);
+            
+            if(subject == null)
+            {
+                throw new NotFoundException(nameof(Subject), request.Id);
+            }
+
+            subject.Name = request.Name;
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

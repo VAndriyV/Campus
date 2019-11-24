@@ -4,6 +4,10 @@ using System.Threading.Tasks;
 using MediatR;
 
 using Campus.Persistence;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Campus.Application.Exceptions;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.Lectors.Queries.GetLectorDetail
 {
@@ -16,9 +20,21 @@ namespace Campus.Application.Lectors.Queries.GetLectorDetail
             _context = context;
         }
 
-        public Task<LectorDetailModel> Handle(GetLectorDetailQuery request, CancellationToken cancellationToken)
+        public async Task<LectorDetailModel> Handle(GetLectorDetailQuery request, CancellationToken cancellationToken)
         {
-            throw new System.NotImplementedException();
+            var lector = await _context.Lectors
+                .Where(x => x.Id == request.Id)
+                .Include(x => x.AcademicRank)
+                .Include(x => x.AcademicDegree)
+                .Select(LectorDetailModel.Projection)
+                .SingleOrDefaultAsync();
+
+            if(lector == null)
+            {
+                throw new NotFoundException(nameof(Lector), request.Id);
+            }
+
+            return lector;
         }
     }
 }

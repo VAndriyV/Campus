@@ -1,25 +1,31 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 using MediatR;
 
 using Campus.Persistence;
+using System.Linq;
+using Campus.Application.Subjects.Queries.DataTransferObjects;
 
 namespace Campus.Application.Subjects.Queries.GetAllSubjects
 {
     public class GetAllSubjectsQueryHandler : IRequestHandler<GetAllSubjectsQuery, SubjectsListViewModel>
     {
-        private readonly CampusDbContext _campus;
+        private readonly CampusDbContext _context;
 
-        public GetAllSubjectsQueryHandler(CampusDbContext campus)
+        public GetAllSubjectsQueryHandler(CampusDbContext context)
         {
-            _campus = campus;
+            _context = context;
         }
 
-        public Task<SubjectsListViewModel> Handle(GetAllSubjectsQuery request, CancellationToken cancellationToken)
+        public async Task<SubjectsListViewModel> Handle(GetAllSubjectsQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var model = new SubjectsListViewModel();
+
+            model.Subjects = await _context.Subjects.Select(SubjectDto.Projection).ToListAsync();
+
+            return model;
         }
     }
 }

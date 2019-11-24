@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
 
 using Campus.Persistence;
+using Campus.Application.Exceptions;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.Lessons.Commands.UpdateLesson
 {
@@ -15,9 +16,23 @@ namespace Campus.Application.Lessons.Commands.UpdateLesson
         {
             _context = context;
         }
-        public Task<Unit> Handle(UpdateLessonCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateLessonCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var lesson = await _context.Lessons.FindAsync(request.Id);
+
+            if (lesson == null)
+            {
+                throw new NotFoundException(nameof(Lesson), request.Id);
+            }
+
+            lesson.LectorSubjectId = request.LectorSubjectId;
+            lesson.GroupId = request.GroupId;
+
+            _context.Lessons.Update(lesson);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

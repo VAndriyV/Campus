@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
 
 using Campus.Persistence;
+using Campus.Application.Exceptions;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.LectorSubjects.Commands.DeleteLectorSubject
 {
@@ -16,9 +17,20 @@ namespace Campus.Application.LectorSubjects.Commands.DeleteLectorSubject
             _context = context;
         }
 
-        public Task<Unit> Handle(DeleteLectorSubjectCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteLectorSubjectCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var lectorSubject = await _context.LectorSubjects.FindAsync(request.Id);
+
+            if(lectorSubject == null)
+            {
+                throw new NotFoundException(nameof(LectorSubject), request.Id);
+            }
+
+            _context.LectorSubjects.Remove(lectorSubject);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

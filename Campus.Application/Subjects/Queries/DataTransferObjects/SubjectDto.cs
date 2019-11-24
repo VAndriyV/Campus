@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq.Expressions;
 
+using Campus.Domain.Entities;
 namespace Campus.Application.Subjects.Queries.DataTransferObjects
 {
     public class SubjectDto
