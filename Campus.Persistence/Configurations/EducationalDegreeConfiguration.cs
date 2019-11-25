@@ -12,7 +12,8 @@ namespace Campus.Persistence.Configurations
             builder.HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.Property(x => x.Id).ValueGeneratedNever();
+            builder.Property(x => x.Id)
+                .ValueGeneratedNever();
 
             builder.Property(x => x.Name).HasMaxLength(15);
 

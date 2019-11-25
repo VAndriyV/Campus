@@ -10,6 +10,7 @@ namespace Campus.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Lesson> builder)
         {
             builder.HasKey(l => l.Id);
+
             builder.Property(l => l.Id)
                 .ValueGeneratedOnAdd();
 

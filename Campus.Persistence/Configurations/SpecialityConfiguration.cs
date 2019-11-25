@@ -12,11 +12,12 @@ namespace Campus.Persistence.Configurations
             builder.HasKey(x => x.Id)
                 .IsClustered(false);
 
-            builder.Property(x => x.Id).ValueGeneratedNever();
+            builder.Property(x => x.Id)
+                .ValueGeneratedOnAdd();
 
             builder.Property(x => x.Name)
                 .IsRequired()
-                .HasMaxLength(50);
+                .HasMaxLength(60);
 
             builder.Property(x => x.Code)
                 .IsRequired();

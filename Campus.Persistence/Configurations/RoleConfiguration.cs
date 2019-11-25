@@ -9,7 +9,11 @@ namespace Campus.Persistence.Configurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.HasKey(x => x.Id).IsClustered(false);
+            builder.HasKey(x => x.Id)
+                .IsClustered(false);
+
+            builder.Property(x => x.Id)
+                .ValueGeneratedNever();
 
             builder.Property(x => x.Name)
                 .IsRequired()

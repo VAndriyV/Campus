@@ -10,6 +10,7 @@ namespace Campus.Persistence.Configurations
         public void Configure(EntityTypeBuilder<Group> builder)
         {
             builder.HasKey(g => g.Id);
+
             builder.Property(g => g.Id)
                 .ValueGeneratedOnAdd();
 
