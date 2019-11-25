@@ -19,10 +19,7 @@ namespace Campus.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(u => u.PasswordHash)
-                .HasMaxLength(255);
-
-            builder.Property(u => u.Salt)
-                .HasMaxLength(255);
+                .HasMaxLength(255);           
 
             builder.Property(u => u.LastVisit)
                 .HasColumnType("datetime");

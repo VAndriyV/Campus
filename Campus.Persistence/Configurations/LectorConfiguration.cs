@@ -47,7 +47,6 @@ namespace Campus.Persistence.Configurations
                 .WithMany()
                 .HasForeignKey(l => l.UserId)
                 .IsRequired();
-
         }
     }
 }
