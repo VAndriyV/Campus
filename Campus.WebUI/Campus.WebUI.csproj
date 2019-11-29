@@ -31,6 +31,13 @@
     <ProjectReference Include="..\Campus.Persistence\Campus.Persistence.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClientApp\src\components\groups\add-group\" />
+    <Folder Include="ClientApp\src\components\groups\edit-group\" />
+    <Folder Include="ClientApp\src\components\groups\groups-list\" />
+    <Folder Include="ClientApp\src\components\groups\group-detail\" />
+  </ItemGroup>
+
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
