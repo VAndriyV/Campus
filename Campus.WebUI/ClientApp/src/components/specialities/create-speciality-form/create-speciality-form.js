@@ -16,7 +16,7 @@ export default class CreateSpecialityForm extends Component {
             </FormGroup>
             <FormGroup>
                 <Label for="code">Code</Label>
-                <Input type="number" name="name" id="name" placeholder="code" />
+                <Input type="number" name="code" id="code" placeholder="Code" />
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
         </Form>);

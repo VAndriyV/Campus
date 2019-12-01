@@ -22,7 +22,7 @@ export default class EditSpecialityForm extends Component {
             </FormGroup>
             <FormGroup>
                 <Label for="code">Code</Label>
-                <Input type="number" name="name" id="name" value={speciality.code} placeholder="code" />
+                <Input type="number" name="code" id="code" value={speciality.code} placeholder="Code" />
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
         </Form>);

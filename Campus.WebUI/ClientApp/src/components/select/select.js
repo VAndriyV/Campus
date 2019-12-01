@@ -9,10 +9,10 @@ export default class Select extends Component {
     }
 
     render() {
-        const { name, options } = this.props.options;
-
-        return (<Label for="exampleSelect">Select</Label>
-            <Input type="select" name={name} id="select-{name}" >
+        const { name, options, initValue } = this.props.options;
+        
+        return (<Label for="name">Select</Label>
+            <Input type="select" name={name} id="name" value={initValue}>
             { this.renderOptions(options) }
             </Input >
           );
