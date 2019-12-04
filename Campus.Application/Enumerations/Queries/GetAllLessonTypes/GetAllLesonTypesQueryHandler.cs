@@ -10,7 +10,7 @@ using Campus.Persistence;
 
 namespace Campus.Application.Enumerations.Queries.GetAllLessonTypes
 {
-    public class GetAllLesonTypesQueryHandler : IRequestHandler<GetAllLesonTypesQuery, EnumerationItemsListViewModel>
+    public class GetAllLesonTypesQueryHandler : IRequestHandler<GetAllLessonTypesQuery, EnumerationItemsListViewModel>
     {
         private readonly CampusDbContext _context;
 
@@ -19,7 +19,7 @@ namespace Campus.Application.Enumerations.Queries.GetAllLessonTypes
             _context = context;
         }
 
-        public async Task<EnumerationItemsListViewModel> Handle(GetAllLesonTypesQuery request, CancellationToken cancellationToken)
+        public async Task<EnumerationItemsListViewModel> Handle(GetAllLessonTypesQuery request, CancellationToken cancellationToken)
         {
             var result = new EnumerationItemsListViewModel();
 

@@ -1,8 +1,8 @@
 ﻿using MediatR;
 
-using Campus.Application.User.Queries.DataTransferObjects;
+using Campus.Application.Users.Queries.DataTransferObjects;
 
-namespace Campus.Application.User.Queries.GetUser
+namespace Campus.Application.Users.Queries.GetUser
 {
     public class GetUserQuery : IRequest<UserDto>
     {

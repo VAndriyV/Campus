@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Campus.Application.User.Queries.GetUser
+namespace Campus.Application.Users.Queries.GetUser
 {
     public class GetUserQueryValidator : AbstractValidator<GetUserQuery>
     {

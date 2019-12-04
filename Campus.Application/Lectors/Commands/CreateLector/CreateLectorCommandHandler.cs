@@ -18,7 +18,7 @@ namespace Campus.Application.Lectors.Commands.CreateLector
         }
 
         public async Task<int> Handle(CreateLectorCommand request, CancellationToken cancellationToken)
-        {
+        { 
             var lector = new Lector
             {
                 FirstName = request.FirstName,

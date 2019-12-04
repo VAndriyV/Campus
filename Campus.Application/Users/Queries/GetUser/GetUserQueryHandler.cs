@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 
 using MediatR;
 
-using Campus.Application.User.Queries.DataTransferObjects;
+using Campus.Application.Users.Queries.DataTransferObjects;
 using Campus.Persistence;
 
-namespace Campus.Application.User.Queries.GetUser
+namespace Campus.Application.Users.Queries.GetUser
 {
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
     {

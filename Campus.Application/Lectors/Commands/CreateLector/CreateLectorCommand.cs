@@ -11,6 +11,7 @@ namespace Campus.Application.Lectors.Commands.CreateLector
         public int AcademicDegreeId { get; set; }
         public int AcademicRankId { get; set; }
         public string Email { get; set; }
-        public string PhoneNumber { get; set; }       
+        public string PhoneNumber { get; set; }     
+
     }
 }
