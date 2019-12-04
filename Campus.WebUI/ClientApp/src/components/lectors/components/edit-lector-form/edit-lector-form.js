@@ -1,13 +1,8 @@
 import React, {Component} from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import Select from '../../select';
+import Select from '../../../select';
 
 export default class EditLectorForm extends Component{
-    state = {
-        academicRanks:[],
-        academicDegrees:[]
-    }
-
     componentDidMount(){
 
     }
@@ -16,9 +11,8 @@ export default class EditLectorForm extends Component{
 
     }
 
-    render(){
-        const {academicRanks, academicDegrees} = this.state;
-        const {lector} = this.props;
+    render(){    
+        const {lector,academicRanks, academicDegrees} = this.props;
 
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>

@@ -1,15 +1,29 @@
 import React, { Component } from 'react';
-import { Route } from 'react-router';
 import Layout from '../layout';
+import CampusService from '../../services/campus-service';
+import ErrorBoundry from '../error-boundry/';
+import { CampusServiceProvider } from '../campus-service-context';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+import LectorsListPage from '../lectors/pages/lectors-list-page';
+
 
 export default class App extends Component {
   static displayName = App.name;
 
-  render () {
+  campusService = new CampusService();
+
+  render() {
     return (
-        <Layout>
-            <Route exact path='/' component={() => { return <p>hello</p>; }} />       
-      </Layout>
+      <ErrorBoundry>
+        <CampusServiceProvider value={this.campusService}>
+          <Router>
+          <Layout>
+            <Route exact path='/' component={() => { return <p>hello</p>; }} />
+            <Route exact path ='/lectors' component = {LectorsListPage}/>
+          </Layout>
+          </Router>
+        </CampusServiceProvider>
+      </ErrorBoundry>
     );
   }
 }

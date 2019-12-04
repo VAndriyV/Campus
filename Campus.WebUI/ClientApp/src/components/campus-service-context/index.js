@@ -1,7 +1,7 @@
 ﻿import {
     CampusServiceProvider,
     CampusServiceConsumer
-} from './сampus-service-context';
+} from './campus-service-context';
 
 export {
     CampusServiceProvider,

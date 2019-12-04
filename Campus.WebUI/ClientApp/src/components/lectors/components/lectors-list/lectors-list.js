@@ -6,7 +6,7 @@ import { FaPencilAlt } from 'react-icons/fa';
 export default class LectorsList extends Component {
 
     mapLectors(lectors) {
-        lectors.map((item, idx) =>
+       return lectors.map((item, idx) =>
             this.mapLector(item, idx));
     };
 

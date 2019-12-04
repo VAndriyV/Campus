@@ -7,10 +7,10 @@ const withCampusService = (Wrapped) => {
         return (
             <CampusServiceConsumer>
                 {
-                    (swapiService) => {                       
+                    (campusService) => {                       
 
                         return (
-                            <Wrapped {...props} service={swapiService} />
+                            <Wrapped {...props} campusService={campusService} />
                         );
                     }
                 }

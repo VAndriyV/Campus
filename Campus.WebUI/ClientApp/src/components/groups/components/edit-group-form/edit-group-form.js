@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
-import Select from '../../select';
+import Select from '../../../select';
 
 export default class EditGroupForm extends Component{
     state = {
