@@ -1,41 +1,41 @@
 import React, {Component} from 'react';
-import LectorDetail from '../../components/lector-detail';
+import GroupDetail from '../../components/group-detail';
 import Spinner from '../../../spinner/';
 import {Row,Col} from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
-class LectorDetailPage extends Component{
+class GroupDetailPage extends Component{
     state = {
-        lector:null,
+        group:null,
         loading:true
     };
 
     componentDidMount(){
-        this.fetchLector();
+        this.fetchGroup();
     }
 
-    fetchLector(){
+    fetchGroup(){
         const {id} = this.props.match.params;
 
         this.props.campusService
-            .getLector(id)
-            .then((lector)=>{
+            .getGroup(id)
+            .then((group)=>{
                 this.setState({
-                    lector:lector,
+                    group:group,
                     loading:false
                 });
             });
     }
 
     render(){
-        const {lector, loading} = this.state;
+        const {group, loading} = this.state;
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<LectorDetail lector={lector}/>}
+                {loading?<Spinner/>:<GroupDetail group={group}/>}
             </Col>
         </Row>)
     }
 }
 
-export default withCampusService(LectorDetailPage);
+export default withCampusService(GroupDetailPage);

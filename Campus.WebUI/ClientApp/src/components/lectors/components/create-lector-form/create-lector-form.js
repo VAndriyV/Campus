@@ -28,8 +28,12 @@ export default class CreateLectorForm extends Component{
                 <Label for="patronymic">Patronymic</Label>
                 <Input type="text" name="patronymic" id="patronymic" placeholder="Patronymic" />
             </FormGroup>
-            <Select name={"academicRankId"} options = {academicRanks}/>
-            <Select name={"academicDegreeId"} options = {academicDegrees}/>
+            <FormGroup>
+                <Select label={"Academic rank"} name={"academicRankId"} options = {academicRanks}/>
+            </FormGroup>
+            <FormGroup>
+                <Select label={"Academic degree"} name={"academicDegreeId"} options = {academicDegrees}/>
+            </FormGroup>
             <FormGroup>
                 <Label for="email">Email</Label>
                 <Input type="text" name="email" id="email" placeholder="Email" />

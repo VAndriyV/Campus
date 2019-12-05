@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import CreateLectorForm from '../../components/create-lector-form';
 import Spinner from '../../../spinner';
 import {Row,Col} from 'reactstrap';
+import withCampusService from '../../../hoc/with-campus-service';
 
-export default class CreateLectorPage extends Component{
+class CreateLectorPage extends Component{
     state = {       
         academicRanks:[],
         academicDegrees:[],
@@ -11,10 +12,10 @@ export default class CreateLectorPage extends Component{
     };
 
     componentDidMount(){
-        this.fetchLector();
+        this.fetchData();
     }
 
-    fetchLector(){        
+    fetchData(){        
         const {campusService} = this.props;
 
         Promise.all([            
@@ -23,8 +24,8 @@ export default class CreateLectorPage extends Component{
         ])
         .then(([academicRanks,academicDegrees])=>{
             this.setState({               
-                academicRanks:academicRanks,
-                academicDegrees:academicDegrees,
+                academicRanks:academicRanks.items,
+                academicDegrees:academicDegrees.items,
                 loading:false
             });
         });
@@ -35,8 +36,10 @@ export default class CreateLectorPage extends Component{
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<CreateLectorForm academicRanks={academicRanks} academicDegrees ={academicDegrees} lector={lector}/>}
+                {loading?<Spinner/>:<CreateLectorForm academicRanks={academicRanks} academicDegrees ={academicDegrees}/>}
             </Col>
         </Row>)
     }
 }
+
+export default withCampusService(CreateLectorPage);

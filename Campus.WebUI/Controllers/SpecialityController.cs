@@ -30,7 +30,7 @@ namespace Campus.WebUI.Controllers
         {
             var productId = await Mediator.Send(command);
 
-            return CreatedAtAction("GetSpeciality", new { id = productId });
+            return CreatedAtAction("Get", new { id = productId });
         }
 
         // PUT: api/Specialitys/5

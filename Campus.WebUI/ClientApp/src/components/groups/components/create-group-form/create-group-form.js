@@ -2,11 +2,7 @@ import React, {Component} from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from '../../../select';
 
-export default class CreateGroupForm extends Component{
-    state = {
-        specialities:[],
-        educationDegrees:[]
-    }
+export default class CreateGroupForm extends Component{  
     
     componentDidMount(){
 
@@ -17,15 +13,19 @@ export default class CreateGroupForm extends Component{
     }
 
     render(){
-        const {specialities, educationDegrees} = this.state;
+        const {specialities, educationalDegrees} = this.props;
 
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>
                 <Label for="name">Group name</Label>
                 <Input type="text" name="name" id="name" placeholder="Group name" />
             </FormGroup>
-            <Select name={"specialityId"} options = {specialities}/>
-            <Select name={"educationDegreeId"} options = {educationDegrees}/>
+            <FormGroup>
+                <Select label={"Speciality"} name={"specialityId"} options = {specialities}/>
+            </FormGroup>
+            <FormGroup>
+                <Select label={"Educational degree"} name={"educationalDegreeId"} options = {educationalDegrees}/>
+            </FormGroup>
             <FormGroup>
                 <Label for="year">Year</Label>
                 <Input type="number" name="year" id="year" placeholder="Year" />

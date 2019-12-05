@@ -15,8 +15,6 @@ class LectorsListPage extends Component{
     }
 
     fetchLectors(){
-    console.log(this.props);
-
         this.props.campusService
             .getAllLectors()
             .then((res)=>{               

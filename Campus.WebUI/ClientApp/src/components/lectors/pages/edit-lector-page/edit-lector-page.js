@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import EditLectorForm from '../../components/edit-lector-form';
 import Spinner from '../../../spinner/';
 import {Row,Col} from 'reactstrap';
+import withCampusService from '../../../hoc/with-campus-service';
 
-export default class EditLectorPage extends Component{
+class EditLectorPage extends Component{
     state = {
         lector:null,
         academicRanks:[],
@@ -16,19 +17,19 @@ export default class EditLectorPage extends Component{
     }
 
     fetchLector(){
-        const {id} = this.props.match.params.id;
+        const {id} = this.props.match.params;
         const {campusService} = this.props;
 
         Promise.all([
-            campusService.getLector(id),
-            campusService.getAcademicRanks(),
+            campusService.getLector(id), 
+            campusService.getAcademicRanks(),                       
             campusService.getAcademicDegrees()
         ])
         .then(([lector,academicRanks,academicDegrees])=>{
             this.setState({
                 lector:lector,
-                academicRanks:academicRanks,
-                academicDegrees:academicDegrees,
+                academicRanks:academicRanks.items,
+                academicDegrees:academicDegrees.items,
                 loading:false
             });
         });
@@ -44,3 +45,5 @@ export default class EditLectorPage extends Component{
         </Row>)
     }
 }
+
+export default withCampusService(EditLectorPage);

@@ -13,37 +13,37 @@ namespace Campus.WebUI.Controllers
 {
     public class EnumerationController : BaseController
     {
-        [HttpGet]
+        [HttpGet("WeatherType")]
         public async Task<ActionResult<EnumerationItemsListViewModel>> WeatherType()
         {
             return Ok(await Mediator.Send(new GetAllWeatherTypesQuery()));
         }
 
-        [HttpGet]
+        [HttpGet("AcademicRank")]
         public async Task<ActionResult<EnumerationItemsListViewModel>> AcademicRank()
         {
             return Ok(await Mediator.Send(new GetAllAcademicRanksQuery()));
         }
 
-        [HttpGet]
+        [HttpGet("AcademicDegree")]
         public async Task<ActionResult<EnumerationItemsListViewModel>> AcademicDegree()
         {
             return Ok(await Mediator.Send(new GetAllAcademicDegreesQuery()));
         }
 
-        [HttpGet]
+        [HttpGet("DayOfWeek")]
         public async Task<ActionResult<EnumerationItemsListViewModel>> DayOfWeek()
         {
             return Ok(await Mediator.Send(new GetAllDayOfWeeksQuery()));
         }
 
-        [HttpGet]
+        [HttpGet("EducationalDegree")]
         public async Task<ActionResult<EnumerationItemsListViewModel>> EducationalDegree()
         {
             return Ok(await Mediator.Send(new GetAllEducationalDegreesQuery()));
         }
 
-        [HttpGet]
+        [HttpGet("LessonType")]
         public async Task<ActionResult<EnumerationItemsListViewModel>> LessonType()
         {
             return Ok(await Mediator.Send(new GetAllLessonTypesQuery()));

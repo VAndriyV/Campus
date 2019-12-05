@@ -13,11 +13,11 @@ export default class CreateSubjectForm extends Component {
         return (<Form onSubmit={this.onSubmit} >
             <FormGroup>
                 <Label for="id" hidden>Id</Label>
-                <Input type="hidden" name="id" id="id" value={subject.id} />
+                <Input type="hidden" name="id" id="id" defaultValue={subject.id} />
             </FormGroup>
             <FormGroup>
                 <Label for="name">Subject name</Label>
-                <Input type="text" name="name" id="name" value={subject.name} placeholder="Subject name" />
+                <Input type="text" name="name" id="name" defaultValue={subject.name} placeholder="Subject name" />
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
         </Form>);
