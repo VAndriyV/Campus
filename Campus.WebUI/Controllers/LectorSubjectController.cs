@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Campus.Application.LectorSubjects.Queries.GetAllLectorsSubjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Campus.WebUI.Controllers
 {
-    public class LectorSubjectController : Controller
+    public class LectorSubjectController : BaseController
     {
-        public IActionResult Index()
+        [HttpGet("lector/{id}")]
+        public async Task<IActionResult> GetByLectorId(int id)
         {
-            return View();
+            return Ok(await Mediator.Send(new GetAllLectorsSubjectsQuery { LectorId = id }));
         }
     }
 }

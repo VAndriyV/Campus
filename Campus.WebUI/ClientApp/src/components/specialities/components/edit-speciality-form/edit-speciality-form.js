@@ -12,10 +12,8 @@ export default class EditSpecialityForm extends Component {
         const { speciality } = this.props;
 
         return (<Form onSubmit={this.onSubmit} >
-            <FormGroup>
-                <Label for="id" hidden>Id</Label>
-                <Input type="hidden" name="id" id="id" defaultValue={speciality.id} />
-            </FormGroup>
+            <Label for="id" hidden>Id</Label>
+            <Input type="hidden" name="id" id="id" defaultValue={speciality.id} />
             <FormGroup>
                 <Label for="name">Speciality name</Label>
                 <Input type="text" name="name" id="name" defaultValue={speciality.name} placeholder="Speciality name" />

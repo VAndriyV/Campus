@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import { FaRegTrashAlt, FaPen } from 'react-icons/fa';
+import { FaRegTrashAlt, FaPencilAlt } from 'react-icons/fa';
 import {Link} from 'react-router-dom';
 import {Button} from 'reactstrap';
 
@@ -25,7 +25,7 @@ export default class GroupsList extends Component {
             <td>{group.studentsCount}</td>
             <td>
                 <Button tag={Link} to={`/groups/edit/${group.id}`} size="sm" outline color="warning">
-                    <FaPen />
+                    <FaPencilAlt />
                 </Button>
                 <Button onClick={this.onDelete(group.id)} size="sm" outline color="danger">
                     <FaRegTrashAlt />

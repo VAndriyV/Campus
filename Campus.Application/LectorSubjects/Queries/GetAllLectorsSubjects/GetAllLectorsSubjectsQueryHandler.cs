@@ -23,7 +23,7 @@ namespace Campus.Application.LectorSubjects.Queries.GetAllLectorsSubjects
         {
             var model = new LectorsSubjectsListViewModel();
 
-            model.LectorSubjects = await _context.LectorSubjects
+            model.LectorsSubjects = await _context.LectorSubjects
                 .Where(x => x.LectorId == request.LectorId)
                 .Include(x => x.Subject)
                 .Include(x => x.LessonType)

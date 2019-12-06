@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { Table, Button } from "reactstrap";
-import { FaPen, FaRegTrashAlt } from "react-icons/fa";
+import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import {Link} from 'react-router-dom';
 
 export default class LectorsList extends Component {
@@ -26,7 +26,7 @@ export default class LectorsList extends Component {
         <td>{lector.phoneNumber}</td>
         <td>
           <Button tag={Link} to={`/lectors/edit/${lector.id}`} size="sm" outline color="warning">
-            <FaPen />
+            <FaPencilAlt />
           </Button>
           <Button onClick={this.onDelete(lector.id)} size="sm" outline color="danger">
             <FaRegTrashAlt />

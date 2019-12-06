@@ -6,14 +6,22 @@ import { CampusServiceProvider } from '../campus-service-context';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import LectorsListPage from '../lectors/pages/lectors-list-page';
-import LectorDetailPage from '../lectors/pages/lector-detail-page/lector-detail-page';
-import EditLectorPage from '../lectors/pages/edit-lector-page/edit-lector-page';
-import CreateLectorPage from '../lectors/pages/create-lector-page/create-lector-page';
+import LectorDetailPage from '../lectors/pages/lector-detail-page';
+import EditLectorPage from '../lectors/pages/edit-lector-page';
+import CreateLectorPage from '../lectors/pages/create-lector-page';
 
 import GroupsListPage from '../groups/pages/groups-list-page';
-import GroupDetailPage from '../groups/pages/group-detail-page/group-detail-page';
-import EditGroupPage from '../groups/pages/edit-group-page/edit-group-page';
-import CreateGroupPage from '../groups/pages/create-group-page/create-group-page';
+import GroupDetailPage from '../groups/pages/group-detail-page';
+import EditGroupPage from '../groups/pages/edit-group-page';
+import CreateGroupPage from '../groups/pages/create-group-page';
+
+import SpecialitiesListPage from '../specialities/pages/specialities-list-page';
+import EditSpecialityPage from '../specialities/pages/edit-speciality-page';
+import CreateSpecialityPage from '../specialities/pages/create-speciality-page';
+
+import SubjectsListPage from '../subjects/pages/subjects-list-page';
+import EditSubjectPage from '../subjects/pages/edit-subject-page';
+import CreateSubjectPage from '../subjects/pages/create-subject-page';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -38,6 +46,14 @@ export default class App extends Component {
             <Route exact path ='/groups/new' component = {CreateGroupPage}/>
             <Route exact path='/groups/:id' component ={GroupDetailPage}/>            
             <Route exact path ='/groups/edit/:id' component = {EditGroupPage}/> 
+
+            <Route exact path ='/specialities' component = {SpecialitiesListPage}/>
+            <Route exact path ='/specialities/new' component = {CreateSpecialityPage}/>                      
+            <Route exact path ='/specialities/edit/:id' component = {EditSpecialityPage}/>
+
+            <Route exact path ='/subjects' component = {SubjectsListPage}/>
+            <Route exact path ='/subjects/new' component = {CreateSubjectPage}/>                     
+            <Route exact path ='/subjects/edit/:id' component = {EditSubjectPage}/>
 
             </Switch>           
           </Layout>

@@ -38,26 +38,36 @@ export default class NavMenu extends Component {
                   <DropdownToggle nav caret>
                     Lectors
                   </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem>
-                      <Link to={'/lectors/new'}>New</Link>
-                    </DropdownItem>
-                    <DropdownItem>
-                      <Link to={'/lectors'}>List</Link>
-                    </DropdownItem>
+                  <DropdownMenu right>                    
+                      <Link to={'/lectors/new'}><DropdownItem>New</DropdownItem></Link>
+                      <Link to={'/lectors'}><DropdownItem>List</DropdownItem></Link>                    
                   </DropdownMenu>
                 </UncontrolledDropdown>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
-                    Options
+                    Groups
                   </DropdownToggle>
-                  <DropdownMenu right>
-                    <DropdownItem>
-                      <Link to={'/groups/new'}>New</Link>
-                    </DropdownItem>
-                    <DropdownItem>
-                      <Link to={'/groups'}>List</Link>
-                    </DropdownItem>
+                  <DropdownMenu right>                   
+                      <Link to={'/groups/new'}> <DropdownItem>New</DropdownItem></Link>
+                      <Link to={'/groups'}><DropdownItem>List</DropdownItem></Link>                    
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Specialities
+                  </DropdownToggle>
+                  <DropdownMenu right>                    
+                      <Link to={'/specialities/new'}><DropdownItem>New</DropdownItem></Link>                                      
+                      <Link to={'/specialities'}><DropdownItem>List</DropdownItem></Link>                    
+                  </DropdownMenu>
+                </UncontrolledDropdown>
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Subjects
+                  </DropdownToggle>
+                  <DropdownMenu right>                   
+                      <Link to={'/subjects/new'}><DropdownItem>New</DropdownItem></Link>                                       
+                      <Link to={'/subjects'}><DropdownItem>List</DropdownItem></Link>                    
                   </DropdownMenu>
                 </UncontrolledDropdown>
               </Nav>

@@ -1,14 +1,18 @@
 ﻿import React, { Component } from 'react';
-import { Table } from 'reactstrap';
-import { FaRegTrashAlt } from 'react-icons/fa';
-import { FaPencilAlt } from 'react-icons/fa';
+import { Table, Button } from "reactstrap";
+import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import {Link} from 'react-router-dom';
 
 export default class SpecialitiesList extends Component {
 
     mapSpecialities(specialities) {
-        specialities.map((item, idx) =>
+        return specialities.map((item, idx) =>
             this.mapSpeciality(item, idx));
     };
+
+    onDelete(id){
+
+    }
 
     mapSpeciality(speciality, idx) {
         return (<tr key={speciality.id} >
@@ -16,7 +20,14 @@ export default class SpecialitiesList extends Component {
             <td>{speciality.id}</td>
             <td>{speciality.name}</td>
             <td>{speciality.code}</td>
-            <td><FaPencilAlt /><FaRegTrashAlt /></td>
+            <td>
+                <Button tag={Link} to={`/specialities/edit/${speciality.id}`} size="sm" outline color="warning">
+                    <FaPencilAlt />
+                </Button>
+                <Button onClick={this.onDelete(speciality.id)} size="sm" outline color="danger">
+                    <FaRegTrashAlt />
+                </Button>
+            </td>
         </tr>);
     }
 

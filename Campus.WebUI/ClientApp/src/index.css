@@ -10,3 +10,25 @@ table tbody td button{
 table tbody td button:first-child{
     margin-left: 0px;    
 }
+
+.tab-pane p{
+    word-break: break-word;
+}
+
+.tab-pane{
+    padding-top: 14px;
+}
+
+.actions{
+    margin-bottom: 14px;
+}
+
+.actions a{
+    margin-right: 12px;
+}
+
+.actions svg{
+    margin: 0 0 3px 3px;
+}
+
+

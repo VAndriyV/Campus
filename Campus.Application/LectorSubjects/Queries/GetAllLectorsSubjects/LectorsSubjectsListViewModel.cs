@@ -6,6 +6,6 @@ namespace Campus.Application.LectorSubjects.Queries.GetAllLectorsSubjects
 {
     public class LectorsSubjectsListViewModel
     {
-        public IList<LectorSubjectDto> LectorSubjects { get; set; }
+        public IList<LectorSubjectDto> LectorsSubjects { get; set; }
     }
 }

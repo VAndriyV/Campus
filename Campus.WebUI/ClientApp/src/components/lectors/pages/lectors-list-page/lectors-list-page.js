@@ -1,8 +1,10 @@
 import React, {Component} from 'react';
 import LectorsList from '../../components/lectors-list';
 import Spinner from '../../../spinner/';
-import {Row,Col} from 'reactstrap';
+import {Row,Col, Button} from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
+import {FaPlus} from 'react-icons/fa';
+import {Link} from 'react-router-dom';
 
 class LectorsListPage extends Component{
     state = {
@@ -30,7 +32,16 @@ class LectorsListPage extends Component{
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<LectorsList lectors={lectors}/>}
+                {loading?<Spinner/>:
+                <React.Fragment>
+                <div className='actions'>
+                <Button tag={Link} to={`/lectors/new`} size="sm" outline color="success">
+                        New <FaPlus/>
+                </Button>
+                </div>    
+                <LectorsList lectors={lectors}/>
+                </React.Fragment>
+                }
             </Col>
         </Row>)
     }

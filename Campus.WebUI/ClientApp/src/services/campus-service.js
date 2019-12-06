@@ -86,6 +86,11 @@
         return result;
       }
 
+      getSpeciality = async(id) =>{
+        const result = await this.GET(`/speciality/${id}`);
+        return result;
+      }
+
       getAllGroups = async() => {
         const result = await this.GET('/group');        
         return result;
@@ -93,6 +98,26 @@
 
       getGroup = async(id) =>{
         const result = await this.GET(`/group/${id}`);
+        return result;
+      }
+
+      getAllSubjects = async() => {
+        const result = await this.GET('/subject');        
+        return result;
+      }
+
+      getSubject = async(id) =>{
+        const result = await this.GET(`/subject/${id}`);
+        return result;
+      }
+
+      getLectorsSubjects = async (lectorId)=>{
+        const result = await this.GET(`/lectorsubject/lector/${lectorId}`);
+        return result;
+      }
+
+      getLectorsLessons = async (lectorId)=>{
+        const result = await this.GET(`/lesson/lector/${lectorId}`);
         return result;
       }
 }
