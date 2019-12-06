@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { Table, Button } from "reactstrap";
-import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { Table } from "reactstrap";
+import TableActions from '../../../common/table-actions';
 import {Link} from 'react-router-dom';
 
 export default class LectorsList extends Component {
@@ -8,7 +8,7 @@ export default class LectorsList extends Component {
     return lectors.map((item, idx) => this.mapLector(item, idx));
   }
 
-  onDelete(id){
+  onDelete(id) {
 
   }
 
@@ -25,12 +25,7 @@ export default class LectorsList extends Component {
         <td>{lector.email}</td>
         <td>{lector.phoneNumber}</td>
         <td>
-          <Button tag={Link} to={`/lectors/edit/${lector.id}`} size="sm" outline color="warning">
-            <FaPencilAlt />
-          </Button>
-          <Button onClick={this.onDelete(lector.id)} size="sm" outline color="danger">
-            <FaRegTrashAlt />
-          </Button>
+          <TableActions toEdit={`/lectors/edit/${lector.id}`} onDelete={this.onDelete()} />
         </td>
       </tr>
     );

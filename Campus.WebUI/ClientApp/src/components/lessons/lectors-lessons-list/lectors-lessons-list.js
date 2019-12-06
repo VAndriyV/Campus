@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from "reactstrap";
-import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import { Table} from "reactstrap";
+import TableActions from '../../common/table-actions';
 import {Link} from 'react-router-dom';
 
 export default class LectorsLessonsList extends Component {
@@ -21,12 +21,7 @@ export default class LectorsLessonsList extends Component {
             <td>{lesson.subjectName}</td>
             <td>{lesson.lessonTypeName}</td>
             <td>
-                <Button tag={Link} to={`/lessons/edit/${lesson.id}`} size="sm" outline color="warning">
-                    <FaPencilAlt />
-                </Button>
-                <Button onClick={this.onDelete(lesson.id)} size="sm" outline color="danger">
-                    <FaRegTrashAlt />
-                </Button>
+                <TableActions toEdit={`/lessons/edit/${lesson.id}`} onDelete={this.onDelete()}/>                
             </td>
         </tr>);
     }

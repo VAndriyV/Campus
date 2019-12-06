@@ -5,8 +5,7 @@ import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Button } from 're
 import classnames from 'classnames';
 import LectorsSubjectsList from '../../../lector-subjects/lectors-subjects-list';
 import LectorsLessonsList from '../../../lessons/lectors-lessons-list';
-import { Link } from 'react-router-dom';
-import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
+import DetailActions from '../../../common/detail-actions';
 
 import withCampusService from '../../../hoc/with-campus-service';
 
@@ -85,14 +84,7 @@ class LectorDetailPage extends Component {
               <TabPane tabId="1">
                 {activeTab == 1 ?
                   <React.Fragment>
-                    <div className = 'actions'>
-                      <Button tag={Link} to={`/lectors/edit/${lector.id}`} size="sm" outline color="warning">
-                        Edit <FaPencilAlt />
-                      </Button>
-                      <Button onClick={this.onDelete()} size="sm" outline color="danger">
-                        Delete <FaRegTrashAlt />
-                      </Button>
-                    </div>
+                    <DetailActions toEdit={`/lectors/edit/${lector.id}`} onDelete={this.onDelete}/>                 
                     <LectorDetail lector={lector}/>
                   </React.Fragment>
                   : null}

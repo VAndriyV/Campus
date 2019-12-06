@@ -1,36 +1,41 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import SubjectsList from '../../components/subjects-list';
 import Spinner from '../../../spinner/';
-import {Row,Col} from 'reactstrap';
+import { Row, Col } from 'reactstrap';
+import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
 
-class SubjectsListPage extends Component{
+class SubjectsListPage extends Component {
     state = {
-        subjects:[],
-        loading:true
+        subjects: [],
+        loading: true
     }
 
-    componentDidMount(){
+    componentDidMount() {
         this.fetchSubjects();
     }
 
-    fetchSubjects(){
+    fetchSubjects() {
         this.props.campusService
             .getAllSubjects()
-            .then((res)=>{               
+            .then((res) => {
                 this.setState({
-                    subjects:res.subjects,
-                    loading:false
+                    subjects: res.subjects,
+                    loading: false
                 });
             });
     }
 
-    render(){
-        const {subjects, loading} = this.state;
+    render() {
+        const { subjects, loading } = this.state;
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<SubjectsList subjects={subjects}/>}
+                {loading ? <Spinner /> :
+                    <React.Fragment>
+                        <CreateNewLink to={'/subjects/new'} />
+                        <SubjectsList subjects={subjects} />
+                    </React.Fragment>}
             </Col>
         </Row>)
     }

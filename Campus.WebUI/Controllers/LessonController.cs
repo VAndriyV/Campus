@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Campus.Application.Lessons.Queries.GetAllGroupsLessons;
 using Campus.Application.Lessons.Queries.GetAllLectorsLessons;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,6 +11,12 @@ namespace Campus.WebUI.Controllers
         public async Task<IActionResult> GetByLectorId(int id)
         {
             return Ok(await Mediator.Send(new GetAllLectorsLessonsQuery { LectorId = id }));
+        }
+
+        [HttpGet("group/{id}")]
+        public async Task<IActionResult> GetByGroupId(int id)
+        {
+            return Ok(await Mediator.Send(new GetAllGroupsLessonsQuery { GroupId = id }));
         }
     }
 }

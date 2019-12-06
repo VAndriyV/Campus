@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { Table } from 'reactstrap';
-import { FaRegTrashAlt, FaPencilAlt } from 'react-icons/fa';
 import {Link} from 'react-router-dom';
-import {Button} from 'reactstrap';
+import TableActions from '../../../common/table-actions';
 
 export default class GroupsList extends Component {
     mapGroups(groups) {
@@ -24,19 +23,13 @@ export default class GroupsList extends Component {
             <td>{group.year}</td>
             <td>{group.studentsCount}</td>
             <td>
-                <Button tag={Link} to={`/groups/edit/${group.id}`} size="sm" outline color="warning">
-                    <FaPencilAlt />
-                </Button>
-                <Button onClick={this.onDelete(group.id)} size="sm" outline color="danger">
-                    <FaRegTrashAlt />
-                </Button>
+                <TableActions toEdit={`/groups/edit/${group.id}`} onDelete={this.onDelete()}/>                
             </td>
         </tr>);
     }
 
     render() {        
-        const { groups } = this.props;
-        console.log(groups);
+        const { groups } = this.props;        
 
         return (<Table hover responsive>
             <thead>

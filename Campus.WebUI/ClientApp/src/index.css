@@ -7,6 +7,16 @@ table tbody td button{
     padding-right: 8px;
 }
 
+a:hover{
+    text-decoration: none;
+    color: inherit;
+    opacity: 0.8;
+}
+
+a{
+    color: inherit;
+}
+
 table tbody td button:first-child{
     margin-left: 0px;    
 }
@@ -31,4 +41,11 @@ table tbody td button:first-child{
     margin: 0 0 3px 3px;
 }
 
+.nav-item:hover{
+    cursor: pointer;
+}  
+
+.nav-item a:hover{
+    opacity: 1;
+} 
 

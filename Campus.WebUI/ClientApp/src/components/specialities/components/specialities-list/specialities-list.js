@@ -1,7 +1,6 @@
 ﻿import React, { Component } from 'react';
-import { Table, Button } from "reactstrap";
-import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
-import {Link} from 'react-router-dom';
+import { Table } from "reactstrap";
+import TableActions from '../../../common/table-actions';
 
 export default class SpecialitiesList extends Component {
 
@@ -10,7 +9,7 @@ export default class SpecialitiesList extends Component {
             this.mapSpeciality(item, idx));
     };
 
-    onDelete(id){
+    onDelete(id) {
 
     }
 
@@ -21,12 +20,7 @@ export default class SpecialitiesList extends Component {
             <td>{speciality.name}</td>
             <td>{speciality.code}</td>
             <td>
-                <Button tag={Link} to={`/specialities/edit/${speciality.id}`} size="sm" outline color="warning">
-                    <FaPencilAlt />
-                </Button>
-                <Button onClick={this.onDelete(speciality.id)} size="sm" outline color="danger">
-                    <FaRegTrashAlt />
-                </Button>
+                <TableActions toEdit={`/specialities/edit/${speciality.id}`} onDelete={this.onDelete()} />
             </td>
         </tr>);
     }

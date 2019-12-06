@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import SpecialitiesList from '../../components/specialities-list';
 import Spinner from '../../../spinner/';
 import {Row,Col} from 'reactstrap';
+import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class SpecialitiesListPage extends Component{
@@ -30,7 +31,11 @@ class SpecialitiesListPage extends Component{
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<SpecialitiesList specialities={specialities}/>}
+                {loading?<Spinner/>:
+                <React.Fragment>
+                    <CreateNewLink to={'/specialities/new'}/>
+                    <SpecialitiesList specialities={specialities}/>
+                </React.Fragment>}
             </Col>
         </Row>)
     }
