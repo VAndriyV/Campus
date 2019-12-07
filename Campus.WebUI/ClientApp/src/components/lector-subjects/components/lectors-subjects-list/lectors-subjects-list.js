@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Button } from "reactstrap";
-import TableActions from '../../common/table-actions';
+import { Table } from "reactstrap";
+import TableActions from '../../../common/table-actions';
 
 export default class LectorsSubjectsList extends Component {
     mapLectorsSubjects(lectorsSubjects) {

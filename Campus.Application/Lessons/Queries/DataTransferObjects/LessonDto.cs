@@ -29,7 +29,7 @@ namespace Campus.Application.Lessons.Queries.DataTransferObjects
                     GroupName = x.Group !=null?x.Group.Name:string.Empty,
                     LectorId = x.LectorSubject !=null?x.LectorSubject.LectorId:default,
                     LectorName = x.LectorSubject != null ? (x.LectorSubject.Lector != null ? 
-                                $"{x.LectorSubject.Lector.LastName} {x.LectorSubject.Lector.FirstName} {x.LectorSubject.Lector.FirstName}"
+                                $"{x.LectorSubject.Lector.LastName} {x.LectorSubject.Lector.FirstName} {x.LectorSubject.Lector.Patronymic}"
                                 : string.Empty) 
                                 : string.Empty,
                     LessonTypeName = x.LectorSubject!=null ? (x.LectorSubject.LessonType!=null? x.LectorSubject.LessonType.Name : string.Empty) : string.Empty,

@@ -81,6 +81,11 @@
         return result;
       };
 
+      getLessonTypes = async()=>{
+        const result = await this.GET('/enumeration/lessontype');
+        return result;
+      };
+
       getAllSpecialities = async()=>{
         const result = await this.GET('/speciality');
         return result;
@@ -116,8 +121,18 @@
         return result;
       }
 
+      getLectorSubject = async (lectorSubjectId)=>{
+        const result = await this.GET(`/lectorsubject/${lectorSubjectId}`);
+        return result;
+      };
+
       getLectorsLessons = async (lectorId)=>{
         const result = await this.GET(`/lesson/lector/${lectorId}`);
+        return result;
+      }
+
+      getGroupsLessons = async (groupId)=>{
+        const result = await this.GET(`/lesson/group/${groupId}`);
         return result;
       }
 }

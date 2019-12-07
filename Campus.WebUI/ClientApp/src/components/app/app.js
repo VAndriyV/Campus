@@ -23,6 +23,9 @@ import SubjectsListPage from '../subjects/pages/subjects-list-page';
 import EditSubjectPage from '../subjects/pages/edit-subject-page';
 import CreateSubjectPage from '../subjects/pages/create-subject-page';
 
+import EditLectorSubjectPage from '../lector-subjects/pages/edit-lector-subject-page';
+import CreateLectorSubjectPage from '../lector-subjects/pages/create-lector-subject-page';
+
 export default class App extends Component {
   static displayName = App.name;
 
@@ -54,6 +57,9 @@ export default class App extends Component {
             <Route exact path ='/subjects' component = {SubjectsListPage}/>
             <Route exact path ='/subjects/new' component = {CreateSubjectPage}/>                     
             <Route exact path ='/subjects/edit/:id' component = {EditSubjectPage}/>
+          
+            <Route exact path ='/lectorsubject/new/:lectorId?' component = {CreateLectorSubjectPage}/>                     
+            <Route exact path ='/lectorsubject/edit/:id' component = {EditLectorSubjectPage}/>
 
             </Switch>           
           </Layout>

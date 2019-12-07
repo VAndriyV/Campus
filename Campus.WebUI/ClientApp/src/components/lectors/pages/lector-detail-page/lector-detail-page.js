@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import LectorDetail from '../../components/lector-detail';
 import Spinner from '../../../spinner/';
-import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink, Button } from 'reactstrap';
+import { Row, Col, TabContent, TabPane, Nav, NavItem, NavLink } from 'reactstrap';
 import classnames from 'classnames';
-import LectorsSubjectsList from '../../../lector-subjects/lectors-subjects-list';
-import LectorsLessonsList from '../../../lessons/lectors-lessons-list';
+import LectorsSubjectsList from '../../../lector-subjects/components/lectors-subjects-list';
+import LectorsLessonsList from '../../../lessons/components/lectors-lessons-list';
 import DetailActions from '../../../common/detail-actions';
-
+import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class LectorDetailPage extends Component {
@@ -17,7 +17,7 @@ class LectorDetailPage extends Component {
     lector: null,
     loading: true
   };
-
+ 
   componentDidMount() {
     this.fetchLector();
   }
@@ -63,21 +63,21 @@ class LectorDetailPage extends Component {
                   className={classnames({ active: activeTab === '1' })}
                   onClick={() => { this.toggle('1'); }}>
                   General
-                    </NavLink>
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '2' })}
                   onClick={() => { this.toggle('2'); }}>
                   Subjects
-                    </NavLink>
+                </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '3' })}
                   onClick={() => { this.toggle('3'); }}>
                   Lessons
-                    </NavLink>
+                </NavLink>
               </NavItem>
             </Nav>
             <TabContent activeTab={activeTab}>
@@ -90,10 +90,19 @@ class LectorDetailPage extends Component {
                   : null}
               </TabPane>
               <TabPane tabId="2">
-                {activeTab == 2 ? <LectorsSubjectsList lectorsSubjects={lectorsSubjects} /> : null}
+                {activeTab == 2 ?
+                <React.Fragment>
+                  <CreateNewLink to={`/lectorsubject/new/${lector.id}`}/>
+                  <LectorsSubjectsList lectorsSubjects={lectorsSubjects} />
+                </React.Fragment> 
+                 : null}
               </TabPane>
               <TabPane tabId="3">
-                {activeTab == 3 ? <LectorsLessonsList lessons={lessons} /> : null}
+                {activeTab == 3 ? 
+                <React.Fragment>
+                  <CreateNewLink to={`/lesson/new`}/>
+                  <LectorsLessonsList lessons={lessons} />
+                </React.Fragment> : null}
               </TabPane>
             </TabContent>
           </div>}
