@@ -25,6 +25,7 @@ import CreateSubjectPage from '../subjects/pages/create-subject-page';
 
 import EditLectorSubjectPage from '../lector-subjects/pages/edit-lector-subject-page';
 import CreateLectorSubjectPage from '../lector-subjects/pages/create-lector-subject-page';
+import CreateLessonPage from '../lessons/pages/create-lesson-page';
 
 export default class App extends Component {
   static displayName = App.name;
@@ -60,6 +61,8 @@ export default class App extends Component {
           
             <Route exact path ='/lectorsubject/new/:lectorId?' component = {CreateLectorSubjectPage}/>                     
             <Route exact path ='/lectorsubject/edit/:id' component = {EditLectorSubjectPage}/>
+
+            <Route exact path='/lesson/new/:groupId?' component = {CreateLessonPage}/>
 
             </Switch>           
           </Layout>

@@ -4,7 +4,7 @@ import Spinner from '../../../spinner';
 import {Row,Col} from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
-class CreateGroupPage extends Component{
+class CreateLectorSubjectPage extends Component{
     state={
         lectors:[],
         subjects:[],
@@ -47,4 +47,4 @@ class CreateGroupPage extends Component{
     }
 }
 
-export default withCampusService(CreateGroupPage);
+export default withCampusService(CreateLectorSubjectPage);

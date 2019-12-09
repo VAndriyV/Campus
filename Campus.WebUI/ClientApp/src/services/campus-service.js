@@ -121,6 +121,11 @@
         return result;
       }
 
+      getLectorsSubjectsByLessonType = async (lectorId,lessonTypeId)=>{
+        const result = await this.GET(`/lectorsubject/lector/${lectorId}/${lessonTypeId}`);
+        return result;
+      }
+
       getLectorSubject = async (lectorSubjectId)=>{
         const result = await this.GET(`/lectorsubject/${lectorSubjectId}`);
         return result;
@@ -133,6 +138,11 @@
 
       getGroupsLessons = async (groupId)=>{
         const result = await this.GET(`/lesson/group/${groupId}`);
+        return result;
+      }
+
+      createLesson = async (lesson)=>{
+        const result = await this.POST('/lesson',lesson);
         return result;
       }
 }

@@ -3,6 +3,9 @@ import { Form, Button, FormGroup, Label, Input } from 'reactstrap';
 import Select from '../../../select';
 
 export default class CreateLectorSubjectForm extends Component{
+    constructor(){
+        this.onSubmit = this.onSubmit.bind(this);
+    }
 
     onSubmit(){
 

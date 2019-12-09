@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using System.Reflection;
 
 namespace Campus.WebUI
@@ -41,6 +42,7 @@ namespace Campus.WebUI
 
             services
                .AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
+               .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateGroupCommandValidator>());
 
             services.Configure<ApiBehaviorOptions>(options =>

@@ -5,6 +5,9 @@ using MediatR;
 
 using Campus.Persistence;
 using Campus.Domain.Entities;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Campus.Application.Exceptions;
 
 namespace Campus.Application.Lessons.Commands.CreateLesson
 {
@@ -17,9 +20,19 @@ namespace Campus.Application.Lessons.Commands.CreateLesson
         }
         public async Task<Unit> Handle(CreateLessonCommand request, CancellationToken cancellationToken)
         {
+            var lectorSubject = await _context.LectorSubjects.Where(x => x.SubjectId == request.SubjectId
+                                                                     && x.LessonTypeId == request.LessonTypeId
+                                                                     && x.LectorId == request.LectorId)
+                                                                    .FirstOrDefaultAsync();
+
+            if(lectorSubject == null)
+            {
+                throw new NotFoundException(nameof(LectorSubject));
+            }
+
             var lesson = new Lesson
             {
-                LectorSubjectId = request.LectorSubjectId,
+                LectorSubjectId = lectorSubject.Id,
                 GroupId = request.GroupId
             };
 
