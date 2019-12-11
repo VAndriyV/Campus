@@ -4,6 +4,7 @@ using Campus.Application.Groups.Commands.DeleteGroup;
 using Campus.Application.Groups.Commands.UpdateGroup;
 using Campus.Application.Groups.Queries.GetAllGroups;
 using Campus.Application.Groups.Queries.GetGroupDetail;
+using Campus.Application.Groups.Queries.GetLectorsGroups;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Campus.WebUI.Controllers
@@ -22,6 +23,12 @@ namespace Campus.WebUI.Controllers
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await Mediator.Send(new GetGroupDetailQuery { Id = id }));
+        }
+
+        [HttpGet("lector/{id}")]
+        public async Task<IActionResult> GetByLectorId(int id)
+        {
+            return Ok(await Mediator.Send(new GetLectorsGroupsQuery { LectorId = id }));
         }
 
         // POST: api/Groups

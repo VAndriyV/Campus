@@ -16,12 +16,13 @@ export default class CreateLessonForm extends Component{
 
         this.onSubmit = this.onSubmit.bind(this);
         this.updateSubject = this.updateSubject.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleChange = (e) => {   
+    handleChange(e){   
         const {name,value} = e.target;
         
-        this.setState({[name]: parseInt(value) });        
+        this.setState({[name]: value });        
     }   
     
     updateSubject(e){
@@ -38,12 +39,11 @@ export default class CreateLessonForm extends Component{
     
 
     render(){
-        const {groups, lectors, lessonTypes, subjects} = this.props;        
-        const {groupId} = this.state;       
-
+        const {groups, lectors, lessonTypes, subjects} = this.props;       
+      
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>
-                <Select label={"Group"} initValue={groupId} name={"groupId"} onChange={this.handleChange} options = {groups}/>
+                <Select label={"Group"} name={"groupId"} onChange={this.handleChange} options = {groups}/>
             </FormGroup>             
             <FormGroup>
                 <Select label={"Lector"} name={"lectorId"} textProperties={['firstName','lastName','patronymic']} onChange={this.updateSubject} options = {lectors}/>

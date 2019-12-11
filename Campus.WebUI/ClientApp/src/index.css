@@ -47,5 +47,11 @@ table tbody td button:first-child{
 
 .nav-item a:hover{
     opacity: 1;
-} 
+}
 
+.react-datepicker-wrapper,
+.react-datepicker__input-container,
+.react-datepicker__input-container input {
+    display: block;
+    width: 100%;
+}

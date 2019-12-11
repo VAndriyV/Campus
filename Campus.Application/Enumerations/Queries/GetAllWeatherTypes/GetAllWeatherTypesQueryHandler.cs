@@ -23,7 +23,7 @@ namespace Campus.Application.Enumerations.Queries.GetAllWeatherTypes
         {
             var result = new EnumerationItemsListViewModel();
 
-            result.Items = await _context.AcademicRanks.Select(x => new EnumerationItem { Id = x.Id, Name = x.Name }).ToListAsync();
+            result.Items = await _context.WeatherTypes.Select(x => new EnumerationItem { Id = x.Id, Name = x.Name }).ToListAsync();
 
             return result;
         }

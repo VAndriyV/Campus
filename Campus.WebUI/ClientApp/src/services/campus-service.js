@@ -86,6 +86,11 @@
         return result;
       };
 
+      getWeatherTypes = async()=>{
+        const result = await this.GET('/enumeration/weathertype');
+        return result;
+      };
+
       getAllSpecialities = async()=>{
         const result = await this.GET('/speciality');
         return result;
@@ -143,6 +148,21 @@
 
       createLesson = async (lesson)=>{
         const result = await this.POST('/lesson',lesson);
+        return result;
+      }
+
+      getLesson = async (id)=>{
+        const result = await this.GET(`/lesson/${id}`);
+        return result;        
+      }
+
+      getLectorsGroups = async(id)=>{
+        const result = await this.GET(`/group/lector/${id}`);
+        return result;
+      }
+
+      getLessonsByLectorAndGroup = async (lectorId, groupId)=>{
+        const result = await this.GET(`/lesson/lector/${lectorId}/group/${groupId}`);
         return result;
       }
 }

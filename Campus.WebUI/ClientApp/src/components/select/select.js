@@ -7,8 +7,8 @@ export default class Select extends Component {
     this.dispatchChangeEvent();
   }
 
-  componentDidUpdate(prevProps) {   
-    
+  componentDidUpdate(prevProps) {      
+
     if (prevProps.options.length !== this.props.options.length) {
       this.dispatchChangeEvent();
       return;

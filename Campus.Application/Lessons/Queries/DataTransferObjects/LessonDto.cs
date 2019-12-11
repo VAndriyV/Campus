@@ -16,6 +16,7 @@ namespace Campus.Application.Lessons.Queries.DataTransferObjects
         public int SubjectId { get; set; }
         public string SubjectName { get; set; }
 
+        public int LessonTypeId { get; set; }
         public string LessonTypeName { get; set; }
 
         public static Expression<Func<Lesson,LessonDto>> Projection
@@ -32,6 +33,7 @@ namespace Campus.Application.Lessons.Queries.DataTransferObjects
                                 $"{x.LectorSubject.Lector.LastName} {x.LectorSubject.Lector.FirstName} {x.LectorSubject.Lector.Patronymic}"
                                 : string.Empty) 
                                 : string.Empty,
+                    LessonTypeId = x.LectorSubject != null ? x.LectorSubject.LessonTypeId : default,
                     LessonTypeName = x.LectorSubject!=null ? (x.LectorSubject.LessonType!=null? x.LectorSubject.LessonType.Name : string.Empty) : string.Empty,
                     SubjectId = x.LectorSubject != null ? x.LectorSubject.SubjectId : default,
                     SubjectName = x.LectorSubject != null ? (x.LectorSubject.Subject != null ?

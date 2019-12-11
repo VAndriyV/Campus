@@ -100,7 +100,7 @@ class LectorDetailPage extends Component {
               <TabPane tabId="3">
                 {activeTab == 3 ? 
                 <React.Fragment>
-                  <CreateNewLink to={`/lesson/new`}/>
+                  <CreateNewLink to={`/lessons/new`}/>
                   <LectorsLessonsList lessons={lessons} />
                 </React.Fragment> : null}
               </TabPane>
