@@ -7,6 +7,7 @@ using MediatR;
 using Campus.Persistence;
 using Campus.Application.Exceptions;
 using Campus.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Campus.Application.Lectors.Commands.DeleteLector
 {
@@ -26,6 +27,12 @@ namespace Campus.Application.Lectors.Commands.DeleteLector
             if (lector == null)
             {
                 throw new NotFoundException(nameof(Lector), request.Id);
+            }
+
+            var isUsedInLectorSubject = await _context.LectorSubjects.AnyAsync(x => x.LectorId == request.Id);
+            if (isUsedInLectorSubject)
+            {
+                throw new DeleteFailureException(nameof(Lector), request.Id, "There are subject(s) assigned to this lector");
             }
 
             _context.Lectors.Remove(lector);

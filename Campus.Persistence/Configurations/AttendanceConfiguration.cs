@@ -25,6 +25,7 @@ namespace Campus.Persistence.Configurations
             builder.HasOne(a=>a.Lesson)
                .WithMany(l => l.Attendances)
                .HasForeignKey(a=>a.LessonId)
+               .OnDelete(DeleteBehavior.Cascade)
                .IsRequired();
 
             builder.HasOne(a => a.DayOfWeek)

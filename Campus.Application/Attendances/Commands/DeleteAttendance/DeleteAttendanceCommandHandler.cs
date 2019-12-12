@@ -1,10 +1,11 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
 
 using Campus.Persistence;
+using Campus.Application.Exceptions;
+using Campus.Domain.Entities;
 
 namespace Campus.Application.Attendances.Commands.DeleteAttendance
 {
@@ -17,9 +18,20 @@ namespace Campus.Application.Attendances.Commands.DeleteAttendance
             _context = context;
         }
 
-        public Task<Unit> Handle(DeleteAttendanceCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteAttendanceCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var attendance = _context.Attendances.FindAsync(request.Id);
+            
+            if(attendance == null)
+            {
+                throw new NotFoundException(nameof(Attendance), request.Id);
+            }
+
+            _context.Remove(attendance);
+
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }
