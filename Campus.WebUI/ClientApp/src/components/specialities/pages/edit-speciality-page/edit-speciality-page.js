@@ -5,6 +5,12 @@ import {Row,Col} from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class EditSpecialityPage extends Component{
+    constructor(props){
+        super(props);
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
     state = {
         speciality:null,        
         loading:true
@@ -24,6 +30,10 @@ class EditSpecialityPage extends Component{
                 loading:false
             });
         }); 
+    }
+
+    onSubmit(speciality){
+        this.props.campusService.updateSpeciality(speciality);
     }
 
     render(){

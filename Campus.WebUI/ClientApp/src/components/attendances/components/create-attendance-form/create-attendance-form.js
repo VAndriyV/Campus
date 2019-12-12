@@ -23,9 +23,10 @@ export default class CreateAttendanceForm extends Component{
 
     onSubmit(e){
         e.preventDefault();
+        const {dateObj,lectorSubjectId,studentsCount,weatherTypeId} = this.state;
+        const dayOfWeekId = dateObj.getDay()==0?7:dateObj.getDay();
 
-        console.log(this.state.dateObj.toDateString());      
-       
+        this.props.onSubmit({dayOfWeekId,lectorSubjectId,studentsCount,weatherTypeId});      
     }
 
     handleDateChange(value) {       

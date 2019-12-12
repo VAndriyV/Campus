@@ -17,8 +17,8 @@ class CreateLessonPage extends Component {
         lectors: [],
         subjects: [],
         lessonTypes: [],
-        lectorId: undefined,
-        lessonTypeId: undefined,
+        lectorId: 0,
+        lessonTypeId: 0,
         loading: true
     };
 

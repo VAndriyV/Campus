@@ -5,37 +5,39 @@ import Select from '../../../select';
 export default class EditLessonForm extends Component{
     
     state={
-        groupId:undefined,
-        lectorId:undefined,
-        lessonTypeId:undefined,
-        subjectId:undefined
+        id:0,
+        groupId:0,
+        lectorId:0,
+        lessonTypeId:0,
+        subjectId:0
     };
     
     constructor(props){
         super(props);
 
+        const {id, groupId, lectorId, lessonTypeId, subjectId} = props.lesson;
+        this.state = {id, groupId, lectorId, lessonTypeId, subjectId};
+        
         this.onSubmit = this.onSubmit.bind(this);
         this.updateSubject = this.updateSubject.bind(this);
     }
 
     handleChange = (e) => {   
-        const {name,value} = e.target;
-        
+        const {name,value} = e.target;        
         this.setState({[name]: parseInt(value) });        
     }   
     
     updateSubject(e){
         this.handleChange(e);
-
         this.props.updateSubject(e);
     }
 
     onSubmit(e){
         e.preventDefault();        
         
-        this.props.onSubmit(this.state);
-    }
-    
+        const {id, groupId, lectorId, lessonTypeId, subjectId} = this.state;
+        this.props.onSubmit({id, groupId, lectorId, lessonTypeId, subjectId});
+    }    
 
     render(){
         const {groups, lectors, lessonTypes, subjects, lesson} = this.props;

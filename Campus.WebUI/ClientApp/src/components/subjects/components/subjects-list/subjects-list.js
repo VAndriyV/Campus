@@ -3,13 +3,19 @@ import { Table } from "reactstrap";
 import TableActions from '../../../common/table-actions';
 
 export default class SubjectsList extends Component {
+    constructor(props){
+        super(props);
+
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     mapSubjects(subjects) {
         return subjects.map((item, idx) =>
             this.mapSubject(item, idx));
     };
 
     onDelete(id) {
-
+        this.props.onDelete(id);
     }
 
     mapSubject(subject, idx) {
@@ -18,7 +24,7 @@ export default class SubjectsList extends Component {
             <td>{subject.id}</td>
             <td>{subject.name}</td>
             <td>
-                <TableActions toEdit={`/subjects/edit/${subject.id}`} onDelete={this.onDelete()} />
+                <TableActions toEdit={`/subjects/edit/${subject.id}`} onDelete={()=>this.onDelete(subject.id)} />
             </td>
         </tr>);
     }

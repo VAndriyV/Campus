@@ -3,6 +3,11 @@ import { Table } from "reactstrap";
 import TableActions from '../../../common/table-actions';
 
 export default class SpecialitiesList extends Component {
+    constructor(props){
+        super(props);
+
+        this.onDelete = this.onDelete.bind(this);
+    }    
 
     mapSpecialities(specialities) {
         return specialities.map((item, idx) =>
@@ -10,7 +15,7 @@ export default class SpecialitiesList extends Component {
     };
 
     onDelete(id) {
-
+        this.props.onDelete(id);
     }
 
     mapSpeciality(speciality, idx) {
@@ -20,7 +25,7 @@ export default class SpecialitiesList extends Component {
             <td>{speciality.name}</td>
             <td>{speciality.code}</td>
             <td>
-                <TableActions toEdit={`/specialities/edit/${speciality.id}`} onDelete={this.onDelete()} />
+                <TableActions toEdit={`/specialities/edit/${speciality.id}`} onDelete={()=>this.onDelete(speciality.id)} />
             </td>
         </tr>);
     }

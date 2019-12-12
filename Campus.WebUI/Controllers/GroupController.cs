@@ -10,15 +10,13 @@ using Microsoft.AspNetCore.Mvc;
 namespace Campus.WebUI.Controllers
 {
     public class GroupController : BaseController
-    {
-        // GET: api/Groups
+    {        
         [HttpGet]
         public Task<GroupsListViewModel> GetAll()
         {
             return Mediator.Send(new GetAllGroupsQuery());
         }
-
-        // GET: api/Groups/5
+       
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
@@ -30,8 +28,7 @@ namespace Campus.WebUI.Controllers
         {
             return Ok(await Mediator.Send(new GetLectorsGroupsQuery { LectorId = id }));
         }
-
-        // POST: api/Groups
+      
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateGroupCommand command)
         {
@@ -39,8 +36,7 @@ namespace Campus.WebUI.Controllers
 
             return CreatedAtAction("Get", new { id = productId });
         }
-
-        // PUT: api/Groups/5
+       
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(
             [FromRoute] int id,
@@ -53,8 +49,7 @@ namespace Campus.WebUI.Controllers
 
             return Ok(await Mediator.Send(command));
         }
-
-        // DELETE: api/Groups/5
+       
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

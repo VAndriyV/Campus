@@ -1,168 +1,264 @@
 ﻿export default class CampusService {
-    _apiBase = '/api';
+  _apiBase = '/api';
 
-    GET = async (url) => {
-        const res = await fetch(`${this._apiBase}${url}`);
-    
-        if (!res.ok) {
-          throw new Error(`Could not fetch ${url}` +
-            `, received ${res.status}`)
-        }
+  GET = async (url) => {
+    const res = await fetch(`${this._apiBase}${url}`);
 
-        return await res.json();
-      };
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}` +
+        `, received ${res.status}`)
+    }
 
-      POST = async(url, body)=>{
-        const res = await fetch(`${this._apiBase}${url}`,{
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'POST',
-            body: JSON.stringify(body)
-        });
-    
-        if (!res.ok) {
-          throw new Error(`Could not fetch ${url}` +
-            `, received ${res.status}`)
-        }
+    return await res.json();
+  };
 
-        return await res.json();
-      };
+  POST = async (url, body) => {
+    const res = await fetch(`${this._apiBase}${url}`, {
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      method: 'POST',
+      body: JSON.stringify(body)
+    });
 
-      PUT = async(url, body)=>{
-        const res = await fetch(`${this._apiBase}${url}`,{
-            headers: { "Content-Type": "application/json; charset=utf-8" },
-            method: 'PUT',
-            body: JSON.stringify(body)
-        });
-    
-        if (!res.ok) {
-          throw new Error(`Could not fetch ${url}` +
-            `, received ${res.status}`)
-        }
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}` +
+        `, received ${res.status}`)
+    }
 
-        return await res.json();
-      };
+    return await res.json();
+  };
 
-      DELETE = async(url)=>{
-        const res = await fetch(`${this._apiBase}${url}`,
-        {
-            method:'DELELE'
-        });
-    
-        if (!res.ok) {
-          throw new Error(`Could not fetch ${url}` +
-            `, received ${res.status}`)
-        }
+  PUT = async (url, body) => {
+    const res = await fetch(`${this._apiBase}${url}`, {
+      headers: { "Content-Type": "application/json; charset=utf-8" },
+      method: 'PUT',
+      body: JSON.stringify(body)
+    });
 
-        return await res.json();
-      };
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}` +
+        `, received ${res.status}`)
+    }
 
-      getAllLectors = async() => {
-          const result = await this.GET('/lector');        
-          return result;
-      }
+    return await res.json();
+  };
 
-      getLector = async(id) =>{
-          const result = await this.GET(`/lector/${id}`);
-          return result;
-      }
+  DELETE = async (url) => {
+    const res = await fetch(`${this._apiBase}${url}`,
+      {
+        headers: { "Content-Type": "application/json; charset=utf-8" },       
+        method: 'DELETE'
+      });
 
-      getAcademicRanks = async ()=>{
-          const result = await this.GET('/enumeration/academicrank');
-          return result;
-      }
+    if (!res.ok) {
+      throw new Error(`Could not fetch ${url}` +
+        `, received ${res.status}`)
+    }
 
-      getAcademicDegrees = async ()=>{
-        const result = await this.GET('/enumeration/academicdegree');
-        return result;
-      }
+    return await res.json();
+  };
 
-      getEducationalDegrees = async()=>{
-        const result = await this.GET('/enumeration/educationaldegree');
-        return result;
-      };
+  getAllLectors = async () => {
+    const result = await this.GET('/lector');
+    return result;
+  }
 
-      getLessonTypes = async()=>{
-        const result = await this.GET('/enumeration/lessontype');
-        return result;
-      };
+  getLector = async (id) => {
+    const result = await this.GET(`/lector/${id}`);
+    return result;
+  }
 
-      getWeatherTypes = async()=>{
-        const result = await this.GET('/enumeration/weathertype');
-        return result;
-      };
+  createLector = async (lector) => {
+    const result = await this.POST('/lector', lector);
+    return result;
+  }
 
-      getAllSpecialities = async()=>{
-        const result = await this.GET('/speciality');
-        return result;
-      }
+  updateLector = async (lector) => {
+    const result = await this.PUT('/lector', lector);
+    return result;
+  }
 
-      getSpeciality = async(id) =>{
-        const result = await this.GET(`/speciality/${id}`);
-        return result;
-      }
+  deleteLector = async (id) => {
+    const result = await this.DELETE(`/lector/${id}`);
+    return result;
+  }
 
-      getAllGroups = async() => {
-        const result = await this.GET('/group');        
-        return result;
-      }
+  getAllSpecialities = async () => {
+    const result = await this.GET('/speciality');
+    return result;
+  }
 
-      getGroup = async(id) =>{
-        const result = await this.GET(`/group/${id}`);
-        return result;
-      }
+  getSpeciality = async (id) => {
+    const result = await this.GET(`/speciality/${id}`);
+    return result;
+  }
 
-      getAllSubjects = async() => {
-        const result = await this.GET('/subject');        
-        return result;
-      }
+  createSpeciality = async (speciality) => {
+    const result = await this.POST('/speciality', speciality);
+    return result;
+  }
 
-      getSubject = async(id) =>{
-        const result = await this.GET(`/subject/${id}`);
-        return result;
-      }
+  updateSpeciality = async (speciality) => {
+    const result = await this.PUT('/speciality', speciality);
+    return result;
+  }
 
-      getLectorsSubjects = async (lectorId)=>{
-        const result = await this.GET(`/lectorsubject/lector/${lectorId}`);
-        return result;
-      }
+  deleteSpeciality = async (id) => {
+    const result = await this.POST(`/speciality/${id}`);
+    return result;
+  }
 
-      getLectorsSubjectsByLessonType = async (lectorId,lessonTypeId)=>{
-        const result = await this.GET(`/lectorsubject/lector/${lectorId}/${lessonTypeId}`);
-        return result;
-      }
+  getAllGroups = async () => {
+    const result = await this.GET('/group');
+    return result;
+  }
 
-      getLectorSubject = async (lectorSubjectId)=>{
-        const result = await this.GET(`/lectorsubject/${lectorSubjectId}`);
-        return result;
-      };
+  getGroup = async (id) => {
+    const result = await this.GET(`/group/${id}`);
+    return result;
+  }
 
-      getLectorsLessons = async (lectorId)=>{
-        const result = await this.GET(`/lesson/lector/${lectorId}`);
-        return result;
-      }
+  createGroup = async (group) => {
+    const result = await this.POST('/group', group);
+    return result;
+  }
 
-      getGroupsLessons = async (groupId)=>{
-        const result = await this.GET(`/lesson/group/${groupId}`);
-        return result;
-      }
+  updateGroup = async (group) => {
+    const result = await this.PUT('/group', group);
+    return result;
+  }
 
-      createLesson = async (lesson)=>{
-        const result = await this.POST('/lesson',lesson);
-        return result;
-      }
+  deleteGroup = async (id) => {
+    const result = await this.DELETE(`/group/${id}`);
+    return result;
+  }
 
-      getLesson = async (id)=>{
-        const result = await this.GET(`/lesson/${id}`);
-        return result;        
-      }
+  getLectorsGroups = async (id) => {
+    const result = await this.GET(`/group/lector/${id}`);
+    return result;
+  }
 
-      getLectorsGroups = async(id)=>{
-        const result = await this.GET(`/group/lector/${id}`);
-        return result;
-      }
+  getAllSubjects = async () => {
+    const result = await this.GET('/subject');
+    return result;
+  }
 
-      getLessonsByLectorAndGroup = async (lectorId, groupId)=>{
-        const result = await this.GET(`/lesson/lector/${lectorId}/group/${groupId}`);
-        return result;
-      }
+  getSubject = async (id) => {
+    const result = await this.GET(`/subject/${id}`);
+    return result;
+  }
+
+  createSubject = async (subject) => {
+    const result = await this.POST('/subject', subject);
+    return result;
+  }
+
+  updateSubject = async (subject) => {
+    const result = await this.PUT('/subject', subject);
+    return result;
+  }
+
+  deleteSubject = async (id) => {
+    const result = await this.DELETE(`/subject/${id}`);
+    return result;
+  }
+
+  getLectorsSubjects = async (lectorId) => {
+    const result = await this.GET(`/lectorsubject/lector/${lectorId}`);
+    return result;
+  }
+
+  getLectorsSubjectsByLessonType = async (lectorId, lessonTypeId) => {
+    const result = await this.GET(`/lectorsubject/lector/${lectorId}/${lessonTypeId}`);
+    return result;
+  }
+
+  getLectorSubject = async (lectorSubjectId) => {
+    const result = await this.GET(`/lectorsubject/${lectorSubjectId}`);
+    return result;
+  };
+
+  createLectorSubject = async (lectorSubject) => {
+    const result = await this.POST('/lectorsubject', lectorSubject);
+    return result;
+  }
+
+  updateLectorSubject = async (lectorSubject) => {
+    const result = await this.PUT('/lectorsubject', lectorSubject);
+    return result;
+  }
+
+  deleteLectorSubject = async (id) => {
+    const result = await this.DELETE(`/lectorsubject/${id}`);
+    return result;
+  }  
+
+  createLesson = async(lesson)=>{
+    const result = await this.POST('/lesson',lesson);
+    return result;
+  }
+
+  updateLesson = async(lesson)=>{
+    const result = await this.PUT('/lesson',lesson);
+    return result;
+  }
+
+  deleteLesson = async(id)=>{
+    const result = await this.DELETE(`/lesson/${id}`);
+    return result;
+  }
+
+  getLectorsLessons = async (lectorId) => {
+    const result = await this.GET(`/lesson/lector/${lectorId}`);
+    return result;
+  }
+
+  getGroupsLessons = async (groupId) => {
+    const result = await this.GET(`/lesson/group/${groupId}`);
+    return result;
+  }
+
+  getLesson = async (id) => {
+    const result = await this.GET(`/lesson/${id}`);
+    return result;
+  } 
+
+  getLessonsByLectorAndGroup = async (lectorId, groupId) => {
+    const result = await this.GET(`/lesson/lector/${lectorId}/group/${groupId}`);
+    return result;
+  }
+
+  createAttendance = async (attendace)=>{
+    const result = await this.POST(`/attendance`,attendace);
+    return result;
+  }
+
+  deleteAttendance = async (id)=>{
+    const result = await this.DELETE(`/attendance/${id}`);
+    return result;
+  }
+
+  getAcademicRanks = async () => {
+    const result = await this.GET('/enumeration/academicrank');
+    return result;
+  }
+
+  getAcademicDegrees = async () => {
+    const result = await this.GET('/enumeration/academicdegree');
+    return result;
+  }
+
+  getEducationalDegrees = async () => {
+    const result = await this.GET('/enumeration/educationaldegree');
+    return result;
+  };
+
+  getLessonTypes = async () => {
+    const result = await this.GET('/enumeration/lessontype');
+    return result;
+  };
+
+  getWeatherTypes = async () => {
+    const result = await this.GET('/enumeration/weathertype');
+    return result;
+  };
 }

@@ -1,4 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Campus.Application.LectorSubjects.Commands.CreateLectorSubject;
+using Campus.Application.LectorSubjects.Commands.DeleteLectorSubject;
+using Campus.Application.LectorSubjects.Commands.UpdateLectorSubject;
 using Campus.Application.LectorSubjects.Queries.GetAllLectorsSubjects;
 using Campus.Application.LectorSubjects.Queries.GetLectorsSubjectsByLessonType;
 using Campus.Application.LectorSubjects.Queries.GetLectorSubjectQuery;
@@ -26,5 +29,33 @@ namespace Campus.WebUI.Controllers
             return Ok(await Mediator.Send(new GetLectorsSubjectsByLessonTypeQuery { LectorId = lectorId, LessonTypeId = lessonTypeId}));
         }
         
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] CreateLectorSubjectCommand command)
+        {
+            var productId = await Mediator.Send(command);
+
+            return CreatedAtAction("Get", new { id = productId });
+        }
+       
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(
+            [FromRoute] int id,
+            [FromBody] UpdateLectorSubjectCommand command)
+        {
+            if (id != command.Id)
+            {
+                return BadRequest();
+            }
+
+            return Ok(await Mediator.Send(command));
+        }
+       
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            await Mediator.Send(new DeleteLectorSubjectCommand { Id = id });
+
+            return NoContent();
+        }
     }
 }

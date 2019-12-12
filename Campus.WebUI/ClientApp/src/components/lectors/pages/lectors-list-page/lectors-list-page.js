@@ -6,6 +6,12 @@ import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class LectorsListPage extends Component {
+    constructor(props){
+        super(props);
+
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     state = {
         lectors: [],
         loading: true
@@ -26,6 +32,10 @@ class LectorsListPage extends Component {
             });
     }
 
+    onDelete(id){
+        this.props.campusService.deleteLector(id);
+    }
+
     render() {
         const { lectors, loading } = this.state;
 
@@ -34,7 +44,7 @@ class LectorsListPage extends Component {
                 {loading ? <Spinner /> :
                     <React.Fragment>
                         <CreateNewLink to={'/lectors/new'}/>
-                        <LectorsList lectors={lectors} />
+                        <LectorsList lectors={lectors} onDelete={this.onDelete} />
                     </React.Fragment>
                 }
             </Col>

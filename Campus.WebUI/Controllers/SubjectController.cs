@@ -9,22 +9,19 @@ using Microsoft.AspNetCore.Mvc;
 namespace Campus.WebUI.Controllers
 {
     public class SubjectController : BaseController
-    {
-        // GET: api/Subjects
+    {       
         [HttpGet]
         public Task<SubjectsListViewModel> GetAll()
         {
             return Mediator.Send(new GetAllSubjectsQuery());
         }
-
-        // GET: api/Subjects/5
+        
         [HttpGet("{id}")]       
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await Mediator.Send(new GetSubjectQuery { Id = id }));
         }
-
-        // POST: api/Subjects
+        
         [HttpPost]       
         public async Task<IActionResult> Create([FromBody] CreateSubjectCommand command)
         {
@@ -32,8 +29,7 @@ namespace Campus.WebUI.Controllers
 
             return CreatedAtAction("Get", new { id = productId });
         }
-
-        // PUT: api/Subjects/5
+       
         [HttpPut("{id}")]        
         public async Task<IActionResult> Update(
             [FromRoute] int id,
@@ -46,8 +42,7 @@ namespace Campus.WebUI.Controllers
 
             return Ok(await Mediator.Send(command));
         }
-
-        // DELETE: api/Subjects/5
+        
         [HttpDelete("{id}")]        
         public async Task<IActionResult> Delete(int id)
         {

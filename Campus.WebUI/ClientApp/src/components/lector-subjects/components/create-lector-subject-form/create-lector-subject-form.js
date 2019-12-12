@@ -3,14 +3,29 @@ import { Form, Button, FormGroup } from 'reactstrap';
 import Select from '../../../select';
 
 export default class CreateLectorSubjectForm extends Component{
+    state={
+        lectorId:0,
+        subjectId:0,
+        lessonTypeId:0
+    }
+
     constructor(props){
         super(props);
 
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);       
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    onSubmit(){
+    handleChange(e){   
+        const {name,value} = e.target;        
+        this.setState({[name]: value });        
+    }
 
+    onSubmit(e){
+        e.preventDefault();
+
+        const {lectorId,subjectId,lessonTypeId}=this.state;
+        this.props.onSubmit({lectorId,subjectId,lessonTypeId});
     }
 
     render(){
@@ -18,13 +33,14 @@ export default class CreateLectorSubjectForm extends Component{
 
         return(<Form onSubmit={this.onSubmit} >           
             <FormGroup>
-                <Select label={"Lector"} name={"lectorId"} textProperties={['firstName','lastName','patronymic']} options = {lectors} initValue = {initLectorId}/>
+                <Select label={"Lector"} name={"lectorId"} textProperties={['firstName','lastName','patronymic']} 
+                options = {lectors} initValue = {initLectorId} onChange={this.handleChange}/>
             </FormGroup>
             <FormGroup>
-                <Select label={"Subject"} name={"subjectId"} options = {subjects}/>
+                <Select label={"Subject"} name={"subjectId"} options = {subjects} onChange={this.handleChange}/>
             </FormGroup>
             <FormGroup>
-                <Select label={"Lesson type"} name={"lessonTypeId"} options = {lessonTypes}/>
+                <Select label={"Lesson type"} name={"lessonTypeId"} options = {lessonTypes} onChange={this.handleChange}/>
             </FormGroup>
 
             <Button outline color="secondary">Submit</Button>

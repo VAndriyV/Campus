@@ -8,7 +8,8 @@ namespace Campus.Application.Attendances.Commands.CreateAttendance
         {
             RuleFor(x => x.DayOfWeekId).NotEmpty();
             RuleFor(x => x.StudentsCount).NotEmpty().GreaterThanOrEqualTo(0);
-            RuleFor(x => x.LessonId).NotEmpty();
+            RuleFor(x => x.GroupId).NotEmpty();
+            RuleFor(x => x.LectorSubjectId).NotEmpty();
             RuleFor(x => x.WeatherTypeId).NotEmpty();
         }
     }

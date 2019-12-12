@@ -9,6 +9,13 @@ import DetailActions from '../../../common/detail-actions';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class GroupDetailPage extends Component {
+  constructor(props){
+    super(props);
+
+    this.onDelete = this.onDelete.bind(this);
+    this.onLessonDelete = this.onLessonDelete.bind(this);
+  }
+
   state = {
     activeTab: '1',   
     lessons: [],
@@ -27,8 +34,14 @@ class GroupDetailPage extends Component {
     }
   }
 
-  onDelete() {
+  onDelete(){
+    const id = this.state.group.id;
 
+    this.props.campusService.deleteGroup(id);
+  }
+
+  onLessonDelete(id){
+    this.props.campusService.deleteLesson(id);
   }
 
   fetchGroup() {
@@ -80,7 +93,7 @@ class GroupDetailPage extends Component {
                   : null}
               </TabPane>              
               <TabPane tabId="2">
-                {activeTab == 2 ? <GroupsLessonsList lessons={lessons} /> : null}
+                {activeTab == 2 ? <GroupsLessonsList lessons={lessons} onDelete={this.onLessonDelete}/> : null}
               </TabPane>
             </TabContent>
           </div>}

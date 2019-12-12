@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
 import CreateSubjectForm from '../../components/create-subject-form';
 import {Row,Col} from 'reactstrap';
+import withCampusService from '../../../hoc/with-campus-service';
 
-export default class CreateSubjectPage extends Component{   
+class CreateSubjectPage extends Component{   
 
-    render(){       
+    onSubmit(subject){
+        this.props.campusService.createSubject(subject);
+    }
+
+    render(){    
 
         return (<Row>
             <Col xs={12}>
-                <CreateSubjectForm/>
+                <CreateSubjectForm onSubmit={this.onSubmit}/>
             </Col>
         </Row>)
     }
 }
+
+export default withCampusService(CreateSubjectPage);

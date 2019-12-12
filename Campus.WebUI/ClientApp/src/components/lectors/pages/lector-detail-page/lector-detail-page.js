@@ -10,6 +10,14 @@ import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class LectorDetailPage extends Component {
+  constructor(props){
+    super(props);
+
+    this.onDelete = this.onDelete.bind(this);
+    this.onLessonDelete = this.onLessonDelete.bind(this);
+    this.onSubjectDelete = this.onSubjectDelete.bind(this);
+  }
+
   state = {
     activeTab: '1',
     lectorsSubjects: [],
@@ -17,7 +25,7 @@ class LectorDetailPage extends Component {
     lector: null,
     loading: true
   };
- 
+
   componentDidMount() {
     this.fetchLector();
   }
@@ -29,8 +37,18 @@ class LectorDetailPage extends Component {
     }
   }
 
-  onDelete() {
+  onDelete(){
+    const id = this.state.lector.id;
 
+    this.props.campusService.deleteLector(id);
+  }
+
+  onSubjectDelete(id) {
+    this.props.campusService.deleteLectorSubject(id);
+  }
+
+  onLessonDelete(id) {
+    this.props.campusService.deleteLesson(id);
   }
 
   fetchLector() {
@@ -84,25 +102,25 @@ class LectorDetailPage extends Component {
               <TabPane tabId="1">
                 {activeTab == 1 ?
                   <React.Fragment>
-                    <DetailActions toEdit={`/lectors/edit/${lector.id}`} onDelete={this.onDelete}/>                 
-                    <LectorDetail lector={lector}/>
+                    <DetailActions toEdit={`/lectors/edit/${lector.id}`} onDelete={this.onDelete} />
+                    <LectorDetail lector={lector} />
                   </React.Fragment>
                   : null}
               </TabPane>
               <TabPane tabId="2">
                 {activeTab == 2 ?
-                <React.Fragment>
-                  <CreateNewLink to={`/lectorsubject/new/${lector.id}`}/>
-                  <LectorsSubjectsList lectorsSubjects={lectorsSubjects} />
-                </React.Fragment> 
-                 : null}
+                  <React.Fragment>
+                    <CreateNewLink to={`/lectorsubject/new/${lector.id}`} />
+                    <LectorsSubjectsList lectorsSubjects={lectorsSubjects} onDelete={this.onSubjectDelete} />
+                  </React.Fragment>
+                  : null}
               </TabPane>
               <TabPane tabId="3">
-                {activeTab == 3 ? 
-                <React.Fragment>
-                  <CreateNewLink to={`/lessons/new`}/>
-                  <LectorsLessonsList lessons={lessons} />
-                </React.Fragment> : null}
+                {activeTab == 3 ?
+                  <React.Fragment>
+                    <CreateNewLink to={`/lessons/new`} />
+                    <LectorsLessonsList lessons={lessons} onDelete={this.onLessonDelete} />
+                  </React.Fragment> : null}
               </TabPane>
             </TabContent>
           </div>}

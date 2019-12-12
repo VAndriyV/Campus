@@ -2,13 +2,12 @@ import React, {Component} from 'react';
 import { Form, Button, FormGroup } from 'reactstrap';
 import Select from '../../../select';
 
-export default class CreateLessonForm extends Component{
-    
+export default class CreateLessonForm extends Component{    
     state={
-        groupId:undefined,
-        lectorId:undefined,
-        lessonTypeId:undefined,
-        subjectId:undefined
+        groupId:0,
+        lectorId:0,
+        lessonTypeId:0,
+        subjectId:0
     };
     
     constructor(props){
@@ -20,23 +19,21 @@ export default class CreateLessonForm extends Component{
     }
 
     handleChange(e){   
-        const {name,value} = e.target;
-        
+        const {name,value} = e.target;        
         this.setState({[name]: value });        
     }   
     
     updateSubject(e){
         this.handleChange(e);
-
         this.props.updateSubject(e);
     }
 
     onSubmit(e){
-        e.preventDefault();        
-        
-        this.props.onSubmit(this.state);
-    }
-    
+        e.preventDefault();
+
+        const {groupId, lectorId, lessonTypeId, subjectId} = this.state;
+        this.props.onSubmit({groupId, lectorId, lessonTypeId, subjectId});
+    }    
 
     render(){
         const {groups, lectors, lessonTypes, subjects} = this.props;       

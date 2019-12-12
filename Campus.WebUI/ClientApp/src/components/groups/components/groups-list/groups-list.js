@@ -4,13 +4,19 @@ import {Link} from 'react-router-dom';
 import TableActions from '../../../common/table-actions';
 
 export default class GroupsList extends Component {
+    constructor(props){
+        super(props);
+
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     mapGroups(groups) {
        return groups.map((item, idx) =>
             this.mapGroup(item, idx));
     };
 
     onDelete(id){
-
+        this.props.onDelete(id);
     }
 
     mapGroup(group, idx) {
@@ -23,7 +29,7 @@ export default class GroupsList extends Component {
             <td>{group.year}</td>
             <td>{group.studentsCount}</td>
             <td>
-                <TableActions toEdit={`/groups/edit/${group.id}`} onDelete={this.onDelete()}/>                
+                <TableActions toEdit={`/groups/edit/${group.id}`} onDelete={()=>this.onDelete(group.id)}/>                
             </td>
         </tr>);
     }

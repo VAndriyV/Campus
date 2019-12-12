@@ -17,8 +17,8 @@ class EditLessonPage extends Component {
         lectors: [],
         subjects: [],
         lessonTypes: [],
-        lectorId: undefined,
-        lessonTypeId: undefined,
+        lectorId: 0,
+        lessonTypeId: 0,
         lesson:null,
         loading: true
     };
@@ -71,8 +71,8 @@ class EditLessonPage extends Component {
         });
     }    
 
-    onSubmit(data) {
-        this.props.campusService.createLesson(data);
+    onSubmit(lesson) {
+        this.props.campusService.updateLesson(lesson);
     }
 
     render() {

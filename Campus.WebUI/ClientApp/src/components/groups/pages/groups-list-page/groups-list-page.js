@@ -6,6 +6,12 @@ import withCampusService from '../../../hoc/with-campus-service';
 import CreateNewLink from '../../../common/create-new-link';
 
 class GroupsListPage extends Component {
+    constructor(props){
+        super(props);
+
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     state = {
         groups: [],
         loading: true
@@ -26,6 +32,10 @@ class GroupsListPage extends Component {
             });
     }
 
+    onDelete(id){
+        this.props.campusService.deleteGroup(id);
+    }
+
     render() {
         const { groups, loading } = this.state;
 
@@ -34,7 +44,7 @@ class GroupsListPage extends Component {
                 {loading ? <Spinner /> :
                     <React.Fragment>
                         <CreateNewLink to={'/groups/new'} />
-                        <GroupsList groups={groups} />
+                        <GroupsList groups={groups} onDelete={this.onDelete}/>
                     </React.Fragment>
                 }
             </Col>

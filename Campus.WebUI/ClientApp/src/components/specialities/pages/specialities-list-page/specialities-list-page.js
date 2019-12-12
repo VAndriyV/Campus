@@ -6,6 +6,12 @@ import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class SpecialitiesListPage extends Component{
+    constructor(props){
+        super(props);
+
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     state = {
         specialities:[],
         loading:true
@@ -26,6 +32,10 @@ class SpecialitiesListPage extends Component{
             });
     }
 
+    onDelete(id){
+        this.props.campusService.deleteSpeciality(id);
+    }
+
     render(){
         const {specialities, loading} = this.state;
 
@@ -34,7 +44,7 @@ class SpecialitiesListPage extends Component{
                 {loading?<Spinner/>:
                 <React.Fragment>
                     <CreateNewLink to={'/specialities/new'}/>
-                    <SpecialitiesList specialities={specialities}/>
+                    <SpecialitiesList specialities={specialities} onDelete={this.onDelete}/>
                 </React.Fragment>}
             </Col>
         </Row>)

@@ -16,7 +16,7 @@ class CreateAttendancePage extends Component{
     state={
         groups:[],
         lessons:[],
-        groupId:undefined,
+        groupId:0,
         loading:true
     };
 
@@ -61,10 +61,9 @@ class CreateAttendancePage extends Component{
         });
     }
 
-    onSubmit(data){
-
+    onSubmit(attendance){
+        this.props.campusService.createAttendance(attendance);
     }
-
 
     render(){
         const {loading, lessons, groups, weatherTypes} = this.state;

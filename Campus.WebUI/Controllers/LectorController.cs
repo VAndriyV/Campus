@@ -9,22 +9,19 @@ using System.Threading.Tasks;
 namespace Campus.WebUI.Controllers
 {
     public class LectorController : BaseController
-    {
-        // GET: api/Lectors
+    {        
         [HttpGet]
         public Task<LectorsListViewModel> GetAll()
         {
             return Mediator.Send(new GetAllLectorsQuery());
         }
-
-        // GET: api/Lectors/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
             return Ok(await Mediator.Send(new GetLectorDetailQuery { Id = id }));
         }
-
-        // POST: api/Lectors
+       
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateLectorCommand command)
         {
@@ -32,8 +29,7 @@ namespace Campus.WebUI.Controllers
 
             return CreatedAtAction("Get", new { id = productId });
         }
-
-        // PUT: api/Lectors/5
+       
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(
             [FromRoute] int id,

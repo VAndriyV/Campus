@@ -5,6 +5,12 @@ import {Row,Col} from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class EditLectorSubjectPage extends Component{
+    constructor(props){
+        super(props);
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
+
     state={
         lectorSubject:null,
         lectors:[],
@@ -38,12 +44,17 @@ class EditLectorSubjectPage extends Component{
         });
     }
 
+    onSubmit(lectorSubject){
+        this.props.campusService.updateLectorSubject(lectorSubject);
+    }
+
     render(){
         const {lectors, subjects, lessonTypes, lectorSubject, loading} = this.state;
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<EditLectorSubjectForm lectorSubject={lectorSubject} lectors={lectors} subjects={subjects} lessonTypes={lessonTypes}/>}
+                {loading?<Spinner/>:<EditLectorSubjectForm lectorSubject={lectorSubject} lectors={lectors} 
+                subjects={subjects} lessonTypes={lessonTypes} onSubmit={this.onSubmit}/>}
             </Col>
         </Row>)
     }

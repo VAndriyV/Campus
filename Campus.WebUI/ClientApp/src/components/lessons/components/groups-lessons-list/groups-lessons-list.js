@@ -4,13 +4,19 @@ import TableActions from '../../../common/table-actions';
 import {Link} from 'react-router-dom';
 
 export default class GroupsLessonsList extends Component {
+    constructor(props){
+        super(props);
+
+        this.onDelete = this.onDelete.bind(this);
+    }
+
     mapLessons(lessons) {
         return lessons.map((item, idx) =>
             this.mapLesson(item, idx));
     };
 
     onDelete(id){
-
+        this.props.onDelete(id);
     }
 
     mapLesson(lesson,idx) {
@@ -21,7 +27,7 @@ export default class GroupsLessonsList extends Component {
             <td>{lesson.subjectName}</td>
             <td>{lesson.lessonTypeName}</td>
             <td>
-                <TableActions toEdit={`/lessons/edit/${lesson.id}`} onDelete={this.onDelete()}/>                
+                <TableActions toEdit={`/lessons/edit/${lesson.id}`} onDelete={()=>this.onDelete(lesson.id)}/>                
             </td>
         </tr>);
     }

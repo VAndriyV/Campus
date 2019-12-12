@@ -4,12 +4,18 @@ import TableActions from '../../../common/table-actions';
 import {Link} from 'react-router-dom';
 
 export default class LectorsList extends Component {
+  constructor(props){
+    super(props);
+
+    this.onDelete = this.onDelete.bind(this);
+  }
+
   mapLectors(lectors) {
     return lectors.map((item, idx) => this.mapLector(item, idx));
   }
 
   onDelete(id) {
-
+    this.props.onDelete(id);
   }
 
   mapLector(lector, idx) {
@@ -25,7 +31,7 @@ export default class LectorsList extends Component {
         <td>{lector.email}</td>
         <td>{lector.phoneNumber}</td>
         <td>
-          <TableActions toEdit={`/lectors/edit/${lector.id}`} onDelete={this.onDelete()} />
+          <TableActions toEdit={`/lectors/edit/${lector.id}`} onDelete={()=>this.onDelete(lector.id)} />
         </td>
       </tr>
     );

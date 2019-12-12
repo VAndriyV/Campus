@@ -26,12 +26,16 @@ class EditSubjectPage extends Component{
         }); 
     }
 
+    onSubmit(subject){
+        this.props.campusService.updateSubject(subject);
+    }
+
     render(){
         const {subject, loading} = this.state;
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<EditSubjectForm subject={subject}/>}
+                {loading?<Spinner/>:<EditSubjectForm subject={subject} onSubmit={this.onSubmit}/>}
             </Col>
         </Row>)
     }
