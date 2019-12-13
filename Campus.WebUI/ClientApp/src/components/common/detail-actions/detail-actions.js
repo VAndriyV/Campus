@@ -12,7 +12,7 @@ export default class DetailActions extends Component {
             <Button tag={Link} to={toEdit} size="sm" outline color="warning">
                 Edit <FaPencilAlt />
             </Button>
-            <Button onClick={onDelete()} size="sm" outline color="danger">
+            <Button onClick={onDelete} size="sm" outline color="danger">
                 Delete <FaRegTrashAlt />
             </Button>
         </div>);

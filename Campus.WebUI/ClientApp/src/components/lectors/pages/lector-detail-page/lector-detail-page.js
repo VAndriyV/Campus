@@ -8,14 +8,16 @@ import LectorsLessonsList from '../../../lessons/components/lectors-lessons-list
 import DetailActions from '../../../common/detail-actions';
 import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
+import Modal from '../../../common/modal';
 
 class LectorDetailPage extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.onDelete = this.onDelete.bind(this);
     this.onLessonDelete = this.onLessonDelete.bind(this);
     this.onSubjectDelete = this.onSubjectDelete.bind(this);
+    this.toggle = this.toggle.bind(this);
   }
 
   state = {
@@ -23,6 +25,9 @@ class LectorDetailPage extends Component {
     lectorsSubjects: [],
     lessons: [],
     lector: null,
+    hasError: false,
+    error: '',
+    header: '',
     loading: true
   };
 
@@ -30,25 +35,71 @@ class LectorDetailPage extends Component {
     this.fetchLector();
   }
 
-  toggle(tab) {
+  toggleModal(tab) {
     const { activeTab } = this.state;
     if (activeTab !== tab) {
       this.setState({ activeTab: tab });
     }
   }
 
-  onDelete(){
+  onDelete() {
     const id = this.state.lector.id;
-
-    this.props.campusService.deleteLector(id);
+    this.props.campusService.deleteLector(id)
+      .then(() => this.props.history.push('/lectors'))
+      .catch(err => this.showLectorDeleteErrorModal(err));
   }
 
   onSubjectDelete(id) {
-    this.props.campusService.deleteLectorSubject(id);
+    this.props.campusService.deleteLectorSubject(id)
+    .then(() => this.removeSubjectFromList(id))
+    .catch(err => this.showLectorSubjectDeleteErrorModal(err));
   }
 
   onLessonDelete(id) {
-    this.props.campusService.deleteLesson(id);
+    this.props.campusService.deleteLesson(id)
+    .then(() => this.removeLessonFromList(id))
+    .catch(err => this.showLessonDeleteErrorModal(err));
+  }
+
+  showLectorDeleteErrorModal(err) {
+    const header = 'An error has occured while deleting lector';
+    this.showModal(err, header);
+  }
+
+  showLectorSubjectDeleteErrorModal(err) {
+    const header = 'An error has occured while deleting assigned subject';
+    this.showModal(err, header);
+  }
+
+  showLessonDeleteErrorModal(err) {
+    const header = 'An error has occured while deleting lesson';
+    this.showModal(err, header);
+  }
+
+  showModal(err, header) {
+    this.setState({
+      hasError: true,
+      error: err.error,
+      header: header
+    })
+  }
+
+  removeSubjectFromList(id){
+    this.setState({lectorsSubjects: this.state.lectorsSubjects.filter(function(lectorSubject) { 
+        return lectorSubject.id !==id
+    })});
+  }
+
+  removeLessonFromList(id){
+    this.setState({lessons: this.state.lessons.filter(function(lesson) { 
+        return lesson.id !==id
+    })});
+  }
+
+  toggle() {
+    this.setState({
+      hasError: !this.state.hasError
+    });
   }
 
   fetchLector() {
@@ -69,7 +120,7 @@ class LectorDetailPage extends Component {
   }
 
   render() {
-    const { lector, lectorsSubjects, lessons, loading, activeTab } = this.state;
+    const { lector, lectorsSubjects, lessons, loading, activeTab, error, hasError, header } = this.state;
 
     return (<Row>
       <Col xs={12}>
@@ -79,21 +130,21 @@ class LectorDetailPage extends Component {
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '1' })}
-                  onClick={() => { this.toggle('1'); }}>
+                  onClick={() => { this.toggleModal('1'); }}>
                   General
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '2' })}
-                  onClick={() => { this.toggle('2'); }}>
+                  onClick={() => { this.toggleModal('2'); }}>
                   Subjects
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '3' })}
-                  onClick={() => { this.toggle('3'); }}>
+                  onClick={() => { this.toggleModal('3'); }}>
                   Lessons
                 </NavLink>
               </NavItem>
@@ -124,6 +175,8 @@ class LectorDetailPage extends Component {
               </TabPane>
             </TabContent>
           </div>}
+        <Modal header={header} body={error}
+          modal={hasError} toggle={this.toggle} />
       </Col>
     </Row>)
   }

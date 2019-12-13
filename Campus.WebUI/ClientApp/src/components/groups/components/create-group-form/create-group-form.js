@@ -36,7 +36,7 @@ export default class CreateGroupForm extends Component{
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>
                 <Label for="name">Group name</Label>
-                <Input type="text" name="name" id="name" placeholder="Group name" />
+                <Input type="text" name="name" id="name" placeholder="Group name" onChange={this.handleChange}/>
             </FormGroup>
             <FormGroup>
                 <Select label={"Speciality"} name={"specialityId"} options = {specialities} onChange={this.handleChange}/>

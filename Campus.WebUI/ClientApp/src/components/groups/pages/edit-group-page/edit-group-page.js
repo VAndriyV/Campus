@@ -5,6 +5,12 @@ import {Row,Col} from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class EditGroupPage extends Component{
+    constructor(props){
+        super(props);
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }    
+
     state={
         group:null,
         specialities:[],
@@ -14,6 +20,10 @@ class EditGroupPage extends Component{
 
     componentDidMount(){
         this.fetchGroup();
+    }
+
+    onSubmit(group){
+        this.props.campusService.updateGroup(group);
     }
 
     fetchGroup() {
@@ -40,7 +50,8 @@ class EditGroupPage extends Component{
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<EditGroupForm group = {group} educationalDegrees = {educationalDegrees} specialities={specialities}/>}
+                {loading?<Spinner/>:<EditGroupForm group = {group} educationalDegrees = {educationalDegrees} 
+                specialities={specialities} onSubmit={this.onSubmit}/>}
             </Col>
         </Row>)
     }

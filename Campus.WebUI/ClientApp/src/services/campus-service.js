@@ -4,9 +4,10 @@
   GET = async (url) => {
     const res = await fetch(`${this._apiBase}${url}`);
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}`)
+    if (res.status < 200 || res.status > 299) {
+      await res.json().then(({ error }) => {
+        throw { status: res.status, error };
+      });
     }
 
     return await res.json();
@@ -19,9 +20,10 @@
       body: JSON.stringify(body)
     });
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}`)
+    if (res.status < 200 || res.status > 299) {
+      await res.json().then(({ error }) => {
+        throw { status: res.status, error };
+      });
     }
 
     return await res.json();
@@ -34,9 +36,10 @@
       body: JSON.stringify(body)
     });
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}`)
+    if (res.status < 200 || res.status > 299) {
+      await res.json().then(({ error }) => {
+        throw { status: res.status, error };
+      });
     }
 
     return await res.json();
@@ -45,16 +48,17 @@
   DELETE = async (url) => {
     const res = await fetch(`${this._apiBase}${url}`,
       {
-        headers: { "Content-Type": "application/json; charset=utf-8" },       
+        headers: { "Content-Type": "application/json; charset=utf-8" },
         method: 'DELETE'
       });
 
-    if (!res.ok) {
-      throw new Error(`Could not fetch ${url}` +
-        `, received ${res.status}`)
+    if (res.status < 200 || res.status > 299) {
+      await res.json().then(({ error }) => {
+        throw { status: res.status, error };
+      });
     }
 
-    return await res.json();
+    return true;
   };
 
   getAllLectors = async () => {
@@ -78,8 +82,8 @@
   }
 
   deleteLector = async (id) => {
-    const result = await this.DELETE(`/lector/${id}`);
-    return result;
+    await this.DELETE(`/lector/${id}`);
+    return true;
   }
 
   getAllSpecialities = async () => {
@@ -103,7 +107,7 @@
   }
 
   deleteSpeciality = async (id) => {
-    const result = await this.POST(`/speciality/${id}`);
+    const result = await this.DELETE(`/speciality/${id}`);
     return result;
   }
 
@@ -190,19 +194,19 @@
   deleteLectorSubject = async (id) => {
     const result = await this.DELETE(`/lectorsubject/${id}`);
     return result;
-  }  
+  }
 
-  createLesson = async(lesson)=>{
-    const result = await this.POST('/lesson',lesson);
+  createLesson = async (lesson) => {
+    const result = await this.POST('/lesson', lesson);
     return result;
   }
 
-  updateLesson = async(lesson)=>{
-    const result = await this.PUT('/lesson',lesson);
+  updateLesson = async (lesson) => {
+    const result = await this.PUT('/lesson', lesson);
     return result;
   }
 
-  deleteLesson = async(id)=>{
+  deleteLesson = async (id) => {
     const result = await this.DELETE(`/lesson/${id}`);
     return result;
   }
@@ -220,19 +224,19 @@
   getLesson = async (id) => {
     const result = await this.GET(`/lesson/${id}`);
     return result;
-  } 
+  }
 
   getLessonsByLectorAndGroup = async (lectorId, groupId) => {
     const result = await this.GET(`/lesson/lector/${lectorId}/group/${groupId}`);
     return result;
   }
 
-  createAttendance = async (attendace)=>{
-    const result = await this.POST(`/attendance`,attendace);
+  createAttendance = async (attendace) => {
+    const result = await this.POST(`/attendance`, attendace);
     return result;
   }
 
-  deleteAttendance = async (id)=>{
+  deleteAttendance = async (id) => {
     const result = await this.DELETE(`/attendance/${id}`);
     return result;
   }

@@ -47,7 +47,7 @@ class CreateLectorPage extends Component{
         return (<Row>
             <Col xs={12}>
                 {loading?<Spinner/>:<CreateLectorForm academicRanks={academicRanks} academicDegrees ={academicDegrees}
-                onSubmit={this.props.onSubmit}/>}
+                onSubmit={this.onSubmit}/>}
             </Col>
         </Row>)
     }

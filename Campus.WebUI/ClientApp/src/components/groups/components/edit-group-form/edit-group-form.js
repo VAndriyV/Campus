@@ -41,25 +41,25 @@ export default class EditGroupForm extends Component{
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>
                 <Label for="id" hidden>Id</Label>
-                <Input type="hidden" name="id" id="id" defaultValue={id} />
+                <Input type="hidden" name="id" id="id" defaultValue={id}/>
             </FormGroup>
             <FormGroup>
                 <Label for="name">Group name</Label>
-                <Input type="text" name="name" id="name" defaultValue={name} placeholder="Group name" />
+                <Input type="text" name="name" id="name" defaultValue={name} placeholder="Group name" onChange={this.handleChange} />
             </FormGroup>
             <FormGroup>
-                <Select label={"Speciality"} name={"specialityId"} options = {specialities} initValue={specialityId}/>
+                <Select label={"Speciality"} name={"specialityId"} options = {specialities} initValue={specialityId} onChange={this.handleChange}/>
             </FormGroup>
             <FormGroup>
-                <Select label = {"Educational degree"} name={"educationalDegreeId"} options = {educationalDegrees} initValue = {educationalDegreeId}/> 
+                <Select label = {"Educational degree"} name={"educationalDegreeId"} options = {educationalDegrees} initValue = {educationalDegreeId} onChange={this.handleChange}/> 
             </FormGroup>           
             <FormGroup>
                 <Label for="year">Year</Label>
-                <Input type="number" name="year" id="year" defaultValue = {year} placeholder="Year" />
+                <Input type="number" name="year" id="year" defaultValue = {year} placeholder="Year" onChange={this.handleChange} />
             </FormGroup>
             <FormGroup>
                 <Label for="studentsCount">Students count</Label>
-                <Input type="number" name="studentsCount" id="studentsCount" defaultValue={studentsCount} placeholder="Students count"/>
+                <Input type="number" name="studentsCount" id="studentsCount" defaultValue={studentsCount} placeholder="Students count" onChange={this.handleChange}/>
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
         </Form>);
