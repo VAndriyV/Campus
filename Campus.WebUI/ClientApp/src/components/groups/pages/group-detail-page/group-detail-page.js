@@ -7,6 +7,7 @@ import GroupsLessonsList from '../../../lessons/components/groups-lessons-list';
 import DetailActions from '../../../common/detail-actions';
 import withCampusService from '../../../hoc/with-campus-service';
 import Modal from '../../../common/modal';
+import RangeAttendance from '../../../attendances/components/range-attendance';
 
 class GroupDetailPage extends Component {
   constructor(props) {
@@ -23,7 +24,8 @@ class GroupDetailPage extends Component {
     group: null,
     hasError: false,
     error: '',
-    header: '',
+    header: '',   
+    attendanceData:[],    
     loading: true
   };
 
@@ -94,11 +96,22 @@ class GroupDetailPage extends Component {
     this.setState({
       hasError: !this.state.hasError
     });
+  } 
+
+  loadAttendanceData = (startDate,endDate)=>{ 
+    const {group} = this.state;
+
+    this.props.campusService.getGroupsAttendances(group.id,startDate, endDate)
+    .then(({data})=>{
+      this.setState({
+        attendanceData:data    
+      })
+    })
+    .catch(err=>console.log(err));
   }
 
   render() {
-    const { group, lessons, loading, activeTab, error, hasError, header } = this.state;    
-
+    const { group, lessons, loading, activeTab, error, hasError, header, attendanceData} = this.state;
     return (<Row>
       <Col xs={12}>
         {loading ? <Spinner /> :
@@ -118,6 +131,13 @@ class GroupDetailPage extends Component {
                   Lessons
                 </NavLink>
               </NavItem>
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: activeTab === '3' })}
+                  onClick={() => { this.toggleTab('3'); }}>
+                  Attendance
+                </NavLink>
+              </NavItem>
             </Nav>
             <TabContent activeTab={activeTab}>
               <TabPane tabId="1">
@@ -130,6 +150,10 @@ class GroupDetailPage extends Component {
               </TabPane>
               <TabPane tabId="2">
                 {activeTab == 2 ? <GroupsLessonsList lessons={lessons} onDelete={this.onLessonDelete} /> : null}
+              </TabPane> 
+              <TabPane tabId="3">
+                {activeTab == 3 ? <RangeAttendance loadData={this.loadAttendanceData} data={attendanceData}/> 
+                : null}
               </TabPane>
             </TabContent>
           </div>}

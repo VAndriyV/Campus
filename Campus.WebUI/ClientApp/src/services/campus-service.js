@@ -4,6 +4,12 @@
   GET = async (url) => {
     const res = await fetch(`${this._apiBase}${url}`);
 
+    if(res.status === 400){
+      await res.json().then(({ invalidFields }) => {
+        throw { status: res.status, invalidFields };
+      });
+    }
+
     if (res.status < 200 || res.status > 299) {
       await res.json().then(({ error }) => {
         throw { status: res.status, error };
@@ -244,6 +250,21 @@
 
   deleteAttendance = async (id) => {
     const result = await this.DELETE(`/attendance/${id}`);
+    return result;
+  }
+
+  getAttendances = async(startDate,endDate)=>{
+    const result = await this.GET(`/attendance/${startDate}/${endDate}`);
+    return result;
+  }
+
+  getGroupsAttendances = async(groupId,startDate,endDate)=>{
+    const result = await this.GET(`/attendance/group/${groupId}/${startDate}/${endDate}`);
+    return result;
+  }
+
+  getLectorsAttendances = async(lectorId,startDate,endDate)=>{
+    const result = await this.GET(`/attendance/lector/${lectorId}/${startDate}/${endDate}`);
     return result;
   }
 

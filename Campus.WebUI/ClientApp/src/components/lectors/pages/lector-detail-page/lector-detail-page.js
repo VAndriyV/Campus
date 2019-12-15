@@ -9,6 +9,7 @@ import DetailActions from '../../../common/detail-actions';
 import CreateNewLink from '../../../common/create-new-link';
 import withCampusService from '../../../hoc/with-campus-service';
 import Modal from '../../../common/modal';
+import RangeAttendance from '../../../attendances/components/range-attendance';
 
 class LectorDetailPage extends Component {
   constructor(props) {
@@ -24,6 +25,7 @@ class LectorDetailPage extends Component {
     activeTab: '1',
     lectorsSubjects: [],
     lessons: [],
+    attendanceData:[],
     lector: null,
     hasError: false,
     error: '',
@@ -35,7 +37,7 @@ class LectorDetailPage extends Component {
     this.fetchLector();
   }
 
-  toggleModal(tab) {
+  toggleTab(tab) {
     const { activeTab } = this.state;
     if (activeTab !== tab) {
       this.setState({ activeTab: tab });
@@ -119,8 +121,20 @@ class LectorDetailPage extends Component {
     })
   }
 
+  loadAttendanceData = (startDate,endDate)=>{ 
+    const {lector} = this.state;
+
+    this.props.campusService.getLectorsAttendances(lector.id,startDate, endDate)
+    .then(({data})=>{
+      this.setState({
+        attendanceData:data    
+      })
+    })
+    .catch(err=>console.log(err));
+  }
+
   render() {
-    const { lector, lectorsSubjects, lessons, loading, activeTab, error, hasError, header } = this.state;
+    const { lector, lectorsSubjects, lessons, loading, activeTab, error, hasError, header, attendanceData } = this.state;
 
     return (<Row>
       <Col xs={12}>
@@ -130,22 +144,29 @@ class LectorDetailPage extends Component {
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '1' })}
-                  onClick={() => { this.toggleModal('1'); }}>
+                  onClick={() => { this.toggleTab('1'); }}>
                   General
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '2' })}
-                  onClick={() => { this.toggleModal('2'); }}>
+                  onClick={() => { this.toggleTab('2'); }}>
                   Subjects
                 </NavLink>
               </NavItem>
               <NavItem>
                 <NavLink
                   className={classnames({ active: activeTab === '3' })}
-                  onClick={() => { this.toggleModal('3'); }}>
+                  onClick={() => { this.toggleTab('3'); }}>
                   Lessons
+                </NavLink>
+              </NavItem>
+              <NavItem>
+                <NavLink
+                  className={classnames({ active: activeTab === '4' })}
+                  onClick={() => { this.toggleTab('4'); }}>
+                  Attendance
                 </NavLink>
               </NavItem>
             </Nav>
@@ -172,6 +193,10 @@ class LectorDetailPage extends Component {
                     <CreateNewLink to={`/lessons/new`} />
                     <LectorsLessonsList lessons={lessons} onDelete={this.onLessonDelete} />
                   </React.Fragment> : null}
+              </TabPane>
+              <TabPane tabId="4">
+                {activeTab == 4 ? <RangeAttendance  loadData={this.loadAttendanceData} data={attendanceData}/> 
+                : null}
               </TabPane>
             </TabContent>
           </div>}

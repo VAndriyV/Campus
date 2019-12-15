@@ -67,3 +67,24 @@ table tbody td button:first-child{
 .form-alert ul{
     margin-bottom: 0px;
 }
+
+.date-range-wrapper{
+    display: flex;
+    margin-bottom: 14px;
+}
+
+.date-range-wrapper .date-picker{
+    width: 15%;
+}
+
+.date-range-wrapper span{
+    display: block;
+}
+
+.date-range-wrapper .date-picker:first-child{
+    margin-right: 20px;
+}
+
+.attendance-filter{
+    margin-bottom: 14px;
+}

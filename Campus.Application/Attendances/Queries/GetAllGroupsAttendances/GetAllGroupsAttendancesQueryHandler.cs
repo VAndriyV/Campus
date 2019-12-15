@@ -32,7 +32,7 @@ namespace Campus.Application.Attendances.Queries.GetAllGroupsAttendances
                 .Select(x => new ChartDataItem
                 {
                     Date = x.Date,
-                    AttendancePercentage = (x.StudentsCount / x.Lesson.Group.StudentsCount) * 100
+                    AttendancePercentage = ((double)x.StudentsCount / x.Lesson.Group.StudentsCount) * 100
                 }).ToListAsync();
 
             return chartData;

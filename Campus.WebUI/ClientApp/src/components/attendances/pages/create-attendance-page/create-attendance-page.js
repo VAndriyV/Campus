@@ -64,8 +64,7 @@ class CreateAttendancePage extends Component{
         });
     }
 
-    onSubmit(attendance){
-        console.log(attendance);
+    onSubmit(attendance){       
         this.props.campusService.createAttendance(attendance)
         .then(() => {
             this.setState({
@@ -86,7 +85,7 @@ class CreateAttendancePage extends Component{
     }
 
     render(){
-        const {loading, lessons, groups, weatherTypes,  hasError, errorObj} = this.state;
+        const {loading, lessons, groups, weatherTypes,  hasError, errorObj, operationSuccessful} = this.state;
 
         return (<Row>
             <Col xs={12}>

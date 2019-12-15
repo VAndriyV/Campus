@@ -24,12 +24,13 @@ export default class CreateAttendanceForm extends Component{
     onSubmit(e){
         e.preventDefault();
         const {groupId,dateObj,lectorSubjectId,studentsCount,weatherTypeId} = this.state;
-        const dayOfWeekId = dateObj.getDay()==0?7:dateObj.getDay();
+        const dayOfWeekId = dateObj.getDay()===0?7:dateObj.getDay();        
         const date = dateObj.toISOString();        
         this.props.onSubmit({groupId,dayOfWeekId, date, lectorSubjectId,studentsCount,weatherTypeId});      
     }
 
     handleDateChange(value) {       
+        value.setHours(0,0,0,0);
         this.setState({ dateObj: value});
     } 
     
