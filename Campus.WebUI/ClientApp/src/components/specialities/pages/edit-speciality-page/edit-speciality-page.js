@@ -1,20 +1,24 @@
 import React, {Component} from 'react';
 import EditSpecialityForm from '../../components/edit-speciality-form';
 import Spinner from '../../../spinner/';
-import {Row,Col} from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
+import { Link } from 'react-router-dom';
 
 class EditSpecialityPage extends Component{
+    state = {
+        hasError: false,
+        errorObj: null,
+        operationSuccessful: false, 
+        speciality:null,        
+        loading:true
+    };
+    
     constructor(props){
         super(props);
 
         this.onSubmit = this.onSubmit.bind(this);
-    }
-
-    state = {
-        speciality:null,        
-        loading:true
-    };
+    }    
 
     componentDidMount(){
         this.fetchSpeciality();
@@ -33,15 +37,46 @@ class EditSpecialityPage extends Component{
     }
 
     onSubmit(speciality){
-        this.props.campusService.updateSpeciality(speciality);
+        this.setState({
+            operationSuccessful: false,           
+            hasError: false,
+            errorObj: null
+        });
+
+        this.props.campusService.updateSpeciality(speciality)
+            .then(() => {
+                this.setState({
+                    operationSuccessful: true                  
+                })
+            })
+            .catch(err => {               
+                if (err.status === 400 || err.status=== 409) {
+                    this.setState({
+                        hasError: true,
+                        errorObj: err
+                    });
+                }
+                else {
+                    throw err;
+                }
+            }); 
     }
 
     render(){
-        const {speciality, loading} = this.state;
+        const {speciality, loading, hasError, errorObj, operationSuccessful} = this.state;
 
         return (<Row>
             <Col xs={12}>
-                {loading?<Spinner/>:<EditSpecialityForm speciality={speciality}/>}
+                {loading?<Spinner/>:<EditSpecialityForm speciality={speciality} hasError={hasError} errorObj={errorObj} />}
+                {operationSuccessful ? <div className='form-alert'>
+                    <Alert color="success">
+                        <h5 className="alert-heading"> Speciality is successfully updated.</h5>
+                        <p>Go to {<Link to={`/specialities`} className='alert-link'>
+                            specialities list
+                            </Link>}
+                        </p>
+                    </Alert>
+                </div> : null}
             </Col>
         </Row>)
     }

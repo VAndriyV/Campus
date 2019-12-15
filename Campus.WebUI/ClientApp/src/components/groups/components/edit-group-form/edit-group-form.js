@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from '../../../select';
+import ErrorsAlert from '../../../common/errors-alert';
 
 export default class EditGroupForm extends Component{   
     state={
@@ -35,7 +36,7 @@ export default class EditGroupForm extends Component{
     }
 
     render(){
-        const {specialities, educationalDegrees} = this.props;       
+        const {specialities, educationalDegrees, hasError, errorObj} = this.props;       
         const {id,name,specialityId,educationalDegreeId,year,studentsCount} = this.state;
 
         return(<Form onSubmit={this.onSubmit} >
@@ -62,6 +63,7 @@ export default class EditGroupForm extends Component{
                 <Input type="number" name="studentsCount" id="studentsCount" defaultValue={studentsCount} placeholder="Students count" onChange={this.handleChange}/>
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
+            {hasError?<ErrorsAlert error={errorObj}/>:null}  
         </Form>);
     }
 };

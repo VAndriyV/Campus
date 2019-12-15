@@ -14,9 +14,10 @@ namespace Campus.WebUI.Filters
             if (context.Exception is ValidationException)
             {
                 context.HttpContext.Response.ContentType = "application/json";
-                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                context.HttpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;               
+
                 context.Result = new JsonResult(
-                    ((ValidationException)context.Exception).Failures);
+                   new {invalidFields = ((ValidationException)context.Exception).Failures });
 
                 return;
             }
@@ -26,6 +27,11 @@ namespace Campus.WebUI.Filters
             if (context.Exception is NotFoundException)
             {
                 code = HttpStatusCode.NotFound;
+            }
+
+            if(context.Exception is DuplicateException || context.Exception is DeleteFailureException)
+            {
+                code = HttpStatusCode.Conflict;
             }
 
             context.HttpContext.Response.ContentType = "application/json";

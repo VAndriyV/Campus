@@ -23,7 +23,7 @@ export default class Select extends Component {
   }
 
   dispatchChangeEvent() {
-    const select = document.getElementById(this.props.name);
+    const select = document.getElementById(this.props.name);    
     select.dispatchEvent(new Event('change', { bubbles: true }));
   }
 

@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from '../../../select';
+import ErrorsAlert from '../../../common/errors-alert';
 
-export default class EditLectorForm extends Component{
+export default class EditLectorForm extends Component{ 
     state={
         id:0,
         firstName:'',
@@ -42,7 +43,8 @@ export default class EditLectorForm extends Component{
     render(){    
         const {academicRanks, academicDegrees} = this.props;
         const {id,firstName,lastName,patronymic,
-            academicDegreeId, academicRankId, email, phoneNumber} = this.state;
+            academicDegreeId, academicRankId, email, phoneNumber,
+            hasError, errorObj} = this.state;
 
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>
@@ -65,7 +67,7 @@ export default class EditLectorForm extends Component{
                 <Select label={"Academic rank"} name={"academicRankId"} options = {academicRanks} initValue={academicRankId}/>
             </FormGroup>
             <FormGroup>
-                <Select label={"Academic degree"} options = {academicDegrees} initValue={academicDegreeId}/>
+                <Select label={"Academic degree"} name={"academicDegreeId"} options = {academicDegrees} initValue={academicDegreeId}/>
             </FormGroup>
             <FormGroup>
                 <Label for="email">Email</Label>
@@ -76,6 +78,7 @@ export default class EditLectorForm extends Component{
                 <Input type="text" name="phoneNumber" id="phoneNumber" defaultValue={phoneNumber} placeholder="Phone number" />
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
+            {hasError?<ErrorsAlert error={errorObj}/>:null} 
         </Form>);
     }
 }

@@ -55,3 +55,15 @@ table tbody td button:first-child{
     display: block;
     width: 100%;
 }
+
+.form-alert{
+    margin-top: 14px;
+}
+
+.form-alert .alert{
+    margin-bottom: 0px;
+}
+
+.form-alert ul{
+    margin-bottom: 0px;
+}

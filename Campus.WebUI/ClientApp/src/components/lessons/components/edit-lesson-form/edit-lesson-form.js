@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Form, Button, FormGroup, Label, Input } from 'reactstrap';
 import Select from '../../../select';
+import ErrorsAlert from '../../../common/errors-alert';
 
 export default class EditLessonForm extends Component{
     
@@ -40,7 +41,7 @@ export default class EditLessonForm extends Component{
     }    
 
     render(){
-        const {groups, lectors, lessonTypes, subjects, lesson} = this.props;
+        const {groups, lectors, lessonTypes, subjects, lesson, hasError, errorObj} = this.props;
 
         return(<Form onSubmit={this.onSubmit} >
              <FormGroup>
@@ -63,8 +64,8 @@ export default class EditLessonForm extends Component{
                 <Select label={"Subject"} name={"subjectId"} 
                 onChange={this.handleChange} options = {subjects} initValue={lesson.subjectId}/>
             </FormGroup>           
-
             <Button outline color="secondary">Submit</Button>
+            {hasError?<ErrorsAlert error={errorObj}/>:null}
         </Form>)
     }
 }

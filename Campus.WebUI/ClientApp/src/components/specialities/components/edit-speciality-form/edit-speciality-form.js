@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import ErrorsAlert from '../../../common/errors-alert';
 
 export default class EditSpecialityForm extends Component {
     state={
@@ -33,6 +34,7 @@ export default class EditSpecialityForm extends Component {
 
     render() {
         const { id,name,code } = this.state;       
+        const {hasError, errorObj} = this.props;
 
         return (<Form onSubmit={this.onSubmit} >
             <Label for="id" hidden>Id</Label>
@@ -46,6 +48,7 @@ export default class EditSpecialityForm extends Component {
                 <Input type="number" name="code" id="code" defaultValue={code} placeholder="Code" onChange={this.handleChange}/>
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
+            {hasError?<ErrorsAlert error={errorObj}/>:null}
         </Form>);
     };
 };

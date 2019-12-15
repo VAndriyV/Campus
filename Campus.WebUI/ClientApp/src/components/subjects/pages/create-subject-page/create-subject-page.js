@@ -1,19 +1,63 @@
 import React, {Component} from 'react';
 import CreateSubjectForm from '../../components/create-subject-form';
-import {Row,Col} from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
+import { Link } from 'react-router-dom';
 
 class CreateSubjectPage extends Component{   
+    state={
+        hasError: false,
+        errorObj: null,
+        operationSuccessful: false 
+    }
+
+    constructor(props){
+        super(props);
+
+        this.onSubmit = this.onSubmit.bind(this);
+    }
 
     onSubmit(subject){
-        this.props.campusService.createSubject(subject);
+        this.setState({
+            operationSuccessful: false,           
+            hasError: false,
+            errorObj: null
+        });
+
+        this.props.campusService.createSubject(subject)
+            .then(() => {
+                this.setState({
+                    operationSuccessful: true                  
+                })
+            })
+            .catch(err => {               
+                if (err.status === 400 || err.status=== 409) {
+                    this.setState({
+                        hasError: true,
+                        errorObj: err
+                    });
+                }
+                else {
+                    throw err;
+                }
+            }); 
     }
 
     render(){    
+        const { hasError, errorObj, operationSuccessful } = this.state;
 
         return (<Row>
             <Col xs={12}>
-                <CreateSubjectForm onSubmit={this.onSubmit}/>
+                <CreateSubjectForm onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj}/>
+                {operationSuccessful ? <div className='form-alert'>
+                    <Alert color="success">
+                        <h5 className="alert-heading"> Subject is successfully added.</h5> 
+                        <p>Go to {<Link to={`/subjects`} className='alert-link'>
+                                subjects list
+                            </Link>} 
+                        </p>
+                    </Alert>
+                </div> : null}
             </Col>
         </Row>)
     }

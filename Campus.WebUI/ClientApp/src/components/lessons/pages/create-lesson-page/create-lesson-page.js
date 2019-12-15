@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import CreateLessonForm from '../../components/create-lesson-form';
 import Spinner from '../../../spinner';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class CreateLessonPage extends Component {
@@ -19,6 +19,9 @@ class CreateLessonPage extends Component {
         lessonTypes: [],
         lectorId: 0,
         lessonTypeId: 0,
+        hasError: false,
+        errorObj: null,
+        operationSuccessful: false,
         loading: true
     };
 
@@ -28,7 +31,7 @@ class CreateLessonPage extends Component {
 
     componentDidUpdate(prevProps, prevState) {
         const { lectorId, lessonTypeId } = this.state;
-        if (lectorId && lessonTypeId && 
+        if (lectorId && lessonTypeId &&
             (lectorId != prevState.lectorId || lessonTypeId != prevState.lessonTypeId)) {
 
             const { campusService } = this.props;
@@ -53,7 +56,7 @@ class CreateLessonPage extends Component {
             this.setState({
                 lectors: lectors,
                 groups: groups,
-                lessonTypes: items,                
+                lessonTypes: items,
                 loading: false
             });
         });
@@ -62,25 +65,53 @@ class CreateLessonPage extends Component {
     updateSubjectsList(e) {
         const { name, value } = e.target;
 
-        this.setState({           
+        this.setState({
             [name]: value
         });
-    }    
+    }
 
-    onSubmit(data) {
-        this.props.campusService.createLesson(data);
+    onSubmit(lesson) {
+        this.setState({
+            operationSuccessful: false,         
+            hasError: false,
+            errorObj: null
+        });
+
+        this.props.campusService.createLesson(lesson)
+        .then(() => {
+            this.setState({
+                operationSuccessful: true                
+            })
+        })
+        .catch(err => {               
+            if (err.status === 400 || err.status=== 409) {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
+            }
+            else {
+                throw err;
+            }
+        });
     }
 
     render() {
-        const { lectors, groups, lessonTypes, subjects, loading } = this.state;
+        const { lectors, groups, lessonTypes, subjects, loading, hasError, errorObj,
+            operationSuccessful } = this.state;
 
         return (<Row>
             <Col xs={12}>
                 {loading ? <Spinner /> :
                     <CreateLessonForm subjects={subjects}
                         lectors={lectors} groups={groups}
-                        lessonTypes={lessonTypes} updateSubject={this.updateSubjectsList} 
-                        onSubmit={this.onSubmit}/>}
+                        lessonTypes={lessonTypes} updateSubject={this.updateSubjectsList}
+                        onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj} />}
+                {operationSuccessful ? <div className='form-alert'>
+                    <Alert color="success">
+                        <h5 className="alert-heading"> Lesson is successfully added.</h5>
+                    </Alert>
+                </div> : null}
             </Col>
         </Row>)
     }

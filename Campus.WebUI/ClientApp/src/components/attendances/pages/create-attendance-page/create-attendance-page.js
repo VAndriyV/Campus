@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CreateAttendanceForm from '../../components/create-attendance-form';
 import Spinner from '../../../spinner';
-import { Row, Col } from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class CreateAttendancePage extends Component{
@@ -17,6 +17,9 @@ class CreateAttendancePage extends Component{
         groups:[],
         lessons:[],
         groupId:0,
+        hasError: false,
+        errorObj: null,
+        operationSuccessful: false,
         loading:true
     };
 
@@ -62,11 +65,28 @@ class CreateAttendancePage extends Component{
     }
 
     onSubmit(attendance){
-        this.props.campusService.createAttendance(attendance);
+        console.log(attendance);
+        this.props.campusService.createAttendance(attendance)
+        .then(() => {
+            this.setState({
+                operationSuccessful: true
+            })
+        })
+        .catch(err => {
+            if (err.status === 400 || err.status === 409) {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
+            }
+            else {
+                throw err;
+            }
+        });
     }
 
     render(){
-        const {loading, lessons, groups, weatherTypes} = this.state;
+        const {loading, lessons, groups, weatherTypes,  hasError, errorObj} = this.state;
 
         return (<Row>
             <Col xs={12}>
@@ -74,7 +94,12 @@ class CreateAttendancePage extends Component{
                     <CreateAttendanceForm groups={groups}
                         lessons={lessons} updateLesson = {this.updateLessonsList}
                         weatherTypes = {weatherTypes}
-                        onSubmit={this.onSubmit}/>}
+                        onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj}/>}
+                        {operationSuccessful ? <div className='form-alert'>
+                    <Alert color="success">
+                        <h5 className="alert-heading"> Record is successfully added.</h5>
+                    </Alert>
+                </div> : null}
             </Col>
         </Row>)
     }

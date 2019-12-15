@@ -20,6 +20,12 @@
       body: JSON.stringify(body)
     });
 
+    if(res.status === 400){
+      await res.json().then(({ invalidFields }) => {
+        throw { status: res.status, invalidFields };
+      });
+    }
+
     if (res.status < 200 || res.status > 299) {
       await res.json().then(({ error }) => {
         throw { status: res.status, error };

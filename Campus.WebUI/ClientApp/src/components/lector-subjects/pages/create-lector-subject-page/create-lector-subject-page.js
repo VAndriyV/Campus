@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import CreateLectorSubjectForm from '../../components/create-lector-subject-form';
 import Spinner from '../../../spinner';
-import {Row,Col} from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class CreateLectorSubjectPage extends Component{
@@ -15,6 +15,9 @@ class CreateLectorSubjectPage extends Component{
         lectors:[],
         subjects:[],
         lessonTypes:[],
+        hasError: false,
+        errorObj: null,
+        operationSuccessful: false,
         loading:true
     };
 
@@ -41,18 +44,47 @@ class CreateLectorSubjectPage extends Component{
     }
 
     onSubmit(lectorSubject){
-        this.props.campusService.createLectorSubject(lectorSubject);
+        this.setState({
+            operationSuccessful: false,         
+            hasError: false,
+            errorObj: null
+        });
+
+        this.props.campusService.createLectorSubject(lectorSubject)
+        .then(() => {
+            this.setState({
+                operationSuccessful: true                
+            })
+        })
+        .catch(err => {               
+            if (err.status === 400 || err.status=== 409) {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
+            }
+            else {
+                throw err;
+            }
+        });
     }
 
     render(){
-        const {lectors, subjects, lessonTypes,loading} = this.state;
+        const {lectors, subjects, lessonTypes,loading, hasError, errorObj,
+            operationSuccessful} = this.state;
 
         const {lectorId} = this.props.match.params;
 
         return (<Row>
             <Col xs={12}>
                 {loading?<Spinner/>:<CreateLectorSubjectForm lectors={lectors} subjects={subjects} 
-                lessonTypes={lessonTypes} initLectorId={lectorId} onSubmit={this.onSubmit}/>}
+                lessonTypes={lessonTypes} initLectorId={lectorId} onSubmit={this.onSubmit} 
+                hasError={hasError} errorObj={errorObj}/>}
+                {operationSuccessful ? <div className='form-alert'>
+                    <Alert color="success">
+                        <h5 className="alert-heading"> Record is successfully added.</h5>
+                    </Alert>
+                </div> : null}
             </Col>
         </Row>)
     }

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from '../../../select';
+import ErrorsAlert from '../../../common/errors-alert';
 
 export default class CreateGroupForm extends Component{ 
     state={
@@ -31,7 +32,7 @@ export default class CreateGroupForm extends Component{
     }
 
     render(){
-        const {specialities, educationalDegrees} = this.props;
+        const {specialities, educationalDegrees, hasError, errorObj} = this.props;
 
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>
@@ -53,6 +54,7 @@ export default class CreateGroupForm extends Component{
                 <Input type="number" name="studentsCount" id="studentsCount" placeholder="Students count" onChange={this.handleChange}/>
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
+            {hasError?<ErrorsAlert error={errorObj}/>:null}            
         </Form>);
     }
 };

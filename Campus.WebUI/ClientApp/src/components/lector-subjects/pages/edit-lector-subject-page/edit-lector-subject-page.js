@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import EditLectorSubjectForm from '../../components/edit-lector-subject-form';
 import Spinner from '../../../spinner';
-import {Row,Col} from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
 class EditLectorSubjectPage extends Component{
@@ -16,6 +16,9 @@ class EditLectorSubjectPage extends Component{
         lectors:[],
         subjects:[],
         lessonTypes:[],
+        hasError: false,
+        errorObj: null,
+        operationSuccessful: false,
         loading:true
     };
 
@@ -45,16 +48,45 @@ class EditLectorSubjectPage extends Component{
     }
 
     onSubmit(lectorSubject){
-        this.props.campusService.updateLectorSubject(lectorSubject);
+        this.setState({
+            operationSuccessful: false,         
+            hasError: false,
+            errorObj: null
+        });
+
+        this.props.campusService.updateLectorSubject(lectorSubject)
+        .then(() => {
+            this.setState({
+                operationSuccessful: true               
+            })
+        })
+        .catch(err => {               
+            if (err.status === 400 || err.status=== 409) {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
+            }
+            else {
+                throw err;
+            }
+        });
     }
 
     render(){
-        const {lectors, subjects, lessonTypes, lectorSubject, loading} = this.state;
+        const {lectors, subjects, lessonTypes, lectorSubject, loading,hasError, errorObj,
+            operationSuccessful} = this.state;
 
         return (<Row>
             <Col xs={12}>
                 {loading?<Spinner/>:<EditLectorSubjectForm lectorSubject={lectorSubject} lectors={lectors} 
-                subjects={subjects} lessonTypes={lessonTypes} onSubmit={this.onSubmit}/>}
+                subjects={subjects} lessonTypes={lessonTypes} onSubmit={this.onSubmit}
+                hasError={hasError} errorObj={errorObj}/>}
+                {operationSuccessful ? <div className='form-alert'>
+                    <Alert color="success">
+                        <h5 className="alert-heading"> Record is successfully updated.</h5>
+                    </Alert>
+                </div> : null}
             </Col>
         </Row>)
     }

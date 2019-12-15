@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import CreateLectorForm from '../../components/create-lector-form';
 import Spinner from '../../../spinner';
-import {Row,Col} from 'reactstrap';
+import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
+import { Link } from 'react-router-dom';
 
 class CreateLectorPage extends Component{
     constructor(props){
@@ -14,6 +15,10 @@ class CreateLectorPage extends Component{
     state = {       
         academicRanks:[],
         academicDegrees:[],
+        hasError: false,
+        errorObj: null,
+        operationSuccessful: false,
+        createdEntityId: 0,
         loading:true
     };
 
@@ -38,16 +43,51 @@ class CreateLectorPage extends Component{
     }
 
     onSubmit(lector){
-        this.props.campusService.createLector(lector);
+        this.setState({
+            operationSuccessful: false,
+            createdEntityId: 0,
+            hasError: false,
+            errorObj: null
+        });
+
+        this.props.campusService.createLector(lector)
+            .then(() => {
+                this.setState({
+                    operationSuccessful: true                   
+                })
+            })
+            .catch(err => {               
+                if (err.status === 400 || err.status=== 409) {
+                    this.setState({
+                        hasError: true,
+                        errorObj: err
+                    }); 
+                }
+                else {
+                    throw err;
+                }
+            });
     }
 
     render(){
-        const {academicDegrees, academicRanks, loading} = this.state;
+        const {academicDegrees, academicRanks, loading, operationSuccessful, 
+               hasError, errorObj, createdEntityId} = this.state;
 
         return (<Row>
             <Col xs={12}>
                 {loading?<Spinner/>:<CreateLectorForm academicRanks={academicRanks} academicDegrees ={academicDegrees}
-                onSubmit={this.onSubmit}/>}
+                onSubmit={this.onSubmit} hasError ={hasError} errorObj={errorObj}/>}
+                {operationSuccessful ? <div className='form-alert'>
+                    <Alert color="success">
+                        <h5 className="alert-heading"> Lector is successfully added.</h5> 
+                        <p>Go to {<Link to={`/lectors/${createdEntityId}`} className='alert-link'>
+                            lector detail page
+                            </Link>} or to{<Link to={`/lectors`} className='alert-link'>
+                                lectors list
+                            </Link>} 
+                        </p>
+                    </Alert>
+                </div> : null}
             </Col>
         </Row>)
     }

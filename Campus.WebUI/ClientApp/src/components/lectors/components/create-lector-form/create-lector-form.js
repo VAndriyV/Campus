@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import Select from '../../../select';
+import ErrorsAlert from '../../../common/errors-alert';
 
 export default class CreateLectorForm extends Component{ 
     state={
@@ -9,7 +10,7 @@ export default class CreateLectorForm extends Component{
         patronymic:'',
         academicRankId:0,
         academicDegreeId:0,
-        email:'',
+        email:'', 
         phoneNumber:''
     }
 
@@ -35,7 +36,7 @@ export default class CreateLectorForm extends Component{
     }
 
     render(){
-        const {academicRanks, academicDegrees} = this.props;
+        const {academicRanks, academicDegrees , hasError, errorObj} = this.props;
 
         return(<Form onSubmit={this.onSubmit} >
             <FormGroup>
@@ -65,6 +66,7 @@ export default class CreateLectorForm extends Component{
                 <Input type="text" name="phoneNumber" id="phoneNumber" placeholder="Phone number" onChange={this.handleChange}/>
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
+            {hasError?<ErrorsAlert error={errorObj}/>:null}  
         </Form>);
     }
 }

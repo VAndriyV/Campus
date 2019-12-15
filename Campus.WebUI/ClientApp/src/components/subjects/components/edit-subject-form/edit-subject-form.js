@@ -1,5 +1,6 @@
 ﻿import React, { Component } from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
+import ErrorsAlert from '../../../common/errors-alert';
 
 export default class CreateSubjectForm extends Component {
     state={
@@ -10,7 +11,7 @@ export default class CreateSubjectForm extends Component {
     constructor(props){
         super(props);
 
-        const {id,name}=props.subject;
+        const {id,name}=props.subject; 
 
         this.state = {id,name};
 
@@ -31,7 +32,7 @@ export default class CreateSubjectForm extends Component {
     }
 
     render() {
-        const { id,name } = this.state;       
+        const { id,name, hasError, errorObj } = this.state;       
 
         return (<Form onSubmit={this.onSubmit} >
             <FormGroup>
@@ -43,6 +44,7 @@ export default class CreateSubjectForm extends Component {
                 <Input type="text" name="name" id="name" defaultValue={name} placeholder="Subject name" onChange={this.handleChange} />
             </FormGroup>
             <Button outline color="secondary">Submit</Button>
+            {hasError?<ErrorsAlert error={errorObj}/>:null} 
         </Form>);
     };
 };
