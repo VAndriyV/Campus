@@ -34,6 +34,11 @@ namespace Campus.WebUI.Filters
                 code = HttpStatusCode.Conflict;
             }
 
+            if(context.Exception is InvalidPasswordException)
+            {
+                code = HttpStatusCode.Unauthorized;
+            }
+
             context.HttpContext.Response.ContentType = "application/json";
             context.HttpContext.Response.StatusCode = (int)code;
             context.Result = new JsonResult(new

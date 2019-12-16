@@ -1,13 +1,19 @@
 using Campus.Application.Groups.Commands.CreateGroup;
 using Campus.Application.Groups.Queries.GetAllGroups;
 using Campus.Application.Infrastructure;
+using Campus.Infrastructure.Helpers;
 using Campus.Persistence;
 using Campus.WebUI.Filters;
+using Campus.WebUI.Identity.Jwt;
+using Campus.WebUI.Identity.Jwt.Extensions;
+using Campus.WebUI.Options;
 using FluentValidation.AspNetCore;
 using MediatR;
 using MediatR.Pipeline;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.EntityFrameworkCore;
@@ -40,10 +46,19 @@ namespace Campus.WebUI
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddMediatR(typeof(GetAllGroupsQueryHandler).GetTypeInfo().Assembly);
 
+            services.AddTransient(typeof(PasswordHasher));
+            services.AddTransient(typeof(PasswordGenerator));           
+
             services
                .AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))
                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver())
                .AddFluentValidation(fv => fv.RegisterValidatorsFromAssemblyContaining<CreateGroupCommandValidator>());
+
+            var section = Configuration.GetSection("AuthOptions");
+            var authOptions = section.Get<AuthOptions>();
+            var jwtOptions = new JwtOptions(authOptions.Audience, authOptions.Issuer, authOptions.Secret,
+                                            authOptions.Lifetime);
+            services.AddApiJwtAuthentication(jwtOptions);
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
@@ -75,8 +90,25 @@ namespace Campus.WebUI
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseRouting();
+            app.UseCookiePolicy(new CookiePolicyOptions
+            {
+                MinimumSameSitePolicy = SameSiteMode.Strict,
+                HttpOnly = HttpOnlyPolicy.Always,
+                Secure = CookieSecurePolicy.Always
+            });
 
+            /*  if (env.IsDevelopment())
+                  app.UseCors(x => x
+                      .WithOrigins("https://localhost:3000")
+                      .AllowCredentials()
+                      .AllowAnyMethod()
+                      .AllowAnyHeader());*/
+
+            app.UseSecureJwt();
+            app.UseAuthentication();
+
+            app.UseRouting();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
