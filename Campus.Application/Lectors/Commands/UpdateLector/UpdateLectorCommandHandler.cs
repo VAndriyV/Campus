@@ -6,6 +6,7 @@ using MediatR;
 using Campus.Persistence;
 using Campus.Application.Exceptions;
 using Campus.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Campus.Application.Lectors.Commands.UpdateLector
 {
@@ -25,6 +26,13 @@ namespace Campus.Application.Lectors.Commands.UpdateLector
             if (lector == null)
             {
                 throw new NotFoundException(nameof(Lector), request.Id);
+            }
+
+            var isEmailExist = await _context.Lectors.AnyAsync(x => x.Email == request.Email && x.Id!=lector.Id);
+
+            if (isEmailExist)
+            {
+                throw new DuplicateException(nameof(Lector), "Email", request.Email);
             }
 
             lector.FirstName = request.FirstName;

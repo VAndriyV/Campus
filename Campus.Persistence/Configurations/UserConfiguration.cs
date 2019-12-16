@@ -23,10 +23,7 @@ namespace Campus.Persistence.Configurations
                 .HasMaxLength(255);           
 
             builder.Property(u => u.LastVisit)
-                .HasColumnType("datetime");
-
-            builder.Property(u => u.IsActive)
-                .HasDefaultValueSql("0");
+                .HasColumnType("datetime");        
                 
         }
     }

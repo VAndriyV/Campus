@@ -4,14 +4,16 @@ using Campus.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Campus.Persistence.Migrations
 {
     [DbContext(typeof(CampusDbContext))]
-    partial class CampusDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191216111112_User-Lector-updates")]
+    partial class UserLectorupdates
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -338,7 +340,7 @@ namespace Campus.Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime?>("LastVisit")
+                    b.Property<DateTime>("LastVisit")
                         .HasColumnType("datetime");
 
                     b.Property<string>("PasswordHash")

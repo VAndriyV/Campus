@@ -12,9 +12,8 @@ namespace Campus.Domain.Entities
 
         public int Id { get; set; }
         public string Email { get; set; }
-        public string PasswordHash { get; set; }   
-        public bool IsActive { get; set; }
-        public DateTime LastVisit { get; set; }       
+        public string PasswordHash { get; set; } 
+        public DateTime? LastVisit { get; set; }       
 
         public ICollection<UserRole> UserRoles { get; private set; }
         public Lector Lector { get; set; }

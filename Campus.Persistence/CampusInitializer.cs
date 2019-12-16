@@ -286,12 +286,12 @@ namespace Campus.Persistence
         {
             var users = new[]
             {
-                new User{Email ="email1@mail.com", IsActive = true, PasswordHash="password123", LastVisit = DateTime.Now},
-                new User{Email ="email2@mail.com", IsActive = true, PasswordHash="password123", LastVisit = DateTime.Now},
-                new User{Email ="email3@mail.com", IsActive = true, PasswordHash="password123", LastVisit = DateTime.Now},
-                new User{Email ="email4@mail.com", IsActive = true, PasswordHash="password123", LastVisit = DateTime.Now},
-                new User{Email ="admin@mail.com", IsActive = true, PasswordHash="password123",  LastVisit= DateTime.Now},
-                new User{Email ="superAdmin@mail.com", IsActive = true, PasswordHash="password123", LastVisit= DateTime.Now},
+                new User{Email ="email1@mail.com", PasswordHash="password123", LastVisit = DateTime.Now},
+                new User{Email ="email2@mail.com", PasswordHash="password123", LastVisit = DateTime.Now},
+                new User{Email ="email3@mail.com", PasswordHash="password123", LastVisit = DateTime.Now},
+                new User{Email ="email4@mail.com", PasswordHash="password123", LastVisit = DateTime.Now},
+                new User{Email ="admin@mail.com",  PasswordHash="password123",  LastVisit= DateTime.Now},
+                new User{Email ="superAdmin@mail.com", PasswordHash="password123", LastVisit= DateTime.Now},
             };
 
             context.Users.AddRange(users);

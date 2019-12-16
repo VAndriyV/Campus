@@ -47,6 +47,7 @@ namespace Campus.Persistence.Configurations
             builder.HasOne(l => l.User)
                 .WithMany()
                 .HasForeignKey(l => l.UserId)
+                .OnDelete(DeleteBehavior.Cascade)
                 .IsRequired();
         }
     }

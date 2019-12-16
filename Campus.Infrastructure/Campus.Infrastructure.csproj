@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Campus.Application\Campus.Application.csproj" />
     <ProjectReference Include="..\Campus.Common\Campus.Common.csproj" />
   </ItemGroup>
 

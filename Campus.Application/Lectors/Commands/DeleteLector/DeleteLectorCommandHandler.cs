@@ -8,6 +8,7 @@ using Campus.Persistence;
 using Campus.Application.Exceptions;
 using Campus.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Campus.Application.Lectors.Commands.DeleteLector
 {
@@ -34,6 +35,13 @@ namespace Campus.Application.Lectors.Commands.DeleteLector
             {
                 throw new DeleteFailureException(nameof(Lector), request.Id, "There are subject(s) assigned to this lector");
             }
+
+            var user = await _context.Users.FindAsync(lector.UserId);
+
+            var userRoles = await _context.UserRoles.Where(x => x.UserId == user.Id).ToListAsync();
+
+            _context.UserRoles.RemoveRange(userRoles);
+            _context.Users.Remove(user);
 
             _context.Lectors.Remove(lector);
 
