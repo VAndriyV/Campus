@@ -22,18 +22,45 @@ export default class NavMenu extends Component {
     });
   }
 
-  render() {
+  isAuthenticated(){
+    const {user} = this.props;
+    return user!==undefined && user!==null;
+  }
+
+  isAdmin(){
+    return this.props.user.roles.includes('Admin');
+  }
+
+  isSuperAdmin(){
+    return this.props.user.roles.includes('SuperAdmin');
+  }
+
+  isLector(){
+    return this.props.user.roles.includes('Lector');
+  }  
+
+  handleLogoutClick=(e)=>{
+    e.preventDefault();
+    this.props.userService.logout();
+  }
+
+  render() {   
+
     return (
       <header>
         <Navbar className="navbar-expand-sm navbar-toggleable-sm ng-white border-bottom box-shadow mb-3" light>
           <Container>
             <NavbarBrand tag={Link} to="/">Campus.WebUI</NavbarBrand>
-            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />
+            {this.isAuthenticated()?
+            <React.Fragment>
+            <NavbarToggler onClick={this.toggleNavbar} className="mr-2" />               
             <Collapse className="d-sm-inline-flex flex-sm-row-reverse" isOpen={!this.state.collapsed} navbar>
               <Nav className="mr-auto" navbar>
                 <NavItem>
                   <NavLink tag={Link} className="text-dark" to="/">Home</NavLink>
                 </NavItem>
+                {(this.isAdmin() || this.isSuperAdmin())?
+                <React.Fragment>
                 <UncontrolledDropdown nav inNavbar>
                   <DropdownToggle nav caret>
                     Lectors
@@ -70,9 +97,23 @@ export default class NavMenu extends Component {
                       <Link to={'/subjects'}><DropdownItem>List</DropdownItem></Link>                    
                   </DropdownMenu>
                 </UncontrolledDropdown>
+                </React.Fragment>
+                :
+                <UncontrolledDropdown nav inNavbar>
+                  <DropdownToggle nav caret>
+                    Attendances
+                  </DropdownToggle>
+                  <DropdownMenu right>                   
+                      <Link to={'/attendances/new'}><DropdownItem>New</DropdownItem></Link>             
+                  </DropdownMenu>
+                </UncontrolledDropdown>}
+                <NavItem>
+                  <NavLink tag={Link} onClick={this.handleLogoutClick} className="text-dark" to="/logout">Logout</NavLink>
+                </NavItem>
               </Nav>
             </Collapse>
-          </Container>
+            </React.Fragment>: null}
+          </Container>          
         </Navbar>
       </header>
     );

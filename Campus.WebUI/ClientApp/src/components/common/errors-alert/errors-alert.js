@@ -16,8 +16,7 @@ export default class ErrorsAlert extends Component {
         return Object.keys(errors).map((item,idx) => <li key={idx}>{`${errors[item]}`}</li>);
     }
 
-    mapErrorMessages(errors){
-        console.log(errors);
+    mapErrorMessages(errors){     
         return errors.map((item,idx) => <li key={idx}>{`${item}`}</li>);
     }
 

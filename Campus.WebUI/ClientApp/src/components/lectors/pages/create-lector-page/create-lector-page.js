@@ -51,9 +51,10 @@ class CreateLectorPage extends Component{
         });
 
         this.props.campusService.createLector(lector)
-            .then(() => {
+            .then(({id}) => {
                 this.setState({
-                    operationSuccessful: true                   
+                    operationSuccessful: true,
+                    createdEntityId:id                   
                 })
             })
             .catch(err => {               
