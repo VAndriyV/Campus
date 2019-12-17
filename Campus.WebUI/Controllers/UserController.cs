@@ -17,17 +17,24 @@ namespace Campus.WebUI.Controllers
             _jwtTokenGenerator = jwtTokenGenerator;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Post([FromBody] UserCredentials credentials)
+        [HttpPost("session")]
+        public async Task<IActionResult> Session([FromBody] UserCredentials credentials)
         {
             var user = await Mediator.Send(new GetUserQuery { Email = credentials.Email, Password =  credentials.Password });
-            var tokenResult = _jwtTokenGenerator.Generate(user);
+            var tokenResult = _jwtTokenGenerator.Generate(user);            
             HttpContext.Response.Cookies.Append(
                 ".AspNetCore.Application.Id",
                 tokenResult.AccessToken,
                 new CookieOptions { MaxAge = TimeSpan.FromMinutes(10080) });
 
             return Ok(user);
+        }
+
+        [HttpDelete("session")]
+        public IActionResult Session()
+        {
+            HttpContext.Response.Cookies.Delete(".AspNetCore.Application.Id");
+            return NoContent();
         }
     }
 }
