@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="3.1.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite.Core" Version="3.1.0" />
+    <PackageReference Include="Moq" Version="4.13.1" />
+    <PackageReference Include="nunit" Version="3.12.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Campus.Application\Campus.Application.csproj" />
+    <ProjectReference Include="..\Campus.Common\Campus.Common.csproj" />
+    <ProjectReference Include="..\Campus.Domain\Campus.Domain.csproj" />
+    <ProjectReference Include="..\Campus.Infrastructure\Campus.Infrastructure.csproj" />
+    <ProjectReference Include="..\Campus.Persistence\Campus.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Lessons\" />
+    <Folder Include="Attendances\" />
+  </ItemGroup>
+
+</Project>

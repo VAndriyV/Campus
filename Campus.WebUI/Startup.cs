@@ -2,6 +2,7 @@ using Campus.Application.Groups.Commands.CreateGroup;
 using Campus.Application.Groups.Queries.GetAllGroups;
 using Campus.Application.Infrastructure;
 using Campus.Infrastructure.Helpers;
+using Campus.Infrastructure.Helpers.Interfaces;
 using Campus.Persistence;
 using Campus.WebUI.Filters;
 using Campus.WebUI.Identity.Jwt;
@@ -46,8 +47,8 @@ namespace Campus.WebUI
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
             services.AddMediatR(typeof(GetAllGroupsQueryHandler).GetTypeInfo().Assembly);
 
-            services.AddTransient(typeof(PasswordHasher));
-            services.AddTransient(typeof(PasswordGenerator));           
+            services.AddTransient(typeof(IPasswordHasher), typeof(PasswordHasher));
+            services.AddTransient(typeof(IPasswordGenerator), typeof(PasswordGenerator));           
 
             services
                .AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))

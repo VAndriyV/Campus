@@ -31,7 +31,7 @@ namespace Campus.Application.LectorSubjects.Commands.DeleteLectorSubject
 
             if (isUsedInLessons)
             {
-                throw new DeleteFailureException(nameof(LectorSubject), request.Id, "This record is used in lesson(s}");
+                throw new DeleteFailureException(nameof(LectorSubject), request.Id, "This record is used in lesson(s)");
             }
 
             _context.LectorSubjects.Remove(lectorSubject);

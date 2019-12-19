@@ -5,21 +5,20 @@ using MediatR;
 
 using Campus.Persistence;
 using Campus.Domain.Entities;
-using Campus.Infrastructure.Helpers;
-using System;
 using Microsoft.EntityFrameworkCore;
 using Campus.Application.Exceptions;
+using Campus.Infrastructure.Helpers.Interfaces;
 
 namespace Campus.Application.Lectors.Commands.CreateLector
 {
     public class CreateLectorCommandHandler : IRequestHandler<CreateLectorCommand, int>
     {
         private readonly CampusDbContext _context;
-        private readonly PasswordHasher _passwordHasher;
-        private readonly PasswordGenerator _passwordGenerator;
+        private readonly IPasswordHasher _passwordHasher;
+        private readonly IPasswordGenerator _passwordGenerator;
 
-        public CreateLectorCommandHandler(CampusDbContext context, PasswordHasher passwordHasher,
-                                         PasswordGenerator passwordGenerator)
+        public CreateLectorCommandHandler(CampusDbContext context, IPasswordHasher passwordHasher,
+                                        IPasswordGenerator passwordGenerator)
         {
             _context = context;
             _passwordHasher = passwordHasher;
@@ -38,8 +37,7 @@ namespace Campus.Application.Lectors.Commands.CreateLector
             var user = new User
             {
                 Email = request.Email,
-               // PasswordHash = _passwordHasher.HashPassword(_passwordGenerator.GetRandomAlphanumericString())   
-               PasswordHash = _passwordHasher.HashPassword("testPassword123")
+                PasswordHash = _passwordHasher.HashPassword(_passwordGenerator.GetRandomAlphanumericString())
             };
 
             _context.Users.Add(user);

@@ -2,7 +2,7 @@
 
 namespace Campus.Application.LectorSubjects.Commands.CreateLectorSubject
 {
-    public class CreateLectorSubjectCommand : IRequest
+    public class CreateLectorSubjectCommand : IRequest<int>
     {
         public int Id { get; set; }
         public int LectorId { get; set; }

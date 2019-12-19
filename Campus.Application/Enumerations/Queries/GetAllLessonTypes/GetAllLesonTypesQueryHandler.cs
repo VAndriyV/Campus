@@ -10,11 +10,11 @@ using Campus.Persistence;
 
 namespace Campus.Application.Enumerations.Queries.GetAllLessonTypes
 {
-    public class GetAllLesonTypesQueryHandler : IRequestHandler<GetAllLessonTypesQuery, EnumerationItemsListViewModel>
+    public class GetAllLessonTypesQueryHandler : IRequestHandler<GetAllLessonTypesQuery, EnumerationItemsListViewModel>
     {
         private readonly CampusDbContext _context;
 
-        public GetAllLesonTypesQueryHandler(CampusDbContext context)
+        public GetAllLessonTypesQueryHandler(CampusDbContext context)
         {
             _context = context;
         }

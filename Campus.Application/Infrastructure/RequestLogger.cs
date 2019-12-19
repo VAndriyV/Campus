@@ -20,7 +20,7 @@ namespace Campus.Application.Infrastructure
 
             // TODO: Add User Details
 
-            _logger.LogInformation("Northwind Request: {Name} {@Request}", name, request);
+            _logger.LogInformation("Campus Request: {Name} {@Request}", name, request);
 
             return Task.CompletedTask;
         }

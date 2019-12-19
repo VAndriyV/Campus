@@ -10,7 +10,7 @@ using Campus.Domain.Entities;
 
 namespace Campus.Application.LectorSubjects.Commands.CreateLectorSubject
 {
-    public class CreateLectorSubjectCommandHandler : IRequestHandler<CreateLectorSubjectCommand, Unit>
+    public class CreateLectorSubjectCommandHandler : IRequestHandler<CreateLectorSubjectCommand, int>
     {
         private readonly CampusDbContext _context;
 
@@ -19,8 +19,10 @@ namespace Campus.Application.LectorSubjects.Commands.CreateLectorSubject
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateLectorSubjectCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateLectorSubjectCommand request, CancellationToken cancellationToken)
         {
+            var all = await _context.LectorSubjects.ToListAsync();
+
             var isLectorSubjectExist = await _context.LectorSubjects.AnyAsync(x => x.LectorId == request.LectorId
                                                                               && x.SubjectId == request.SubjectId
                                                                               && x.LessonTypeId == request.LessonTypeId);
@@ -40,7 +42,7 @@ namespace Campus.Application.LectorSubjects.Commands.CreateLectorSubject
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return lectorSubject.Id;
         }
     }
 }

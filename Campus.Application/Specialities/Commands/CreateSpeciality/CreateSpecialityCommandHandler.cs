@@ -10,7 +10,7 @@ using Campus.Domain.Entities;
 
 namespace Campus.Application.Specialities.Commands.CreateSpeciality
 {
-    public class CreateSpecialityCommandHandler : IRequestHandler<CreateSpecialityCommand, Unit>
+    public class CreateSpecialityCommandHandler : IRequestHandler<CreateSpecialityCommand, int>
     {
         private readonly CampusDbContext _context;
 
@@ -19,7 +19,7 @@ namespace Campus.Application.Specialities.Commands.CreateSpeciality
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateSpecialityCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateSpecialityCommand request, CancellationToken cancellationToken)
         {
             var isSpecialityCodeExist = await _context.Specialities.AnyAsync(x => x.Code == request.Code);
 
@@ -38,7 +38,7 @@ namespace Campus.Application.Specialities.Commands.CreateSpeciality
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return speciality.Id;
         }
     }
 }

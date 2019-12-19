@@ -1,25 +1,24 @@
-﻿using System;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 using MediatR;
 
 using Campus.Application.Users.Queries.DataTransferObjects;
 using Campus.Persistence;
-using Campus.Infrastructure.Helpers;
 using Microsoft.EntityFrameworkCore;
 using Campus.Application.Exceptions;
 using Campus.Domain.Entities;
 using System.Linq;
+using Campus.Infrastructure.Helpers.Interfaces;
 
 namespace Campus.Application.Users.Queries.GetUser
 {
     public class GetUserQueryHandler : IRequestHandler<GetUserQuery, UserDto>
     {
         private readonly CampusDbContext _context;
-        private readonly PasswordHasher _passwordHasher;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public GetUserQueryHandler(CampusDbContext context, PasswordHasher passwordHasher)
+        public GetUserQueryHandler(CampusDbContext context, IPasswordHasher passwordHasher)
         {
             _context = context;
             _passwordHasher = passwordHasher;

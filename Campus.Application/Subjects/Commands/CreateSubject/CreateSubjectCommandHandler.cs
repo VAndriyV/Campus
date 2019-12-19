@@ -8,7 +8,7 @@ using Campus.Domain.Entities;
 
 namespace Campus.Application.Subjects.Commands.CreateSubject
 {
-    public class CreateSubjectCommandHandler : IRequestHandler<CreateSubjectCommand, Unit>
+    public class CreateSubjectCommandHandler : IRequestHandler<CreateSubjectCommand, int>
     {
         private readonly CampusDbContext _context;
 
@@ -17,7 +17,7 @@ namespace Campus.Application.Subjects.Commands.CreateSubject
             _context = context;
         }
 
-        public async Task<Unit> Handle(CreateSubjectCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(CreateSubjectCommand request, CancellationToken cancellationToken)
         {
             var subject = new Subject
             {
@@ -28,7 +28,7 @@ namespace Campus.Application.Subjects.Commands.CreateSubject
 
             await _context.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return subject.Id;
         }
     }
 }

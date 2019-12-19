@@ -33,7 +33,7 @@ namespace Campus.Application.Lectors.Commands.UpdateLector
             if (isEmailExist)
             {
                 throw new DuplicateException(nameof(Lector), "Email", request.Email);
-            }
+            }            
 
             lector.FirstName = request.FirstName;
             lector.LastName = request.LastName;
@@ -42,6 +42,9 @@ namespace Campus.Application.Lectors.Commands.UpdateLector
             lector.Email = request.Email;
             lector.AcademicDegreeId = request.AcademicDegreeId;
             lector.AcademicRankId = request.AcademicRankId;
+
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == lector.UserId);
+            user.Email = request.Email;
 
             await _context.SaveChangesAsync(cancellationToken);
 

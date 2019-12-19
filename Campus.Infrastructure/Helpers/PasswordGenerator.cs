@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Campus.Infrastructure.Helpers.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 
 namespace Campus.Infrastructure.Helpers
 {
-    public class PasswordGenerator
+    public class PasswordGenerator : IPasswordGenerator
     {
         public string GetRandomAlphanumericString(int length = 8)
         {

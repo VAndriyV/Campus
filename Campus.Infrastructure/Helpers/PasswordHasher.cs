@@ -1,13 +1,14 @@
-﻿using System;
+﻿using Campus.Infrastructure.Helpers.Interfaces;
+using System;
 using System.Security.Cryptography;
 using System.Text;
 
 namespace Campus.Infrastructure.Helpers
 {
-    public sealed class PasswordHasher
+    public sealed class PasswordHasher : IPasswordHasher
     {
-        public byte Version => 1;
-        public int SaltSize { get; } = 128 / 8; // 128 bits
+        private readonly byte Version = 1;
+        private readonly int SaltSize = 128 / 8; // 128 bits
         public HashAlgorithmName HashAlgorithmName { get; } = HashAlgorithmName.SHA256;
 
         public string HashPassword(string password)
@@ -32,7 +33,7 @@ namespace Campus.Infrastructure.Helpers
                 throw new ArgumentNullException(nameof(password));
 
             if (hashedPassword == null)
-                return false;
+                throw new ArgumentNullException(nameof(hashedPassword));
 
             Span<byte> numArray = Convert.FromBase64String(hashedPassword);
             if (numArray.Length < 1)
