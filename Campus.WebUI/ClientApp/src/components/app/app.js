@@ -32,6 +32,7 @@ import CreateAttendancePage from '../attendances/pages/create-attendance-page';
 import LoginPage from '../user/pages/login-page';
 import HomePage from '../home-page';
 import NotFoundPage from '../error-pages/not-found-page';
+import ResetPasswordPage from '../user/pages/reset-password-page';
 
 
 export default class App extends Component {
@@ -94,6 +95,7 @@ export default class App extends Component {
                 <AuthenticatedRoute user={currentUser} requiredRoles={['Lector', 'Admin', 'SuperAdmin']} exact path='/attendances/new' component={CreateAttendancePage} />
 
                 <UnauthenticatedRoute user={currentUser} path='/login' userService={this.userService} component={LoginPage} />
+                <UnauthenticatedRoute path='/resetpassword' userService={this.userService} component={ResetPasswordPage} />
 
                 <Route render={(props)=> <NotFoundPage displayHomeLink={false} {...props} />} />
               </Switch>

@@ -1,4 +1,4 @@
-﻿namespace Campus.Infrastructure.Helpers.Interfaces
+﻿namespace Campus.Application.Helpers.Interfaces
 {
     public interface IPasswordHasher
     {

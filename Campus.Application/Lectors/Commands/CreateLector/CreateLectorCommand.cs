@@ -2,7 +2,7 @@
 
 namespace Campus.Application.Lectors.Commands.CreateLector
 {
-    public class CreateLectorCommand : IRequest<int>
+    public class CreateLectorCommand : IRequest<(int,string)>
     {
         public int Id { get; set; }
         public string FirstName { get; set; }

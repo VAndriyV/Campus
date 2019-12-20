@@ -87,7 +87,7 @@ class CreateGroupPage extends Component {
                         <h5 className="alert-heading"> Group is successfully added.</h5>
                         <p>Go to {<Link to={`/groups/${createdEntityId}`} className='alert-link'>
                             group detail page
-                            </Link>} or to{<Link to={`/groups`} className='alert-link'>
+                            </Link>} or to {<Link to={`/groups`} className='alert-link'>
                                 groups list
                             </Link>}
                         </p>

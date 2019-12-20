@@ -1,4 +1,6 @@
-﻿using Campus.Application.Users.Queries.GetUser;
+﻿using Campus.Application.Notifications.Commands.SendResetedPassword;
+using Campus.Application.Users.Commands.ResetUserPassword;
+using Campus.Application.Users.Queries.GetUser;
 using Campus.WebUI.Identity.Jwt.Interfaces;
 using Campus.WebUI.Models;
 using Microsoft.AspNetCore.Http;
@@ -35,6 +37,14 @@ namespace Campus.WebUI.Controllers
         {
             HttpContext.Response.Cookies.Delete(".AspNetCore.Application.Id");
             return NoContent();
+        }
+
+        [HttpPost("resetpassword")]
+        public async Task<IActionResult> ResetPassword([FromBody] ResetUserPasswordCommand command)
+        {
+            var (id, password) = await Mediator.Send(command);
+
+            return Ok(await Mediator.Send(new SendResetedPasswordCommand { UserId = id, Password = password }));            
         }
     }
 }

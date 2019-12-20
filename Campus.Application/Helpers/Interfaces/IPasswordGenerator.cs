@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Campus.Infrastructure.Helpers.Interfaces
+namespace Campus.Application.Helpers.Interfaces
 {
     public interface IPasswordGenerator
     {

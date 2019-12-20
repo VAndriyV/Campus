@@ -86,7 +86,7 @@ class CreateLectorPage extends Component {
                         <h5 className="alert-heading"> Lector is successfully added.</h5>
                         <p>Go to {<Link to={`/lectors/${createdEntityId}`} className='alert-link'>
                             lector detail page
-                            </Link>} or to{<Link to={`/lectors`} className='alert-link'>
+                            </Link>} or to {<Link to={`/lectors`} className='alert-link'>
                                 lectors list
                             </Link>}
                         </p>

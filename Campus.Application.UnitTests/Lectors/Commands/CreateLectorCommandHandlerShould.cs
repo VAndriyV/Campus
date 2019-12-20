@@ -3,7 +3,7 @@ using Campus.Application.Lectors.Commands.CreateLector;
 using Campus.Application.UnitTests.Common;
 using Campus.Application.UnitTests.Common.MockSetupHelpers;
 using Campus.Domain.Entities;
-using Campus.Infrastructure.Helpers.Interfaces;
+using Campus.Application.Helpers.Interfaces;
 using Moq;
 using NUnit.Framework;
 using System.Linq;
@@ -44,7 +44,7 @@ namespace Campus.Application.UnitTests.Lectors.Commands
 
             var handler = new CreateLectorCommandHandler(Context, passwordHasherMock.Object, passwordGeneratorMock.Object);
 
-            var result = await handler.Handle(request, CancellationToken.None);
+            await handler.Handle(request, CancellationToken.None);
 
             passwordGeneratorMock.Verify_GetRandomAlphanumericString_Called_Once();
             passwordHasherMock.Verify_HashPassword_Called_Once();
@@ -107,12 +107,12 @@ namespace Campus.Application.UnitTests.Lectors.Commands
 
             var handler = new CreateLectorCommandHandler(Context, passwordHasherMock.Object, passwordGeneratorMock.Object);
 
-            var result = await handler.Handle(request, CancellationToken.None);
+            var (id,_) = await handler.Handle(request, CancellationToken.None);
 
             passwordGeneratorMock.Verify_GetRandomAlphanumericString_Called_Once();
             passwordHasherMock.Verify_HashPassword_Called_Once();
 
-            Assert.IsTrue(Context.Lectors.Where(x => x.Id == result).Count() == 1);
+            Assert.IsTrue(Context.Lectors.Where(x => x.Id == id).Count() == 1);
         }
 
         [Test]
@@ -137,7 +137,7 @@ namespace Campus.Application.UnitTests.Lectors.Commands
 
             var handler = new CreateLectorCommandHandler(Context, passwordHasherMock.Object, passwordGeneratorMock.Object);
 
-            var result = await handler.Handle(request, CancellationToken.None);
+            var (id,_) = await handler.Handle(request, CancellationToken.None);
 
             passwordGeneratorMock.Verify_GetRandomAlphanumericString_Called_Once();
             passwordHasherMock.Verify_HashPassword_Called_Once();
@@ -146,7 +146,7 @@ namespace Campus.Application.UnitTests.Lectors.Commands
             Assert.IsNotNull(user);
 
             Assert.IsTrue(Context.UserRoles.Where(x => x.RoleId == 1 && x.UserId == user.Id).Count() == 1);
-            Assert.IsTrue(Context.Lectors.Where(x => x.Id == result && x.UserId == user.Id).Count() == 1);
+            Assert.IsTrue(Context.Lectors.Where(x => x.Id == id && x.UserId == user.Id).Count() == 1);
         }
 
         [Test]

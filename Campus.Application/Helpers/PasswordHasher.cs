@@ -1,9 +1,9 @@
-﻿using Campus.Infrastructure.Helpers.Interfaces;
+﻿using Campus.Application.Helpers.Interfaces;
 using System;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Campus.Infrastructure.Helpers
+namespace Campus.Application.Helpers
 {
     public sealed class PasswordHasher : IPasswordHasher
     {

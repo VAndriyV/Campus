@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Campus.Application.Exceptions;
 using Campus.Domain.Entities;
 using System.Linq;
-using Campus.Infrastructure.Helpers.Interfaces;
+using Campus.Application.Helpers.Interfaces;
 
 namespace Campus.Application.Users.Queries.GetUser
 {

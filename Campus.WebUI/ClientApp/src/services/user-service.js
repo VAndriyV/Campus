@@ -18,8 +18,7 @@ export default class UserService extends BaseService{
         });
     }
 
-    logout = async()=>{     
-       
+    logout = async()=>{
        await this.DELETE('/user/session')
         .then(()=>{
             localStorage.removeItem('user');
@@ -27,4 +26,8 @@ export default class UserService extends BaseService{
         });    
     }
 
+    resetPassword = async(resetInfo)=>{
+        var result = await this.POST('/user/resetpassword',resetInfo);
+        return result;
+    }
 }

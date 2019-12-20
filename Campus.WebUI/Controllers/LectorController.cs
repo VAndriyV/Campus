@@ -3,6 +3,7 @@ using Campus.Application.Lectors.Commands.DeleteLector;
 using Campus.Application.Lectors.Commands.UpdateLector;
 using Campus.Application.Lectors.Queries.GetAllLectors;
 using Campus.Application.Lectors.Queries.GetLectorDetail;
+using Campus.Application.Notifications.Commands.SendPasswordToNewLector;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -25,9 +26,11 @@ namespace Campus.WebUI.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateLectorCommand command)
         {
-            var productId = await Mediator.Send(command);
+            var (id,password) = await Mediator.Send(command);
 
-            return CreatedAtAction("Get", new { id = productId });
+            await Mediator.Send(new SendPasswordToNewLectorCommand { LectorId = id, Password = password });
+
+            return CreatedAtAction("Get", new { id });
         }
        
         [HttpPut("{id}")]

@@ -7,25 +7,25 @@ using Campus.Persistence;
 using Campus.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Campus.Application.Exceptions;
-using Campus.Infrastructure.Helpers.Interfaces;
+using Campus.Application.Helpers.Interfaces;
 
 namespace Campus.Application.Lectors.Commands.CreateLector
 {
-    public class CreateLectorCommandHandler : IRequestHandler<CreateLectorCommand, int>
+    public class CreateLectorCommandHandler : IRequestHandler<CreateLectorCommand, (int,string)>
     {
         private readonly CampusDbContext _context;
         private readonly IPasswordHasher _passwordHasher;
-        private readonly IPasswordGenerator _passwordGenerator;
+        private readonly IPasswordGenerator _passwordGenerator;       
 
         public CreateLectorCommandHandler(CampusDbContext context, IPasswordHasher passwordHasher,
                                         IPasswordGenerator passwordGenerator)
         {
             _context = context;
             _passwordHasher = passwordHasher;
-            _passwordGenerator = passwordGenerator;
+            _passwordGenerator = passwordGenerator;           
         }
 
-        public async Task<int> Handle(CreateLectorCommand request, CancellationToken cancellationToken)
+        public async Task<(int,string)> Handle(CreateLectorCommand request, CancellationToken cancellationToken)
         {
             var isEmailExist = await _context.Lectors.AnyAsync(x => x.Email == request.Email);
             
@@ -34,10 +34,12 @@ namespace Campus.Application.Lectors.Commands.CreateLector
                 throw new DuplicateException(nameof(Lector), "Email", request.Email);
             }
 
+            var password = _passwordGenerator.GetRandomAlphanumericString();
+
             var user = new User
             {
                 Email = request.Email,
-                PasswordHash = _passwordHasher.HashPassword(_passwordGenerator.GetRandomAlphanumericString())
+                PasswordHash = _passwordHasher.HashPassword(password)
             };
 
             _context.Users.Add(user);
@@ -62,11 +64,11 @@ namespace Campus.Application.Lectors.Commands.CreateLector
                 User = user
             };
 
-            _context.Lectors.Add(lector);
+            _context.Lectors.Add(lector);            
 
-            await _context.SaveChangesAsync(cancellationToken);
+            await _context.SaveChangesAsync(cancellationToken);           
 
-            return lector.Id;
+            return (lector.Id, password);
         }
     }
 }

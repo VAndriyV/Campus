@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Campus.Application\Campus.Application.csproj" />
+    <ProjectReference Include="..\Campus.Infrastructure\Campus.Infrastructure.csproj" />
     <ProjectReference Include="..\Campus.Persistence\Campus.Persistence.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,4 @@
-﻿using Campus.Infrastructure.Helpers.Interfaces;
+﻿using Campus.Application.Helpers.Interfaces;
 using Moq;
 
 namespace Campus.Application.UnitTests.Common.MockSetupHelpers

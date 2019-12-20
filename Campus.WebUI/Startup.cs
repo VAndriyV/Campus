@@ -1,8 +1,8 @@
 using Campus.Application.Groups.Commands.CreateGroup;
 using Campus.Application.Groups.Queries.GetAllGroups;
 using Campus.Application.Infrastructure;
-using Campus.Infrastructure.Helpers;
-using Campus.Infrastructure.Helpers.Interfaces;
+using Campus.Application.Helpers;
+using Campus.Application.Helpers.Interfaces;
 using Campus.Persistence;
 using Campus.WebUI.Filters;
 using Campus.WebUI.Identity.Jwt;
@@ -23,6 +23,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System.Reflection;
+using Campus.Application.Interfaces;
+using Campus.Infrastructure.Services;
 
 namespace Campus.WebUI
 {
@@ -48,7 +50,9 @@ namespace Campus.WebUI
             services.AddMediatR(typeof(GetAllGroupsQueryHandler).GetTypeInfo().Assembly);
 
             services.AddTransient(typeof(IPasswordHasher), typeof(PasswordHasher));
-            services.AddTransient(typeof(IPasswordGenerator), typeof(PasswordGenerator));           
+            services.AddTransient(typeof(IPasswordGenerator), typeof(PasswordGenerator));
+
+            services.AddTransient(typeof(INotificationService), typeof(NotificationService));
 
             services
                .AddControllers(options => options.Filters.Add(typeof(CustomExceptionFilterAttribute)))

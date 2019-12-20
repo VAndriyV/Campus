@@ -1,10 +1,10 @@
-﻿using Campus.Infrastructure.Helpers.Interfaces;
+﻿using Campus.Application.Helpers.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 
-namespace Campus.Infrastructure.Helpers
+namespace Campus.Application.Helpers
 {
     public class PasswordGenerator : IPasswordGenerator
     {

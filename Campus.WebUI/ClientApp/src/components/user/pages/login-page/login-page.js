@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Row, Col } from 'reactstrap';
 import LoginForm from '../../components/login-form';
+import {Link} from 'react-router-dom';
 
 export default class LoginPage extends Component {
     state = {
@@ -32,6 +33,9 @@ export default class LoginPage extends Component {
         return (<Row>
             <Col xs={12}>
                 <LoginForm hasError={hasError} errorObj={errorObj} onSubmit={this.onSubmit} />
+                <div>
+                    <Link to={'/resetpassword'}>Reset password</Link>
+                </div>
             </Col>
         </Row>);
     }
