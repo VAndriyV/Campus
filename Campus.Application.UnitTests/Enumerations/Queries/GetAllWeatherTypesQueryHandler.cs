@@ -10,8 +10,10 @@ namespace Campus.Application.UnitTests.Enumerations.Queries
     [TestFixture]
     public class GetAllWeatherTypesQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             Context.WeatherTypes.Add(new WeatherType { Id = 1, Name = "Weather type 1" });
             Context.SaveChanges();
         }

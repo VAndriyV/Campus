@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.LectorSubjects.Commands
     [TestFixture]
     public class UpdateLectorSubjectCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             LectorSubjectsTestHelper.LoadLectorSubjectsTestData(Context);
         }
 
@@ -33,10 +34,10 @@ namespace Campus.Application.UnitTests.LectorSubjects.Commands
 
             await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.LectorSubjects.Any(x => x.Id == request.Id
+            Assert.IsTrue(Context.LectorSubjects.Where(x => x.Id == request.Id
                                                      && x.LectorId == request.LectorId
                                                      && x.LessonTypeId == request.LessonTypeId
-                                                     && x.SubjectId == request.SubjectId));
+                                                     && x.SubjectId == request.SubjectId).Count() == 1);
         }
 
         [Test]

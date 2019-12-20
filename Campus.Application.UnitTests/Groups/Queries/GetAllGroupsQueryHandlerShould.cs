@@ -8,9 +8,10 @@ namespace Campus.Application.UnitTests.Groups.Queries
     [TestFixture]
     public class GetAllGroupsQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             GroupsTestHelper.LoadGroupsTestData(Context);
         }
 

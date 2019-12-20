@@ -10,8 +10,10 @@ namespace Campus.Application.UnitTests.Enumerations.Queries
     [TestFixture]
     public class GetAllDayOfWeeksQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             Context.DayOfWeeks.Add(new DayOfWeek { Id = 1, Name = "Day of week 1" });
             Context.SaveChanges();
         }

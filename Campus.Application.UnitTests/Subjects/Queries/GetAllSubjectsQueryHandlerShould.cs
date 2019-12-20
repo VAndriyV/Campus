@@ -8,9 +8,10 @@ namespace Campus.Application.UnitTests.Subjects.Queries
     [TestFixture]
     public class GetAllSubjectsQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             SubjectsTestHelper.LoadSubjectsTestData(Context);
         }
 

@@ -12,8 +12,10 @@ namespace Campus.Application.UnitTests.Specialities.Queries
     [TestFixture]
     public class GetSpecialityQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             SpecialitiesTestHelper.LoadSpecialitiesTestData(Context);
         }
         

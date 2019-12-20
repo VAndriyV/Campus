@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Groups.Commands
     [TestFixture]
     public class DeleteGroupCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             GroupsTestHelper.LoadGroupsTestData(Context);
         }
 

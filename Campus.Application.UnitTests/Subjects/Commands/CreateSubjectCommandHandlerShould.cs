@@ -9,9 +9,10 @@ namespace Campus.Application.UnitTests.Subjects.Commands
     [TestFixture]
     public class CreateSubjectCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             SubjectsTestHelper.LoadSubjectsTestData(Context);
         }
 
@@ -27,7 +28,7 @@ namespace Campus.Application.UnitTests.Subjects.Commands
 
             var result = await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.Subjects.Any(x => x.Id == result));
+            Assert.IsTrue(Context.Subjects.Where(x => x.Id == result).Count() == 1);
         }       
     }
 }

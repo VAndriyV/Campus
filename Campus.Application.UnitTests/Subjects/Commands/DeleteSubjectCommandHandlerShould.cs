@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Subjects.Commands
     [TestFixture]
     public class DeleteSubjectCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             SubjectsTestHelper.LoadSubjectsTestData(Context);
         }
 

@@ -11,8 +11,10 @@ namespace Campus.Application.UnitTests.Groups.Queries
     [TestFixture]
     public class GetGroupQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             GroupsTestHelper.LoadGroupsTestData(Context);
         }
 

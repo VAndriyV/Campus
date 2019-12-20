@@ -10,8 +10,10 @@ namespace Campus.Application.UnitTests.Enumerations.Queries
     [TestFixture]
     public class GetAllLessonTypesQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             Context.LessonTypes.Add(new LessonType { Id = 1, Name = "Lesson type 1" });
             Context.SaveChanges();
         }

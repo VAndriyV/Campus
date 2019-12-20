@@ -8,8 +8,10 @@ namespace Campus.Application.UnitTests.Lectors.Queries
     [TestFixture]
     public class GetAllLectorsQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
-        {            
+        {
+            InitDbContext();
             LectorsTestHelper.LoadLectorsTestData(Context);
         }
 

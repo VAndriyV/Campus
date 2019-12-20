@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Specialities.Commands
     [TestFixture]
     public class DeleteSpecialityCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             SpecialitiesTestHelper.LoadSpecialitiesTestData(Context);
         }
 
@@ -30,7 +31,7 @@ namespace Campus.Application.UnitTests.Specialities.Commands
 
             var result = await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsFalse(Context.Specialities.Any(x => x.Id == request.Id));
+            Assert.IsFalse(Context.Specialities.Where(x => x.Id == request.Id).Count() == 1);
         }
 
         [Test]

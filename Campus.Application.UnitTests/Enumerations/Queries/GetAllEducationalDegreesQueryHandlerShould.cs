@@ -10,8 +10,10 @@ namespace Campus.Application.UnitTests.Enumerations.Queries
     [TestFixture]
     public class GetAllEducationalDegreesQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             Context.EducationalDegrees.Add(new EducationalDegree { Id = 1, Name = "Educational degree 1" });
             Context.SaveChanges();
         }

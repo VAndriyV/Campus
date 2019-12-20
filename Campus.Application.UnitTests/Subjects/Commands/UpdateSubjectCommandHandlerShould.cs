@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Subjects.Commands
     [TestFixture]
     public class UpdateSubjectCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             SubjectsTestHelper.LoadSubjectsTestData(Context);
         }
 
@@ -31,7 +32,7 @@ namespace Campus.Application.UnitTests.Subjects.Commands
 
             await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.Subjects.Any(x => x.Id == request.Id && x.Name == request.Name));
+            Assert.IsTrue(Context.Subjects.Where(x => x.Id == request.Id && x.Name == request.Name).Count() == 1);
         }
 
         [Test]

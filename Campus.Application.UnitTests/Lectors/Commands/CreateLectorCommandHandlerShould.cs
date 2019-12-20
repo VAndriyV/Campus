@@ -49,7 +49,7 @@ namespace Campus.Application.UnitTests.Lectors.Commands
             passwordGeneratorMock.Verify_GetRandomAlphanumericString_Called_Once();
             passwordHasherMock.Verify_HashPassword_Called_Once();
 
-            Assert.IsTrue(Context.Users.Any(x => x.Email == request.Email));
+            Assert.IsTrue(Context.Users.Where(x => x.Email == request.Email).Count()==1);
         }
 
         [Test]
@@ -82,7 +82,7 @@ namespace Campus.Application.UnitTests.Lectors.Commands
             var user = Context.Users.SingleOrDefault(x => x.Email == request.Email);
 
             Assert.IsNotNull(user);
-            Assert.IsTrue(Context.UserRoles.Any(x => x.RoleId == 1 && x.UserId == user.Id));
+            Assert.IsTrue(Context.UserRoles.Where(x => x.RoleId == 1 && x.UserId == user.Id).Count() == 1);
         }
 
         [Test]
@@ -112,7 +112,7 @@ namespace Campus.Application.UnitTests.Lectors.Commands
             passwordGeneratorMock.Verify_GetRandomAlphanumericString_Called_Once();
             passwordHasherMock.Verify_HashPassword_Called_Once();
 
-            Assert.IsTrue(Context.Lectors.Any(x => x.Id == result));
+            Assert.IsTrue(Context.Lectors.Where(x => x.Id == result).Count() == 1);
         }
 
         [Test]
@@ -145,8 +145,8 @@ namespace Campus.Application.UnitTests.Lectors.Commands
             var user = Context.Users.SingleOrDefault(x => x.Email == request.Email);
             Assert.IsNotNull(user);
 
-            Assert.IsTrue(Context.UserRoles.Any(x => x.RoleId == 1 && x.UserId == user.Id));
-            Assert.IsTrue(Context.Lectors.Any(x => x.Id == result && x.UserId == user.Id));
+            Assert.IsTrue(Context.UserRoles.Where(x => x.RoleId == 1 && x.UserId == user.Id).Count() == 1);
+            Assert.IsTrue(Context.Lectors.Where(x => x.Id == result && x.UserId == user.Id).Count() == 1);
         }
 
         [Test]

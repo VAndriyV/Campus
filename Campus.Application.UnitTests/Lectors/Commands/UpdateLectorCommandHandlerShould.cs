@@ -38,8 +38,8 @@ namespace Campus.Application.UnitTests.Lectors.Commands
 
             var result = await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.Lectors.Any(x => x.Id == request.Id && x.Email == request.Email));
-            Assert.IsTrue(Context.Users.Any(x => x.Id == 100 && x.Email == request.Email));
+            Assert.IsTrue(Context.Lectors.Where(x => x.Id == request.Id && x.Email == request.Email).Count() == 1);
+            Assert.IsTrue(Context.Users.Where(x => x.Id == 100 && x.Email == request.Email).Count() == 1);
         }
 
         [Test]

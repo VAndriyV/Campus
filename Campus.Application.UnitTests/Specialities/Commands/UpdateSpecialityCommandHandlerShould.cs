@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Specialities.Commands
     [TestFixture]
     public class UpdateSpecialityCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             SpecialitiesTestHelper.LoadSpecialitiesTestData(Context);
         }
 
@@ -32,9 +33,9 @@ namespace Campus.Application.UnitTests.Specialities.Commands
 
             await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.Specialities.Any(x => x.Id == request.Id 
+            Assert.IsTrue(Context.Specialities.Where(x => x.Id == request.Id 
                                                    && x.Name == request.Name
-                                                   && x.Code == request.Code));
+                                                   && x.Code == request.Code).Count() == 1);
         }
 
         [Test]

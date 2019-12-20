@@ -10,12 +10,14 @@ namespace Campus.Application.UnitTests.Enumerations.Queries
     [TestFixture]
     public class GetAllAcademicDegreesQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             Context.AcademicDegrees.Add(new AcademicDegree { Id = 1, Name = "Academic rank 1" });
             Context.SaveChanges();
         }
-
+       
         [Test]
         public async Task ReturnCorrectAcademicDegreesAmount()
         {

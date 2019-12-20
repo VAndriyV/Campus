@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Groups.Commands
     [TestFixture]
     public class CreateGroupCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             GroupsTestHelper.LoadGroupsTestData(Context);
         }
 
@@ -34,7 +35,7 @@ namespace Campus.Application.UnitTests.Groups.Commands
 
             var result = await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.Groups.Any(x => x.Id == result));
+            Assert.IsTrue(Context.Groups.Where(x => x.Id == result).Count()==1);
         }
 
         [Test]

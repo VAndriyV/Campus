@@ -15,9 +15,10 @@ namespace Campus.Application.UnitTests.LectorSubjects.Commands
     [TestFixture]
     public class DeleteLectorSubjectCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             LectorSubjectsTestHelper.LoadLectorSubjectsTestData(Context);
         }
 

@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Groups.Commands
     [TestFixture]
     public class UpdateGroupCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             GroupsTestHelper.LoadGroupsTestData(Context);
         }
 
@@ -35,11 +36,11 @@ namespace Campus.Application.UnitTests.Groups.Commands
 
             await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.Groups.Any(x => x.Id == request.Id 
+            Assert.IsTrue(Context.Groups.Where(x => x.Id == request.Id 
                                              && x.Name == request.Name
                                              && x.EducationalDegreeId == request.EducationalDegreeId
                                              && x.SpecialityId == request.SpecialityId
-                                             && x.Year == request.Year));
+                                             && x.Year == request.Year).Count() == 1);
         }
 
         [Test]

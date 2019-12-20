@@ -10,8 +10,10 @@ namespace Campus.Application.UnitTests.Enumerations.Queries
     [TestFixture]
     public class GetAllAcademicRanksQueryHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
+            InitDbContext();
             Context.AcademicRanks.Add(new AcademicRank { Id = 1, Name = "Academic rank 1" });
             Context.SaveChanges();
         }

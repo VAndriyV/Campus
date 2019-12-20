@@ -12,9 +12,10 @@ namespace Campus.Application.UnitTests.Specialities.Commands
     [TestFixture]
     public class CreateSpecialityCommandHandlerShould : TestBase
     {
+        [SetUp]
         protected override void LoadTestData()
         {
-            base.LoadTestData();
+            InitDbContext();
             SpecialitiesTestHelper.LoadSpecialitiesTestData(Context);
         }
 
@@ -31,7 +32,7 @@ namespace Campus.Application.UnitTests.Specialities.Commands
 
             var result = await handler.Handle(request, CancellationToken.None);
 
-            Assert.IsTrue(Context.Specialities.Any(x => x.Id == result));
+            Assert.IsTrue(Context.Specialities.Where(x => x.Id == result).Count() == 1);
         }
 
         [Test]
