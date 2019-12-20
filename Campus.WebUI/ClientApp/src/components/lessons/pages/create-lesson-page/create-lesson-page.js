@@ -59,6 +59,12 @@ class CreateLessonPage extends Component {
                 lessonTypes: items,
                 loading: false
             });
+        })
+        .catch(err => {
+            this.setState({
+                hasError: true,
+                errorObj: err
+            });
         });
     }
 
@@ -72,34 +78,31 @@ class CreateLessonPage extends Component {
 
     onSubmit(lesson) {
         this.setState({
-            operationSuccessful: false,         
+            operationSuccessful: false,
             hasError: false,
             errorObj: null
         });
 
         this.props.campusService.createLesson(lesson)
-        .then(() => {
-            this.setState({
-                operationSuccessful: true                
+            .then(() => {
+                this.setState({
+                    operationSuccessful: true
+                })
             })
-        })
-        .catch(err => {               
-            if (err.status === 400 || err.status=== 409) {
+            .catch(err => {
                 this.setState({
                     hasError: true,
                     errorObj: err
                 });
-            }
-            else {
-                throw err;
-            }
-        });
+            });
     }
 
     render() {
         const { lectors, groups, lessonTypes, subjects, loading, hasError, errorObj,
             operationSuccessful } = this.state;
-
+        if (hasError && !(errorObj.status === 400 || errorObj.status === 409)) {
+            throw errorObj;
+        }
         return (<Row>
             <Col xs={12}>
                 {loading ? <Spinner /> :

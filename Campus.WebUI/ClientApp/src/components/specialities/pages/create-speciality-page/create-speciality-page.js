@@ -31,21 +31,18 @@ class CreateSpecialityPage extends Component {
                 })
             })
             .catch(err => {
-                if (err.status === 400 || err.status === 409) {
-                    this.setState({
-                        hasError: true,
-                        errorObj: err
-                    });
-                }
-                else {
-                    throw err;
-                }
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
             });
     }
 
     render() {
         const { hasError, errorObj, operationSuccessful } = this.state;
-
+        if (hasError && !(errorObj.status === 400 || errorObj.status === 409)) {
+            throw errorObj;
+        }
         return (<Row>
             <Col xs={12}>
                 <CreateSpecialityForm onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj} />

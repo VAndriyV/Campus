@@ -55,15 +55,22 @@ class EditLessonPage extends Component {
             campusService.getAllLectors(),
             campusService.getAllGroups(),
             campusService.getLessonTypes(),
-        ]).then(([lesson, { lectors }, { groups }, { items }]) => {
-            this.setState({
-                lesson: lesson,
-                lectors: lectors,
-                groups: groups,
-                lessonTypes: items,
-                loading: false
+        ])
+            .then(([lesson, { lectors }, { groups }, { items }]) => {
+                this.setState({
+                    lesson: lesson,
+                    lectors: lectors,
+                    groups: groups,
+                    lessonTypes: items,
+                    loading: false
+                });
+            })
+            .catch(err => {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
             });
-        });
     }
 
     updateSubjectsList(e) {
@@ -88,22 +95,19 @@ class EditLessonPage extends Component {
                 })
             })
             .catch(err => {
-                if (err.status === 400 || err.status === 409) {
-                    this.setState({
-                        hasError: true,
-                        errorObj: err
-                    });
-                }
-                else {
-                    throw err;
-                }
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
             });
     }
 
     render() {
         const { lectors, groups, lessonTypes, subjects, lesson, loading, hasError, errorObj,
             operationSuccessful } = this.state;
-
+        if (hasError && !(errorObj.status === 400 || errorObj.status === 409)) {
+            throw errorObj;
+        }
         return (<Row>
             <Col xs={12}>
                 {loading ? <Spinner /> :

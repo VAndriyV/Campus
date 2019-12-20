@@ -41,16 +41,11 @@ class CreateGroupPage extends Component {
                     createdEntityId: id
                 })
             })
-            .catch(err => {               
-                if (err.status === 400 || err.status=== 409) {
-                    this.setState({
-                        hasError: true,
-                        errorObj: err
-                    });
-                }
-                else {
-                    throw err;
-                }
+            .catch(err => {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
             });
     }
 
@@ -67,12 +62,21 @@ class CreateGroupPage extends Component {
                     educationalDegrees: educationalDegrees.items,
                     loading: false
                 });
+            })
+            .catch(err => {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
             });
     }
 
     render() {
         const { educationalDegrees, specialities, loading, hasError, errorObj,
             operationSuccessful, createdEntityId } = this.state;
+        if (hasError && !(errorObj.status === 400 || errorObj.status === 409)) {
+            throw errorObj;
+        }
 
         return (<Row>
             <Col xs={12}>
@@ -80,12 +84,12 @@ class CreateGroupPage extends Component {
                     specialities={specialities} onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj} />}
                 {operationSuccessful ? <div className='form-alert'>
                     <Alert color="success">
-                        <h5 className="alert-heading"> Group is successfully added.</h5> 
+                        <h5 className="alert-heading"> Group is successfully added.</h5>
                         <p>Go to {<Link to={`/groups/${createdEntityId}`} className='alert-link'>
                             group detail page
                             </Link>} or to{<Link to={`/groups`} className='alert-link'>
                                 groups list
-                            </Link>} 
+                            </Link>}
                         </p>
                     </Alert>
                 </div> : null}

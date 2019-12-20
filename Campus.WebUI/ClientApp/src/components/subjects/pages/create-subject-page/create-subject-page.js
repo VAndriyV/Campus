@@ -1,25 +1,25 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import CreateSubjectForm from '../../components/create-subject-form';
 import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 import { Link } from 'react-router-dom';
 
-class CreateSubjectPage extends Component{   
-    state={
+class CreateSubjectPage extends Component {
+    state = {
         hasError: false,
         errorObj: null,
-        operationSuccessful: false 
+        operationSuccessful: false
     }
 
-    constructor(props){
+    constructor(props) {
         super(props);
 
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    onSubmit(subject){
+    onSubmit(subject) {
         this.setState({
-            operationSuccessful: false,           
+            operationSuccessful: false,
             hasError: false,
             errorObj: null
         });
@@ -27,34 +27,31 @@ class CreateSubjectPage extends Component{
         this.props.campusService.createSubject(subject)
             .then(() => {
                 this.setState({
-                    operationSuccessful: true                  
+                    operationSuccessful: true
                 })
             })
-            .catch(err => {               
-                if (err.status === 400 || err.status=== 409) {
-                    this.setState({
-                        hasError: true,
-                        errorObj: err
-                    });
-                }
-                else {
-                    throw err;
-                }
-            }); 
+            .catch(err => {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
+            });
     }
 
-    render(){    
+    render() {
         const { hasError, errorObj, operationSuccessful } = this.state;
-
+        if (hasError && !(errorObj.status === 400 || errorObj.status === 409)) {
+            throw errorObj;
+        }
         return (<Row>
             <Col xs={12}>
-                <CreateSubjectForm onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj}/>
+                <CreateSubjectForm onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj} />
                 {operationSuccessful ? <div className='form-alert'>
                     <Alert color="success">
-                        <h5 className="alert-heading"> Subject is successfully added.</h5> 
+                        <h5 className="alert-heading"> Subject is successfully added.</h5>
                         <p>Go to {<Link to={`/subjects`} className='alert-link'>
-                                subjects list
-                            </Link>} 
+                            subjects list
+                            </Link>}
                         </p>
                     </Alert>
                 </div> : null}

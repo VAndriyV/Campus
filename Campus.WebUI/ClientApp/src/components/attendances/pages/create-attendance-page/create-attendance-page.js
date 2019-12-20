@@ -1,10 +1,10 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import CreateAttendanceForm from '../../components/create-attendance-form';
 import Spinner from '../../../spinner';
 import { Row, Col, Alert } from 'reactstrap';
 import withCampusService from '../../../hoc/with-campus-service';
 
-class CreateAttendancePage extends Component{
+class CreateAttendancePage extends Component {
     constructor(props) {
         super(props)
 
@@ -13,14 +13,14 @@ class CreateAttendancePage extends Component{
     }
 
     lectorId = 1;
-    state={
-        groups:[],
-        lessons:[],
-        groupId:0,
+    state = {
+        groups: [],
+        lessons: [],
+        groupId: 0,
         hasError: false,
         errorObj: null,
         operationSuccessful: false,
-        loading:true
+        loading: true
     };
 
     componentDidMount() {
@@ -41,60 +41,64 @@ class CreateAttendancePage extends Component{
         }
     }
 
-    fetchData(){
-        const {campusService} = this.props;       
+    fetchData() {
+        const { campusService } = this.props;
 
         Promise.all([
             campusService.getLectorsGroups(this.lectorId),
-            campusService.getWeatherTypes()            
+            campusService.getWeatherTypes()
         ]).then(([{ groups }, { items }]) => {
-            this.setState({                
+            this.setState({
                 groups: groups,
-                weatherTypes:items,              
+                weatherTypes: items,
                 loading: false
+            });
+        })
+        .catch(err => {
+            this.setState({
+                hasError: true,
+                errorObj: err
             });
         });
     }
 
-    updateLessonsList(e){
+    updateLessonsList(e) {
         const { name, value } = e.target;
 
-        this.setState({           
+        this.setState({
             [name]: value
         });
     }
 
-    onSubmit(attendance){       
+    onSubmit(attendance) {
         this.props.campusService.createAttendance(attendance)
-        .then(() => {
-            this.setState({
-                operationSuccessful: true
+            .then(() => {
+                this.setState({
+                    operationSuccessful: true
+                })
             })
-        })
-        .catch(err => {
-            if (err.status === 400 || err.status === 409) {
+            .catch(err => {
                 this.setState({
                     hasError: true,
                     errorObj: err
                 });
-            }
-            else {
-                throw err;
-            }
-        });
+            });
     }
 
-    render(){
-        const {loading, lessons, groups, weatherTypes,  hasError, errorObj, operationSuccessful} = this.state;
+    render() {
+        const { loading, lessons, groups, weatherTypes, hasError, errorObj, operationSuccessful } = this.state;
+        if (hasError && !(errorObj.status === 400 || errorObj.status === 409)){
+            throw errorObj;
+        }
 
         return (<Row>
             <Col xs={12}>
                 {loading ? <Spinner /> :
                     <CreateAttendanceForm groups={groups}
-                        lessons={lessons} updateLesson = {this.updateLessonsList}
-                        weatherTypes = {weatherTypes}
-                        onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj}/>}
-                        {operationSuccessful ? <div className='form-alert'>
+                        lessons={lessons} updateLesson={this.updateLessonsList}
+                        weatherTypes={weatherTypes}
+                        onSubmit={this.onSubmit} hasError={hasError} errorObj={errorObj} />}
+                {operationSuccessful ? <div className='form-alert'>
                     <Alert color="success">
                         <h5 className="alert-heading"> Record is successfully added.</h5>
                     </Alert>
@@ -102,6 +106,6 @@ class CreateAttendancePage extends Component{
             </Col>
         </Row>)
     }
-} 
+}
 
 export default withCampusService(CreateAttendancePage);

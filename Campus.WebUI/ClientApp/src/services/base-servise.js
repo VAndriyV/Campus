@@ -11,7 +11,7 @@ export default class BaseService{
     }
 
     if (res.status < 200 || res.status > 299) {
-      await res.json().then(({ error }) => {
+      await res.json().then(({ error }) => {       
         throw { status: res.status, error };
       });
     }

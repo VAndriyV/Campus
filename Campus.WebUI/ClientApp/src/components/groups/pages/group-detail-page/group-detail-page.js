@@ -66,6 +66,12 @@ class GroupDetailPage extends Component {
         loading: false
       })
     })
+    .catch(err => {
+      this.setState({
+        hasError: true,
+        error: err
+      });
+    });
   }
 
   showLessonDeleteErrorModal(err) {
@@ -81,7 +87,7 @@ class GroupDetailPage extends Component {
   showModal(err, header) {
     this.setState({
       hasError: true,
-      error: err.error,
+      error: err,
       header: header
     })
   }
@@ -107,11 +113,20 @@ class GroupDetailPage extends Component {
         attendanceData:data    
       })
     })
-    .catch(err=>console.log(err));
+    .catch(err => {
+      this.setState({
+        hasError: true,
+        error: err
+      });
+    });
   }
 
   render() {
-    const { group, lessons, loading, activeTab, error, hasError, header, attendanceData} = this.state;
+    const { group, lessons, loading, activeTab, error, hasError, header, attendanceData} = this.state;    
+    if (hasError && error.status !== 409) {
+      throw error;
+    }
+
     return (<Row>
       <Col xs={12}>
         {loading ? <Spinner /> :
@@ -157,8 +172,9 @@ class GroupDetailPage extends Component {
               </TabPane>
             </TabContent>
           </div>}
-        <Modal header={header} body={error}
-          modal={hasError} toggle={this.toggle} />
+          {hasError ?
+          <Modal header={header} body={error.error}
+            modal={hasError} toggle={this.toggle} /> : null}
       </Col>
     </Row>)
   }

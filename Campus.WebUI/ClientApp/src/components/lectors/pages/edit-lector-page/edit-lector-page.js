@@ -42,6 +42,12 @@ class EditLectorPage extends Component {
                     academicDegrees: academicDegrees.items,
                     loading: false
                 });
+            })
+            .catch(err => {
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
             });
     }
 
@@ -59,21 +65,18 @@ class EditLectorPage extends Component {
                 })
             })
             .catch(err => {
-                if (err.status === 400 || err.status === 409) {
-                    this.setState({
-                        hasError: true,
-                        errorObj: err
-                    });
-                }
-                else {
-                    throw err;
-                }
+                this.setState({
+                    hasError: true,
+                    errorObj: err
+                });
             });
     }
- 
+
     render() {
         const { lector, academicRanks, academicDegrees, loading, operationSuccessful, hasError, errorObj } = this.state;
-
+        if (hasError && !(errorObj.status === 400 || errorObj.status === 409)) {
+            throw errorObj;
+        }
         return (<Row>
             <Col xs={12}>
                 {loading ? <Spinner /> : <EditLectorForm academicRanks={academicRanks} academicDegrees={academicDegrees}

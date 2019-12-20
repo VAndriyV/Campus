@@ -31,6 +31,7 @@ import EditLessonPage from '../lessons/pages/edit-lesson-page';
 import CreateAttendancePage from '../attendances/pages/create-attendance-page';
 import LoginPage from '../user/pages/login-page';
 import HomePage from '../home-page';
+import NotFoundPage from '../error-pages/not-found-page';
 
 
 export default class App extends Component {
@@ -57,15 +58,14 @@ export default class App extends Component {
   static displayName = App.name;
 
   render() {
-    const { currentUser } = this.state;  
-    console.log(currentUser);
+    const { currentUser } = this.state;      
     return (
+      <Router>
       <ErrorBoundry>
-        <CampusServiceProvider value={this.campusService}>
-          <Router>
+        <CampusServiceProvider value={this.campusService}>         
             <Layout user={currentUser} userService={this.userService}>
               <Switch>
-                <AuthenticatedRoute user={currentUser} requiredRoles={['Admin', 'SuperAdmin', 'Lector']} exact path='/' component={HomePage} />
+                <AuthenticatedRoute user={currentUser} requiredRoles={['Admin', 'SuperAdmin', 'Lector']} exact  path="/" component={HomePage} />
 
                 <AuthenticatedRoute user={currentUser} requiredRoles={['Admin', 'SuperAdmin']} exact path='/lectors' component={LectorsListPage} />
                 <AuthenticatedRoute user={currentUser} requiredRoles={['Admin', 'SuperAdmin']} exact path='/lectors/new' component={CreateLectorPage} />
@@ -95,11 +95,12 @@ export default class App extends Component {
 
                 <UnauthenticatedRoute user={currentUser} path='/login' userService={this.userService} component={LoginPage} />
 
+                <Route render={(props)=> <NotFoundPage displayHomeLink={false} {...props} />} />
               </Switch>
-            </Layout>
-          </Router>
+            </Layout>          
         </CampusServiceProvider>
       </ErrorBoundry>
+      </Router>
     );
   }
 }

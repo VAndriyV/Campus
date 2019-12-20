@@ -25,10 +25,10 @@ class LectorDetailPage extends Component {
     activeTab: '1',
     lectorsSubjects: [],
     lessons: [],
-    attendanceData:[],
+    attendanceData: [],
     lector: null,
     hasError: false,
-    error: '',
+    error: null,
     header: '',
     loading: true
   };
@@ -53,14 +53,14 @@ class LectorDetailPage extends Component {
 
   onSubjectDelete(id) {
     this.props.campusService.deleteLectorSubject(id)
-    .then(() => this.removeSubjectFromList(id))
-    .catch(err => this.showLectorSubjectDeleteErrorModal(err));
+      .then(() => this.removeSubjectFromList(id))
+      .catch(err => this.showLectorSubjectDeleteErrorModal(err));
   }
 
   onLessonDelete(id) {
     this.props.campusService.deleteLesson(id)
-    .then(() => this.removeLessonFromList(id))
-    .catch(err => this.showLessonDeleteErrorModal(err));
+      .then(() => this.removeLessonFromList(id))
+      .catch(err => this.showLessonDeleteErrorModal(err));
   }
 
   showLectorDeleteErrorModal(err) {
@@ -81,21 +81,25 @@ class LectorDetailPage extends Component {
   showModal(err, header) {
     this.setState({
       hasError: true,
-      error: err.error,
+      error: err,
       header: header
     })
   }
 
-  removeSubjectFromList(id){
-    this.setState({lectorsSubjects: this.state.lectorsSubjects.filter(function(lectorSubject) { 
-        return lectorSubject.id !==id
-    })});
+  removeSubjectFromList(id) {
+    this.setState({
+      lectorsSubjects: this.state.lectorsSubjects.filter(function (lectorSubject) {
+        return lectorSubject.id !== id
+      })
+    });
   }
 
-  removeLessonFromList(id){
-    this.setState({lessons: this.state.lessons.filter(function(lesson) { 
-        return lesson.id !==id
-    })});
+  removeLessonFromList(id) {
+    this.setState({
+      lessons: this.state.lessons.filter(function (lesson) {
+        return lesson.id !== id
+      })
+    });
   }
 
   toggle() {
@@ -119,22 +123,36 @@ class LectorDetailPage extends Component {
         loading: false
       })
     })
+      .catch(err => {
+        this.setState({
+          hasError: true,
+          error: err
+        });
+      });
   }
 
-  loadAttendanceData = (startDate,endDate)=>{ 
-    const {lector} = this.state;
+  loadAttendanceData = (startDate, endDate) => {
+    const { lector } = this.state;
 
-    this.props.campusService.getLectorsAttendances(lector.id,startDate, endDate)
-    .then(({data})=>{
-      this.setState({
-        attendanceData:data    
+    this.props.campusService.getLectorsAttendances(lector.id, startDate, endDate)
+      .then(({ data }) => {
+        this.setState({
+          attendanceData: data
+        })
       })
-    })
-    .catch(err=>console.log(err));
+      .catch(err => {
+        this.setState({
+          hasError: true,
+          error: err
+        });
+      });
   }
 
   render() {
     const { lector, lectorsSubjects, lessons, loading, activeTab, error, hasError, header, attendanceData } = this.state;
+    if (hasError && error.status !== 409) {
+      throw error;
+    }
 
     return (<Row>
       <Col xs={12}>
@@ -195,13 +213,14 @@ class LectorDetailPage extends Component {
                   </React.Fragment> : null}
               </TabPane>
               <TabPane tabId="4">
-                {activeTab == 4 ? <RangeAttendance  loadData={this.loadAttendanceData} data={attendanceData}/> 
-                : null}
+                {activeTab == 4 ? <RangeAttendance loadData={this.loadAttendanceData} data={attendanceData} />
+                  : null}
               </TabPane>
             </TabContent>
           </div>}
-        <Modal header={header} body={error}
-          modal={hasError} toggle={this.toggle} />
+        {hasError ?
+          <Modal header={header} body={error.error}
+            modal={hasError} toggle={this.toggle} /> : null}
       </Col>
     </Row>)
   }

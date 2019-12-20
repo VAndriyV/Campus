@@ -1,23 +1,29 @@
 ﻿import React, { Component } from 'react';
-
-import ErrorIndicator from '../error-indicator/error-indicator';
+import GeneralErrorPage from '../error-pages/general-error-page';
+import NotFoundErrorPage from '../error-pages/not-found-page';
 
 export default class ErrorBoundry extends Component {
 
     state = {
+        error: null,
         hasError: false
     };
 
-    componentDidCatch() {
+    componentDidCatch(error) {
         this.setState({
+            error: error,
             hasError: true
         });
     }
 
     render() {
+        const { hasError, error} = this.state;
 
-        if (this.state.hasError) {
-            return <ErrorIndicator />
+        if (hasError) {
+            if(error.status===404){
+                return <NotFoundErrorPage/>;
+            }
+            return <GeneralErrorPage />;
         }
 
         return this.props.children;
